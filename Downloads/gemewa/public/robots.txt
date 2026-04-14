@@ -1,0 +1,39 @@
+# EWaste Kochi Robots.txt
+# Optimized for SEO 100/100
+
+User-agent: *
+Allow: /
+Allow: /images/
+Allow: /static/
+Allow: /blog/
+
+# Block admin and private areas
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_next/
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
+
+# Sitemaps
+Sitemap: https://ewastekochi.com/sitemap.xml
+
+# Image sitemap
+User-agent: Googlebot-Image
+Allow: /images/
+
+# Mobile optimized
+User-agent: MobileBot*
+Allow: /
+
+# News (if applicable)
+User-agent: Googlebot-News
+Allow: /
+
+# Video
+User-agent: Googlebot-Video
+Allow: /
+
+# AdsBot
+User-agent: AdsBot-Google
+Allow: /

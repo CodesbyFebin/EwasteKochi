@@ -1,0 +1,110 @@
+---
+// src/pages/accessibility.astro
+import MainLayout from "@/layouts/MainLayout.astro";
+import Breadcrumbs from "@/components/seo/Breadcrumbs.astro";
+import { SITE_NAME, CONTACT_EMAIL, SITE_URL } from "@/lib/content";
+import { buildFullHelmetTags, getBreadcrumbSchema, getOrganizationSchema, getWebPageSchema } from "@/lib/seo";
+
+// Breadcrumbs
+const breadcrumbItems = [
+  { name: "Home", url: "/" },
+  { name: "Accessibility", url: "/accessibility" }
+];
+const breadcrumbSchema = getBreadcrumbSchema(breadcrumbItems);
+
+// Page SEO
+const pageTitle = `Accessibility Statement | ${SITE_NAME}`;
+const pageDesc = "EWaste Kochi's commitment to digital accessibility — ensuring our e-waste recycling and ITAD services are accessible to everyone in Kochi, regardless of ability.";
+const canonicalPath = "/accessibility/";
+
+const helmetTags = buildFullHelmetTags({
+  title: pageTitle,
+  description: pageDesc,
+  canonicalPath,
+  ogType: "website",
+  keywords: "accessibility statement, WCAG 2.1, digital inclusion Kochi, inclusive e-waste recycling",
+});
+
+// Structured data
+const schemas = [
+  getOrganizationSchema(),
+  getWebPageSchema({
+    name: pageTitle,
+    description: pageDesc,
+    url: `${SITE_URL}/accessibility`,
+    lastReviewed: "2025-01-01",
+  }),
+  breadcrumbSchema,
+];
+---
+
+<MainLayout
+  title={pageTitle}
+  description={pageDesc}
+  canonical={canonicalPath}
+  schemas={schemas}
+>
+  <Breadcrumbs items={breadcrumbItems} />
+
+  <section class="pt-32 pb-20 bg-white dark:bg-zinc-950">
+    <div class="container max-w-4xl mx-auto px-4">
+      <header class="mb-12 border-b border-zinc-100 dark:border-zinc-800 pb-12">
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-4 dark:text-white font-display tracking-tight leading-tight">Accessibility Statement</h1>
+        <p class="text-zinc-500 dark:text-zinc-400 text-sm font-bold tracking-widest uppercase">Commitment to Inclusion | Last updated: January 2025</p>
+        <div class="mt-6 p-6 bg-zinc-50 dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 italic font-medium text-zinc-600 dark:text-zinc-400">
+          <p>We believe that everyone in Kerala, regardless of ability, should have equal access to essential e-waste recycling and IT asset disposition services.</p>
+        </div>
+      </header>
+      
+      <div class="prose prose-lg prose-zinc dark:prose-invert max-w-none space-y-16 text-zinc-600 dark:text-zinc-400 font-medium">
+        <section id="commitment">
+          <h2 class="text-3xl font-extrabold dark:text-white font-display">1. Our Commitment</h2>
+          <p>EWaste Kochi is committed to ensuring digital accessibility for people with disabilities. We are continually improving the user experience for everyone and applying the relevant accessibility standards, specifically aiming for **WCAG 2.1 Level AA** compliance.</p>
+        </section>
+
+        <section id="features">
+          <h2 class="text-3xl font-extrabold dark:text-white font-display">2. Accessibility Features</h2>
+          <p>Our platform includes specialized tools to enhance your experience:</p>
+          <ul class="list-disc pl-6 space-y-4 mt-6">
+            <li><strong>Accessibility Widget:</strong> A floating tool that allows you to scale text, toggle high-contrast mode, and reduce motion in real-time.</li>
+            <li><strong>Voice-Enabled Chatbot:</strong> Our AI assistant supports voice recognition, allowing users to request pickups and quotes hands-free.</li>
+            <li><strong>Screen Reader Optimization:</strong> We use semantic HTML5 and ARIA labels to ensure screen readers can navigate our 12,000+ page content catalog accurately.</li>
+            <li><strong>Keyboard Navigation:</strong> All interactive elements, including our complex lead funnel, are fully accessible via keyboard (Tab and Enter keys).</li>
+          </ul>
+        </section>
+
+        <section id="conformance">
+          <h2 class="text-3xl font-extrabold dark:text-white font-display">3. Conformance Status</h2>
+          <p>The Web Content Accessibility Guidelines (WCAG) defines requirements for designers and developers to improve accessibility for people with disabilities. EWaste Kochi is partially conformant with WCAG 2.1 level AA. Partially conformant means that some parts of the content do not yet fully conform to the accessibility standard.</p>
+        </section>
+
+        <section id="feedback">
+          <h2 class="text-3xl font-extrabold dark:text-white font-display">4. Feedback & Contact</h2>
+          <p>We welcome your feedback on the accessibility of EWaste Kochi. Please let us know if you encounter accessibility barriers while trying to recycle your electronics:</p>
+          <div class="bg-zinc-900 dark:bg-zinc-800 p-10 rounded-[2.5rem] text-white shadow-2xl relative overflow-hidden group mt-8">
+            <div class="absolute -right-16 -bottom-16 text-[15rem] text-white/5 opacity-40 select-none group-hover:scale-110 transition-transform duration-700">♿</div>
+            <p class="text-xl font-medium mb-6 relative z-10">
+              Accessibility Support:
+            </p>
+            <ul class="relative z-10 space-y-4">
+              <li class="flex items-center gap-4">
+                 <span class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center">📧</span>
+                 <a href={`mailto:${CONTACT_EMAIL}`} class="text-lg font-extrabold hover:underline">{CONTACT_EMAIL}</a>
+              </li>
+              <li class="flex items-center gap-4">
+                 <span class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center">📞</span>
+                 <a href="tel:+917500555454" class="text-lg font-extrabold hover:underline">+91 75005 555454</a>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <div class="flex flex-wrap gap-8 pt-12 text-sm font-bold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
+          <a href="/terms" class="hover:text-green-600 transition-colors">Terms & Conditions</a>
+          <a href="/privacy" class="hover:text-green-600 transition-colors">Privacy Policy</a>
+          <a href="/" class="hover:text-green-600 transition-colors">Return Home</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>

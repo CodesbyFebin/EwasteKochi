@@ -1,0 +1,49 @@
+---
+// src/layouts/MainLayout.astro - Full page layout with Header/Footer
+import BaseLayout from './BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import AIChatBot from '../components/AIChatBot';
+import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
+
+export interface Props {
+  title: string;
+  description?: string;
+  lang?: string;
+  canonical?: string;
+  hreflangs?: any[];
+  breadcrumbs?: any[];
+  schema?: any;
+  schemas?: any[];
+  noIndex?: boolean;
+  type?: string;
+  ogImage?: string;
+  datePublished?: string;
+  dateModified?: string;
+}
+
+const { title, description, lang, canonical, hreflangs, breadcrumbs, schema, schemas, noIndex, type, ogImage, datePublished, dateModified } = Astro.props;
+---
+
+<BaseLayout 
+  title={title} 
+  description={description} 
+  lang={lang}
+  canonical={canonical}
+  hreflangs={hreflangs}
+  schema={schema} 
+  schemas={schemas}
+  noIndex={noIndex} 
+  type={type} 
+  ogImage={ogImage}
+  datePublished={datePublished}
+  dateModified={dateModified}
+>
+  <Header />
+  <Breadcrumbs items={breadcrumbs} />
+  <main id="main-content">
+    <slot />
+  </main>
+  <Footer />
+  <AIChatBot client:load />
+</BaseLayout>

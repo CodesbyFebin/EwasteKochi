@@ -1,0 +1,74 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+import { SITE_NAME, CONTACT_EMAIL, ADDRESS } from "@/constants/content";
+---
+
+<MainLayout
+  title={`Privacy Policy | ${SITE_NAME}`}
+  description="EWaste Kochi Privacy Policy — how we collect, use, and protect your personal data in compliance with the DPDP Act 2023."
+  noIndex={false}
+>
+  <section class="pt-32 pb-20 bg-white dark:bg-zinc-950">
+    <div class="container max-w-4xl mx-auto px-4">
+      <header class="mb-12 border-b border-zinc-100 dark:border-zinc-800 pb-12">
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-4 dark:text-white font-display">Privacy Policy</h1>
+        <p class="text-zinc-500 dark:text-zinc-400 text-sm font-medium">Last updated: January 2025</p>
+      </header>
+      
+      <div class="prose prose-lg prose-zinc dark:prose-invert max-w-none space-y-12">
+        <section class="scroll-mt-24">
+          <h2 class="text-2xl font-extrabold dark:text-white flex items-center gap-3">
+             <span class="w-8 h-8 bg-green-50 dark:bg-green-900/20 text-green-600 rounded-lg flex items-center justify-center text-sm">1</span>
+             Information We Collect
+          </h2>
+          <p class="text-zinc-600 dark:text-zinc-400 leading-relaxed">
+            When you contact us for e-waste pickup, data destruction, or buyback services, we collect: <strong>name, phone number, email address, business name</strong>, and the types and quantities of devices you wish to recycle. We also collect device serial numbers for <strong>Certificate of Destruction</strong> documentation.
+          </p>
+        </section>
+
+        <section class="scroll-mt-24">
+          <h2 class="text-2xl font-extrabold dark:text-white flex items-center gap-3">
+             <span class="w-8 h-8 bg-green-50 dark:bg-green-900/20 text-green-600 rounded-lg flex items-center justify-center text-sm">2</span>
+             How We Use Your Information
+          </h2>
+          <p class="text-zinc-600 dark:text-zinc-400 leading-relaxed">
+            We use your information solely to provide our e-waste recycling and ITAD services: scheduling pickups, processing payments, issuing Certificates of Destruction, and maintaining compliance records as required by law. <strong>We never sell your personal data.</strong>
+          </p>
+        </section>
+
+        <section class="scroll-mt-24">
+          <h2 class="text-2xl font-extrabold dark:text-white flex items-center gap-3">
+             <span class="w-8 h-8 bg-green-50 dark:bg-green-900/20 text-green-600 rounded-lg flex items-center justify-center text-sm">3</span>
+             DPDP Act 2023 Compliance
+          </h2>
+          <div class="bg-zinc-50 dark:bg-zinc-900 p-8 rounded-3xl border border-zinc-100 dark:border-zinc-800">
+            <p class="text-zinc-600 dark:text-zinc-400 leading-relaxed m-0">
+              As a <strong>Data Fiduciary</strong> under the Digital Personal Data Protection Act 2023, we implement appropriate technical and organizational measures to protect your personal data. You have the right to access, correct, and request deletion of your personal data.
+            </p>
+          </div>
+        </section>
+
+        <section class="scroll-mt-24">
+          <h2 class="text-2xl font-extrabold dark:text-white flex items-center gap-3">
+             <span class="w-8 h-8 bg-green-50 dark:bg-green-900/20 text-green-600 rounded-lg flex items-center justify-center text-sm">4</span>
+             Data Retention
+          </h2>
+          <p class="text-zinc-600 dark:text-zinc-400 leading-relaxed">
+            Certificate of Destruction records and associated chain-of-custody documentation are retained for <strong>7 years</strong> as required by applicable regulations. Other customer data is retained for <strong>3 years</strong> from the last transaction.
+          </p>
+        </section>
+
+        <section class="scroll-mt-24 border-t border-zinc-100 dark:border-zinc-800 pt-12">
+          <h2 class="text-2xl font-extrabold dark:text-white mb-6">Contact Us</h2>
+          <div class="bg-forest/5 dark:bg-forest/10 p-8 rounded-3xl">
+            <p class="text-zinc-600 dark:text-zinc-400 m-0 leading-relaxed">
+              For privacy-related queries:<br/>
+              <a href={`mailto:${CONTACT_EMAIL}`} class="text-forest font-bold hover:underline text-lg">{CONTACT_EMAIL}</a><br/>
+              <span class="text-sm mt-2 block">{ADDRESS}</span>
+            </p>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+</MainLayout>

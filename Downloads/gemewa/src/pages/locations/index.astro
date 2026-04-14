@@ -1,0 +1,84 @@
+---
+// src/pages/locations/index.astro - Locations listing
+import MainLayout from '../../layouts/MainLayout.astro';
+import { locations } from '../../data/locations';
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "E-Waste Collection Locations in Kochi",
+  "description": "List of areas in Kochi where EWaste Kochi provides free e-waste pickup services.",
+  "itemListElement": locations.map((loc, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "item": {
+      "@type": "Place",
+      "name": loc.name,
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": loc.name,
+        "addressRegion": "Kerala"
+      }
+    }
+  }))
+};
+---
+
+<MainLayout 
+  title="E-Waste Pickup Locations in Kochi | EWaste Kochi"
+  description="Free e-waste pickup across all areas in Kochi and Ernakulam. Kakkanad, Infopark, Edappally, Vyttila and more."
+  schema={schema}
+>
+  {/* Hero */}
+  <section class="py-24 lg:py-32 bg-cream relative overflow-hidden">
+    <div class="absolute inset-0 bg-dots opacity-50" />
+    <div class="container relative">
+      <div class="max-w-3xl">
+        <span class="text-sm font-medium text-forest uppercase tracking-widest mb-4 block">Service Areas</span>
+        <h1 class="text-5xl md:text-6xl text-zinc-900 leading-tight mb-6">
+          We Serve<br/>
+          <span class="text-forest">Kochi & Kerala</span>
+        </h1>
+        <p class="text-xl text-zinc-600 max-w-xl">
+          Free e-waste pickup available across all locations in Kochi and Ernakulam district.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* Locations Grid */}
+  <section class="py-20 lg:py-24">
+    <div class="container">
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {locations.map((loc, i) => (
+          <a 
+            href={`/locations/${loc.slug}`} 
+            class="card card-hover p-5 group"
+          >
+            <h3 class="text-lg text-zinc-900 mb-1 group-hover:text-forest transition-colors">
+              {loc.name}
+            </h3>
+            <p class="text-sm text-zinc-500">{loc.district || 'Ernakulam'}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* CTA */}
+  <section class="py-20 bg-forest text-white relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10" style="background-image: linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px), linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px); background-size: 40px 40px;" />
+    <div class="container text-center relative">
+      <h2 class="text-3xl md:text-4xl mb-6">Don't See Your Location?</h2>
+      <p class="text-white/80 max-w-lg mx-auto mb-8">We provide free pickup across all of Kochi and Kerala. Contact us to check service availability in your area.</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="https://wa.me/917500555454" class="btn bg-white text-forest hover:bg-cream text-lg px-8 py-3">
+          Check Availability
+        </a>
+        <a href="tel:+917500555454" class="btn btn-primary-gold text-lg px-8 py-3">
+          Call Now
+        </a>
+      </div>
+    </div>
+  </section>
+</MainLayout>

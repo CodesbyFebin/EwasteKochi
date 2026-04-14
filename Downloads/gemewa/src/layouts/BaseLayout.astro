@@ -1,0 +1,169 @@
+---
+// src/layouts/BaseLayout.astro - Main SEO-optimized layout
+import { getFullGraphSchema } from "@/lib/schema";
+export interface Props {
+  title: string;
+  description?: string;
+  lang?: string;
+  canonical?: string;
+  hreflangs?: { lang: string; url: string }[];
+  schema?: any; // Can be object or array
+  schemas?: any[]; // Specifically for arrays
+  noIndex?: boolean;
+  ogImage?: string;
+  keywords?: string;
+  type?: string;
+  datePublished?: string;
+  dateModified?: string;
+}
+
+const { 
+  title, 
+  description = "Kerala's #1 certified e-waste recycling & ITAD company in Kochi. NIST-certified data destruction, free corporate pickup, and EPR-compliant recycling.",
+  lang = "en",
+  canonical,
+  hreflangs,
+  schema,
+  schemas = [],
+  noIndex = false,
+  ogImage = "/og-image.svg",
+  keywords = "e-waste recycling kochi, ITAD services kerala, data destruction, laptop buyback, electronic waste management",
+  type = "website",
+  datePublished,
+  dateModified
+} = Astro.props;
+
+const allSchemas = [...(Array.isArray(schema) ? schema : schema ? [schema] : []), ...schemas];
+
+const canonicalUrl = canonical || `https://ewastekochi.com${Astro.url.pathname}`;
+const fullTitle = title.includes('EWaste Kochi') ? title : `${title} | EWaste Kochi`;
+const sitemapUrl = "https://ewastekochi.com/sitemap.xml";
+
+const globalGraph = getFullGraphSchema();
+---
+
+<!DOCTYPE html>
+<html lang={lang}>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  
+  <!-- Primary Meta Tags -->
+  <title>{fullTitle}</title>
+  <meta name="title" content={fullTitle} />
+  <meta name="description" content={description} />
+  <meta name="author" content="EWaste Kochi" />
+  <meta name="robots" content={noIndex ? "noindex,follow" : "index,follow,max-image-preview:large,max-snippet:-1"} />
+  {noIndex && (
+    <>
+      <meta name="googlebot" content="noindex,follow" />
+      <meta name="bingbot" content="noindex,follow" />
+      <meta name="X-Robots-Tag" content="noindex, follow" />
+    </>
+  )}
+  <meta name="keywords" content={keywords} />
+  <link rel="canonical" href={canonicalUrl} />
+  
+  <!-- Alternate Languages for International SEO -->
+  {hreflangs ? (
+    hreflangs.map(h => <link rel="alternate" hreflang={h.lang} href={h.url} />)
+  ) : (
+    <>
+      <link rel="alternate" hreflang="en" href="https://ewastekochi.com/" />
+      <link rel="alternate" hreflang="ml" href="https://ewastekochi.com/ml" />
+      <link rel="alternate" hreflang="x-default" href="https://ewastekochi.com/" />
+    </>
+  )}
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content={type} />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content={title || "EWaste Kochi - Certified E-Waste Recycling in Kochi, Kerala"} />
+  <meta property="og:site_name" content="EWaste Kochi" />
+  <meta property="og:locale" content={
+    lang === 'ml' ? 'ml_IN' : 
+    lang === 'ta' ? 'ta_IN' : 
+    lang === 'hi' ? 'hi_IN' : 
+    'en_IN'
+  } />
+  <meta property="og:locale:alternate" content="en_US" />
+  
+  {type === "article" && datePublished && (
+    <meta property="article:published_time" content={datePublished} />
+  )}
+  {type === "article" && dateModified && (
+    <meta property="article:modified_time" content={dateModified} />
+  )}
+  {type === "article" && (
+    <meta property="article:author" content="EWaste Kochi" />
+  )}
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content={canonicalUrl} />
+  <meta name="twitter:title" content={fullTitle} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImage} />
+  <meta name="twitter:creator" content="@ewastekochi" />
+  <meta name="twitter:site" content="@ewastekochi" />
+  
+  <!-- Geo Tags for Local SEO -->
+  <meta name="geo.region" content="IN-KL" />
+  <meta name="geo.placename" content="Kochi, Kerala" />
+  <meta name="geo.position" content="9.9312;76.2673" />
+  <meta name="ICBM" content="9.9312, 76.2673" />
+  
+  <!-- Business Info -->
+  <meta name="contact" content="+91-7500555454" />
+  <meta name="copyright" content="EWaste Kochi" />
+  
+  <!-- Theme Color -->
+  <meta name="theme-color" content="#0d5923" />
+  <meta name="msapplication-TileColor" content="#0d5923" />
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+  
+  <!-- JSON-LD Schema -->
+  {allSchemas.map((s) => (
+    <script type="application/ld+json" set:html={JSON.stringify(s)} />
+  ))}
+  
+  <!-- Global Graph Schema (Organization + Local Business) -->
+  <script type="application/ld+json" set:html={JSON.stringify(globalGraph)} />
+  
+  <style is:global>
+    @import '../styles/global.css';
+  </style>
+
+  <!-- Theme Initialization Script -->
+  <script is:inline>
+    const theme = (() => {
+      if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+        return localStorage.getItem('theme');
+      }
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'dark';
+      }
+      return 'light';
+    })();
+    
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  </script>
+</head>
+<body class="bg-cream text-zinc-900 dark:text-zinc-50 font-sans antialiased selection:bg-forest selection:text-white">
+  <slot />
+</body>
+</html>

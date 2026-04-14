@@ -1,0 +1,81 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { CONTACT_PHONE } from "@/constants/content";
+---
+
+<BaseLayout
+  title="ഇ-വേസ്റ്റ് റീസൈക്ലിംഗ് കൊച്ചി | Kerala's #1 Certified ITAD"
+  description="കേരളത്തിലെ #1 KSPCB-അംഗീകൃത ഇ-വേസ്റ്റ് റീസൈക്ലർ. NIST/DoD ഹാർഡ് ഡ്രൈവ് ഷ്രെഡിംഗ്, ഡേറ്റ ഡിസ്ട്രക്ഷൻ, DPDP ആക്ട് 2023 കൊച്ചിയിൽ."
+  lang="ml"
+  canonical="https://ewastekochi.com/ml"
+>
+  <style>
+    .font-malayalam {
+      font-family: 'DM Sans', sans-serif; /* fallback or specific malayalam font if needed, but DM Sans is used globally */
+    }
+  </style>
+
+  <section class="py-24 bg-gradient-to-br from-white to-green-50/30 dark:from-zinc-950 dark:to-zinc-900 font-malayalam">
+    <div class="container max-w-4xl mx-auto text-center space-y-8 px-4">
+      <div class="inline-flex items-center gap-2 px-4 py-2 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full text-xs font-bold uppercase tracking-widest border border-green-200 dark:border-green-800">
+        🏆 കേരളത്തിലെ #1 സർട്ടിഫൈഡ് ITAD
+      </div>
+      <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight dark:text-white leading-[1.2] font-display">
+        കൊച്ചിയിലെ ഏറ്റവും വിശ്വസ്തമായ<br/>
+        <span class="text-green-600">ഇ-വേസ്റ്റ് റീസൈക്ലർ</span>
+      </h1>
+      <p class="text-xl md:text-2xl text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-2xl mx-auto font-medium">
+        NIST/DoD ഹാർഡ് ഡ്രൈവ് ഷ്രെഡിംഗ് • DPDP ആക്ട് 2023 • കൊച്ചിയിൽ സൗജന്യ പിക്കപ്പ്
+      </p>
+      <div class="flex flex-col sm:flex-row justify-center gap-6 pt-6">
+        <a href={`https://wa.me/91${CONTACT_PHONE}?text=നമസ്കാരം%2C%20ഇ-വേസ്റ്റ്%20പിക്കപ്പ്%20ആവശ്യമാണ്`} class="px-10 py-5 bg-green-600 hover:bg-green-700 text-white font-bold text-xl rounded-2xl transition-all hover:scale-105 shadow-xl shadow-green-200 dark:shadow-none" target="_blank" rel="noopener">💬 സൗജന്യ ക്വോട്ട് നേടുക</a>
+        <a href={`tel:+91${CONTACT_PHONE}`} class="px-10 py-5 border-2 border-zinc-200 dark:border-zinc-700 font-bold text-xl rounded-2xl dark:text-white hover:border-green-600 transition-all bg-white dark:bg-transparent shadow-sm">📞 ഇപ്പോൾ വിളിക്കുക</a>
+      </div>
+      <!-- Switch to English -->
+      <p class="text-sm text-zinc-400 pt-8">
+        <a href="/" class="text-green-600 dark:text-green-400 font-bold hover:underline inline-flex items-center gap-2" hreflang="en">
+          Switch to English <span>→</span>
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Key services in Malayalam -->
+  <section class="py-24 bg-white dark:bg-zinc-950 font-malayalam">
+    <div class="container px-4">
+      <div class="max-w-xl mx-auto text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-extrabold dark:text-white mb-4 font-display">ഞങ്ങളുടെ സേവനങ്ങൾ</h2>
+        <div class="w-20 h-1.5 bg-green-500 mx-auto rounded-full"></div>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {[
+          { icon: "⚙️", title: "ഹാർഡ് ഡ്രൈവ് ഷ്രെഡിംഗ്", desc: "NIST 800-88 സർട്ടിഫൈഡ് ഡേറ്റ വൈപ്പിംഗ്, ഫിസിക്കൽ ഷ്രെഡിംഗ്. ബാങ്കുകൾക്കും ആശുപത്രികൾക്കും അനുയോജ്യം." },
+          { icon: "💻", title: "ലാപ്ടോപ്പ് ബൈബാക്ക്", desc: "ഏറ്റവും മികച്ച വില, ഉപയോഗിച്ച ലാപ്ടോപ്പുകൾക്കും ഫോണുകൾക്കും ഒരേ ദിവസം UPI/ക്യാഷ് പേമെന്റ്." },
+          { icon: "♻️", title: "കോർപ്പറേറ്റ് ഇ-വേസ്റ്റ്", desc: "EPR കംപ്ലൈൻ റീസൈക്ലിംഗ്, DPDP ആക്ട് 2023 പ്രകാരമുള്ള ഡോക്യുമെന്റേഷൻ." },
+        ].map(s => (
+          <div class="group p-10 bg-zinc-50 dark:bg-zinc-900 rounded-3xl border border-zinc-100 dark:border-zinc-800 hover:border-green-400 transition-all shadow-sm hover:shadow-xl">
+            <div class="text-5xl mb-6 group-hover:scale-110 transition-transform inline-block">{s.icon}</div>
+            <h3 class="font-extrabold text-2xl mb-4 dark:text-white leading-tight">{s.title}</h3>
+            <p class="text-zinc-500 dark:text-zinc-400 leading-relaxed">{s.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* Local Trust Bar */}
+  <section class="py-12 bg-zinc-900 text-white">
+    <div class="container px-4 flex flex-wrap justify-center gap-8 md:gap-16 opacity-70 grayscale hover:grayscale-0 transition-all">
+      <div class="flex items-center gap-3 font-bold uppercase tracking-widest text-sm italic">
+        Certified NIST 800-88
+      </div>
+      <div class="flex items-center gap-3 font-bold uppercase tracking-widest text-sm italic">
+        KSPCB Authorized
+      </div>
+      <div class="flex items-center gap-3 font-bold uppercase tracking-widest text-sm italic">
+        ISO 14001:2015
+      </div>
+    </div>
+  </section>
+</BaseLayout>

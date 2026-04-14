@@ -1,0 +1,273 @@
+---
+// src/pages/[pillar]/[...slug].astro
+import MainLayout from '../../layouts/MainLayout.astro';
+import { pillars } from '../../data/pillars.js';
+import { blogs } from '../../data/blogs.ts';
+import { generateMassiveFaqs, faqs as genericFaqs } from '../../data/faqs.ts';
+import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
+import { buildFullHelmetTags, getArticleSchema } from '../../lib/seo';
+import { SITE_NAME } from '../../lib/content';
+import { getFAQSchema, getBreadcrumbSchema } from '../../lib/schema';
+
+export async function getStaticPaths() {
+  const paths = [];
+
+  for (const pillar of pillars) {
+    // 1. Pillar Index Route (e.g., /e-waste)
+    paths.push({
+      params: { pillar: pillar.slug, slug: undefined },
+      props: { type: 'pillar', pillar, cluster: null, post: null }
+    });
+
+    for (const cluster of pillar.clusters) {
+      // 2. Cluster Route (e.g., /e-waste/home-pickup)
+      paths.push({
+        params: { pillar: pillar.slug, slug: cluster.id },
+        props: { type: 'cluster', pillar, cluster, post: null }
+      });
+
+      // 3. Post Route (e.g., /e-waste/home-pickup/my-post-slug)
+      const clusterPosts = blogs.filter(b => b.pillarSlug === pillar.slug && b.clusterSlug === cluster.id);
+      for (const post of clusterPosts) {
+        paths.push({
+          params: { pillar: pillar.slug, slug: `${cluster.id}/${post.slug}` },
+          props: { type: 'post', pillar, cluster, post }
+        });
+      }
+    }
+  }
+
+  return paths;
+}
+
+const { type, pillar, cluster, post } = Astro.props;
+
+// Generate 50 FAQs (already in props)
+const topicName = post ? (post as any).title : cluster ? cluster.name : pillar.name;
+const topicFaqs = generateMassiveFaqs(topicName);
+const allFaqs = [...topicFaqs, ...genericFaqs].slice(0, 50);
+
+// Breadcrumbs with schema-ready structure
+const breadcrumbItems = [
+  { name: 'Home', url: '/' },
+  { name: pillar.name, url: `/${pillar.slug}/` }
+];
+if (cluster) {
+  breadcrumbItems.push({ name: cluster.name, url: `/${pillar.slug}/${cluster.id}/` });
+}
+if (post) {
+  breadcrumbItems.push({ name: (post as any).title.slice(0, 50), url: `/${pillar.slug}/${cluster.id}/${(post as any).slug}/` });
+}
+const breadcrumbSchema = getBreadcrumbSchema(breadcrumbItems);
+
+// SEO meta data
+const pageTitle = post 
+  ? `${(post as any).title} | ${pillar.name} | EWaste Kochi`
+  : cluster 
+    ? `${cluster.name} | ${pillar.name} | EWaste Kochi`
+    : `${pillar.name} | Complete Guide | EWaste Kochi`;
+
+const pageDesc = post 
+  ? (post as any).metaDesc 
+  : cluster 
+    ? `Expert guide to ${cluster.keyword} solutions for businesses and homes in Kochi. NIST-certified data destruction, free pickup, DPDP Act compliant.`
+    : pillar.description;
+
+const canonicalPath = post 
+  ? `/${pillar.slug}/${cluster.id}/${(post as any).slug}/`
+  : cluster 
+    ? `/${pillar.slug}/${cluster.id}/`
+    : `/${pillar.slug}/`;
+
+// Build all meta tags using our SEO utility
+const helmetTags = buildFullHelmetTags({
+  title: pageTitle,
+  description: pageDesc,
+  canonicalPath,
+  ogImage: (post as any)?.ogImage || cluster?.ogImage || pillar?.ogImage,
+  ogType: post ? 'article' : 'website',
+  keywords: (post as any)?.keywords || cluster?.keywords || pillar?.keywords,
+  publishedTime: (post as any)?.date,
+  modifiedTime: (post as any)?.updatedDate,
+  author: SITE_NAME,
+});
+
+// Structured data: Article + FAQPage + BreadcrumbList
+const schemas = [breadcrumbSchema];
+if (post) {
+  schemas.push(getArticleSchema({
+    title: (post as any).title,
+    description: (post as any).excerpt,
+    canonicalPath,
+    ogImage: (post as any).ogImage,
+    publishedTime: (post as any).date,
+    modifiedTime: (post as any).updatedDate || (post as any).date,
+    author: SITE_NAME,
+  }));
+}
+// Add FAQPage schema
+if (allFaqs.length > 0) {
+  schemas.push(getFAQSchema(allFaqs.map(f => ({ question: f.q, answer: f.a.replace(/<[^>]*>?/gm, '') }))));
+}
+
+// Related blogs (internal linking powerhouse)
+const relatedBlogs = blogs.filter(b => {
+  if (type === 'post') return b.clusterSlug === cluster.id && b.slug !== (post as any).slug;
+  if (type === 'cluster') return b.clusterSlug === cluster.id;
+  if (type === 'pillar') return b.pillarSlug === pillar.slug;
+  return false;
+}).slice(0, 6);
+
+// Estimate reading time for posts
+const readingTime = post ? Math.ceil((post as any).content?.split(/\s+/).length / 200) || 5 : null;
+---
+
+<MainLayout title={pageTitle} description={pageDesc} canonical={canonicalPath} schemas={schemas}>
+  <Breadcrumbs items={breadcrumbItems} />
+
+  <main class="pt-24 pb-16 bg-white dark:bg-zinc-950">
+    <div class="container mx-auto px-4">
+      <div class="max-w-5xl mx-auto">
+        
+        {type === 'pillar' || type === 'cluster' ? (
+          <>
+            <header class="text-center mb-16">
+              <div class="inline-flex items-center justify-center w-24 h-24 bg-green-50 dark:bg-green-950/30 rounded-[2.5rem] mb-8 border border-green-100 dark:border-green-800 shadow-sm animate-fade-in">
+                <span class="text-5xl">{pillar.icon}</span>
+              </div>
+              <h1 class="text-4xl md:text-6xl font-extrabold text-zinc-900 dark:text-white mb-6 font-display tracking-tight leading-tight">
+                {type === 'cluster' ? cluster.name : pillar.h1}
+              </h1>
+              <p class="text-xl md:text-2xl text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-3xl mx-auto font-medium">
+                {type === 'cluster' ? `Expert guide to ${cluster.keyword} solutions for businesses and homes in Kochi.` : pillar.intro}
+              </p>
+            </header>
+
+            {type === 'pillar' && (
+              <div class="grid sm:grid-cols-2 gap-6 mb-20">
+                {pillar.clusters.map(c => (
+                  <a href={`/${pillar.slug}/${c.id}/`} class="group p-8 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-[2rem] hover:bg-white dark:hover:bg-zinc-800 hover:shadow-2xl hover:border-green-400 dark:hover:border-green-600 transition-all">
+                    <h3 class="text-xl font-bold text-zinc-900 dark:text-white mb-3 group-hover:text-green-600 dark:group-hover:text-green-400">{c.name}</h3>
+                    <p class="text-zinc-500 dark:text-zinc-400 text-sm leading-relaxed italic">Focus on: <span class="text-zinc-700 dark:text-zinc-300 font-bold">{c.keyword}</span></p>
+                  </a>
+                ))}
+              </div>
+            )}
+
+            <div class="space-y-12">
+              <h2 class="text-3xl font-bold text-zinc-900 dark:text-white mb-10 border-b-4 border-green-500 w-fit pb-2 font-display">
+                {type === 'cluster' ? 'In-Depth Articles' : `Latest in ${pillar.name}`}
+              </h2>
+              {relatedBlogs.length > 0 ? (
+                <div class="grid md:grid-cols-2 gap-8">
+                  {relatedBlogs.map(blog => (
+                    <article class="p-8 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-[2rem] hover:border-green-400 dark:hover:border-green-600 transition-all shadow-sm hover:shadow-xl">
+                      <h3 class="text-xl font-bold text-zinc-900 dark:text-white mb-4 leading-tight group">
+                        <a href={`/${pillar.slug}/${blog.clusterSlug}/${blog.slug}/`} class="hover:text-green-600 dark:hover:text-green-400 transition-colors">{blog.title}</a>
+                      </h3>
+                      <p class="text-zinc-500 dark:text-zinc-400 text-sm line-clamp-3 mb-6 leading-relaxed italic">{blog.excerpt}</p>
+                      <a href={`/${pillar.slug}/${blog.clusterSlug}/${blog.slug}/`} class="inline-flex items-center gap-2 text-green-600 dark:text-green-400 font-extrabold text-xs uppercase tracking-widest hover:translate-x-1 transition-transform">Read Analysis <span>→</span></a>
+                    </article>
+                  ))}
+                </div>
+              ) : (
+                <p class="text-center text-zinc-500 dark:text-zinc-400 py-12">More articles coming soon. Check back for expert insights.</p>
+              )}
+            </div>
+          </>
+        ) : (
+          <article itemscope itemtype="https://schema.org/Article">
+            <header class="mb-16">
+              <div class="flex flex-wrap gap-3 mb-10">
+                <a href={`/${pillar.slug}/`} class="px-5 py-2 bg-green-50 dark:bg-green-950/30 text-green-700 dark:text-green-400 text-xs font-extrabold rounded-2xl border border-green-100 dark:border-green-800 uppercase tracking-widest hover:bg-green-100 transition-colors">{pillar.name}</a>
+                <a href={`/${pillar.slug}/${cluster.id}/`} class="px-5 py-2 bg-blue-50 dark:bg-blue-950/30 text-blue-700 dark:text-blue-400 text-xs font-extrabold rounded-2xl border border-blue-100 dark:border-blue-800 uppercase tracking-widest hover:bg-blue-100 transition-colors">{cluster.name}</a>
+                {readingTime && <span class="px-5 py-2 bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 text-xs font-bold rounded-2xl">📖 {readingTime} min read</span>}
+              </div>
+              <h1 class="text-4xl md:text-6xl font-extrabold text-zinc-900 dark:text-white mb-10 leading-[1.1] font-display tracking-tight" itemprop="headline">
+                {(post as any).h1 || (post as any).title}
+              </h1>
+              <div class="p-8 bg-zinc-50 dark:bg-zinc-900 rounded-[2rem] border-l-8 border-green-600">
+                <p class="text-xl md:text-2xl text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium italic" itemprop="description">
+                  {(post as any).excerpt}
+                </p>
+              </div>
+              <meta itemprop="datePublished" content={(post as any).date} />
+              <meta itemprop="dateModified" content={(post as any).updatedDate || (post as any).date} />
+              <meta itemprop="author" content={SITE_NAME} />
+            </header>
+
+            <div class="prose prose-xl prose-zinc dark:prose-invert max-w-none mb-24 font-serif" itemprop="articleBody">
+              <Fragment set:html={(post as any).content} />
+            </div>
+
+            {/* Internal linking: Related posts */}
+            {relatedBlogs.length > 0 && (
+              <aside class="mt-16 pt-8 border-t border-zinc-200 dark:border-zinc-800">
+                <h2 class="text-2xl font-bold text-zinc-900 dark:text-white mb-8">You might also like</h2>
+                <div class="grid md:grid-cols-3 gap-6">
+                  {relatedBlogs.slice(0, 3).map(related => (
+                    <a href={`/${pillar.slug}/${related.clusterSlug}/${related.slug}/`} class="group p-5 bg-zinc-50 dark:bg-zinc-900 rounded-xl hover:shadow-md transition">
+                      <h3 class="font-bold text-zinc-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400 transition">{related.title}</h3>
+                      <p class="text-sm text-zinc-500 dark:text-zinc-400 mt-2 line-clamp-2">{related.excerpt}</p>
+                    </a>
+                  ))}
+                </div>
+              </aside>
+            )}
+
+            <footer class="bg-zinc-900 dark:bg-zinc-800 rounded-[3rem] p-12 text-white shadow-3xl text-center relative overflow-hidden mt-16">
+              <div class="absolute -right-20 -bottom-20 text-[15rem] leading-none text-white/5 opacity-20">♻️</div>
+              <h3 class="text-3xl font-bold mb-6 font-display">Maximize Your E-Waste Impact</h3>
+              <p class="text-zinc-400 mb-12 max-w-lg mx-auto text-lg leading-relaxed">Certified in {pillar.name} across Ernakulam district. Same-day collection available for corporate hubs.</p>
+              <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                <a href={`https://wa.me/917500555454?text=Hi%2C%20I%20need%20help%20with%20${encodeURIComponent(pillar.name)}`} class="bg-green-600 text-white font-extrabold py-5 px-12 rounded-2xl hover:bg-green-500 transition-all font-display text-lg" target="_blank" rel="noopener">
+                  💬 Speak with a Specialist
+                </a>
+                <a href="/contact" class="bg-transparent text-white font-extrabold py-5 px-12 rounded-2xl hover:bg-white/10 transition-all border-2 border-zinc-700 font-display text-lg">
+                  📋 Schedule Free Audit
+                </a>
+              </div>
+            </footer>
+          </article>
+        )}
+
+        {/* 50 FAQ Section for AI/SEO Authority */}
+        {allFaqs.length > 0 && (
+          <section class="mt-32 pt-20 border-t border-zinc-100 dark:border-zinc-800">
+            <div class="max-w-3xl mx-auto">
+              <h2 class="text-3xl font-bold text-zinc-900 dark:text-white mb-12 font-display text-center">In-Depth Reference Guide & FAQs</h2>
+              <div class="space-y-6">
+                {allFaqs.map((faq, i) => (
+                  <div class="border-b border-zinc-100 dark:border-zinc-800 pb-8 last:border-0" itemscope itemtype="https://schema.org/Question">
+                    <h3 class="text-lg font-bold text-zinc-900 dark:text-white mb-4 flex gap-4" itemprop="name">
+                      <span class="text-zinc-400 font-mono text-sm mt-1">{i+1}.</span>
+                      {faq.q}
+                    </h3>
+                    <div class="text-zinc-600 dark:text-zinc-400 leading-relaxed text-sm bg-zinc-50 dark:bg-zinc-900 p-6 rounded-3xl" itemprop="acceptedAnswer" set:html={faq.a} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+      </div>
+    </div>
+  </main>
+</MainLayout>
+
+<style is:global>
+  .animate-fade-in {
+    animation: fadeIn 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.96); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  /* Better dark mode prose overrides */
+  .dark .prose a {
+    color: #4ade80;
+  }
+  .dark .prose strong {
+    color: #f9fafb;
+  }
+</style>

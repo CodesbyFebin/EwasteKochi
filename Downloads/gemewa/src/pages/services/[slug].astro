@@ -1,0 +1,135 @@
+---
+// src/pages/services/[slug].astro
+import MainLayout from '../../layouts/MainLayout.astro';
+import { services, getService } from '../../data/services';
+import { generateServiceFaqs, faqs as genericFaqs } from '../../data/faqs';
+import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
+
+export function getStaticPaths() {
+  return services.map(service => ({
+    params: { slug: service.slug },
+    props: { service }
+  }));
+}
+
+const { service } = Astro.props;
+
+// Generate 50 FAQs
+const serviceSpecificFaqs = generateServiceFaqs(service.name);
+const allFaqs = [...serviceSpecificFaqs, ...genericFaqs].slice(0, 50);
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": service.name,
+  "description": service.description,
+  "provider": {
+    "@type": "Organization",
+    "name": "EWaste Kochi",
+    "url": "https://ewastekochi.com"
+  },
+  "mainEntity": {
+    "@type": "FAQPage",
+    "mainEntity": allFaqs.map(f => ({
+      "@type": "Question",
+      "name": f.q,
+      "acceptedAnswer": { "@type": "Answer", "text": f.a.replace(/<[^>]*>?/gm, '') }
+    }))
+  }
+};
+
+const relatedServices = service.relatedServices?.map(slug => getService(slug)).filter(Boolean) || [];
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Services', url: '/services' },
+  { name: service.name, url: `/services/${service.slug}/` }
+];
+---
+
+<MainLayout 
+  title={service.metaTitle || service.name}
+  description={service.metaDescription || service.description}
+  schema={schema}
+>
+  <Breadcrumbs items={breadcrumbs} />
+
+  <section class="py-20 bg-zinc-50/50">
+    <div class="container mx-auto px-4">
+      <div class="grid lg:grid-cols-3 gap-12">
+        <div class="lg:col-span-2">
+          <header class="mb-12">
+             <div class="text-5xl mb-6">{service.icon}</div>
+             <h1 class="text-4xl md:text-5xl font-extrabold text-zinc-900 mb-6 font-display">
+               {service.name}
+             </h1>
+             <p class="text-xl text-zinc-600 leading-relaxed italic">
+               {service.description}
+             </p>
+          </header>
+          
+          <div class="prose prose-lg prose-zinc max-w-none mb-16 bg-white p-8 rounded-[2rem] border border-zinc-100 shadow-sm">
+            <p>{service.longDescription}</p>
+          </div>
+
+          <!-- 50 FAQs -->
+          <div class="mt-20">
+            <h2 class="text-3xl font-bold text-zinc-900 mb-10 font-display">Service Frequently Asked Questions</h2>
+            <div class="grid gap-6">
+              {allFaqs.map((faq, i) => (
+                <div class="bg-white p-6 rounded-2xl border border-zinc-200 shadow-sm group hover:border-green-500 transition-colors">
+                  <h3 class="font-bold text-zinc-900 mb-3 flex gap-3">
+                    <span class="text-zinc-300 font-mono text-sm">{i+1}.</span>
+                    {faq.q}
+                  </h3>
+                  <div class="text-zinc-600 text-sm leading-relaxed" set:html={faq.a} />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <aside class="space-y-8">
+          <div class="bg-green-600 rounded-[2rem] p-10 text-white shadow-xl">
+            <h3 class="text-2xl font-bold mb-4 font-display">Book {service.name}</h3>
+            <p class="mb-8 text-green-100">KSPCB authorized collection across Kochi.</p>
+            <div class="space-y-4">
+              <a href="https://wa.me/917500555454" class="flex items-center justify-center gap-3 bg-white text-green-700 font-extrabold py-4 rounded-xl hover:bg-green-50 transition-all font-display">
+                💬 WhatsApp Order
+              </a>
+              <a href="tel:+917500555454" class="flex items-center justify-center gap-3 bg-green-500 text-white font-extrabold py-4 rounded-xl hover:bg-green-400 transition-all font-display">
+                📞 Call Team
+              </a>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-[2rem] p-8 border border-zinc-200 shadow-sm">
+            <h3 class="font-bold text-zinc-900 mb-6 font-display">Certifications Included</h3>
+            <div class="space-y-4">
+              {service.badges?.map(badge => (
+                <div class="flex items-center gap-3 text-sm font-medium text-zinc-600">
+                  <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                  {badge}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {relatedServices.length > 0 && (
+            <div class="bg-white rounded-[2rem] p-8 border border-zinc-200 shadow-sm">
+              <h3 class="font-bold text-zinc-900 mb-6 font-display">More Solutions</h3>
+              <div class="space-y-3">
+                {relatedServices.map(related => (
+                  <a href={`/services/${related?.slug}`} class="flex items-center gap-3 text-green-600 font-bold hover:underline transition-all">
+                    <span class="text-zinc-300">→</span>
+                    {related?.name}
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+        </aside>
+      </div>
+    </div>
+  </section>
+</MainLayout>

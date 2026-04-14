@@ -1,0 +1,149 @@
+---
+// src/pages/master-guide.astro
+import MainLayout from '../layouts/MainLayout.astro';
+import { services } from '../data/services';
+import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
+
+const ewasteService = services.find(s => s.slug === 'e-waste-recycling');
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Master Guide', url: '/master-guide' }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Complete E-Waste Disposal Guide Kochi | Master Recycling Handbook",
+  "description": "Comprehensive guide to e-waste disposal in Kochi. Learn what to recycle, where to go, and how the process works. Free pickup available.",
+  "url": "https://ewastekochi.com/master-guide",
+  "mainEntity": {
+    "@type": "Guide",
+    "name": "E-Waste Disposal Master Guide",
+    "description": "Complete guide to responsible electronic waste disposal"
+  }
+};
+
+const guideSections = [
+  {
+    title: 'What is E-Waste?',
+    content: 'Electronic waste includes any discarded electronic or electrical device. From old mobile phones to industrial servers, if it runs on electricity and has a circuit board, it qualifies as e-waste.',
+    icon: '🔌'
+  },
+  {
+    title: 'Why Proper Disposal Matters',
+    content: 'Improper e-waste disposal releases toxic heavy metals like lead, mercury, and cadmium into the environment. In Kerala, this contaminates our sensitive backwaters and groundwater.',
+    icon: '⚠️'
+  },
+  {
+    title: 'What We Recycle',
+    content: 'Computers, laptops, mobiles, TVs, printers, UPS units, air conditioners, refrigerators, cables, and all electronic equipment. Both working and non-working items accepted.',
+    icon: '♻️'
+  },
+  {
+    title: 'The Recycling Process',
+    content: 'Collection → Sorting → Dismantling → Data Destruction → Material Recovery → Refining → Reuse. Every step is documented and environmentally safe.',
+    icon: '🔄'
+  },
+  {
+    title: 'Legal Requirements',
+    content: 'Under E-Waste Rules 2022, businesses must use KSPCB-authorised recyclers. Individuals should avoid informal scrap dealers for environmental protection.',
+    icon: '⚖️'
+  },
+  {
+    title: 'Data Security',
+    content: 'All devices undergo NIST 800-88 certified data wiping. Physical destruction available for maximum security. Certificate of Destruction provided.',
+    icon: '🔐'
+  }
+];
+---
+
+<MainLayout 
+  title="Complete E-Waste Disposal Guide Kochi | Master Recycling Handbook"
+  description="Comprehensive guide to e-waste disposal in Kochi. Learn what to recycle, where to go, and how the process works. Free pickup available."
+  schema={schema}
+>
+  <Breadcrumbs items={breadcrumbs} />
+
+  <main class="pt-24 pb-20">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <div class="bg-white rounded-3xl shadow-xl border border-zinc-100 p-8 lg:p-14">
+          <header class="text-center mb-16">
+            <div class="inline-flex items-center justify-center w-24 h-24 bg-green-50 rounded-3xl mb-8">
+              <span class="text-4xl">📚</span>
+            </div>
+            <h1 class="text-3xl md:text-5xl font-extrabold text-zinc-900 mb-4 font-display leading-tight">
+              E-Waste Master Guide
+            </h1>
+            <p class="text-xl text-zinc-600 max-w-2xl mx-auto">
+              Your comprehensive handbook to responsible electronic waste recycling in Kochi and Kerala
+            </p>
+          </header>
+
+          <div class="space-y-12 mb-16">
+            {guideSections.map(section => (
+              <div class="flex flex-col md:flex-row gap-8 items-start p-8 rounded-2xl hover:bg-zinc-50 transition-colors">
+                <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-3xl shadow-sm border border-zinc-100 flex-shrink-0">
+                  {section.icon}
+                </div>
+                <div>
+                  <h3 class="text-2xl font-bold text-zinc-900 mb-4 font-display">{section.title}</h3>
+                  <p class="text-zinc-600 leading-relaxed text-lg">{section.content}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {ewasteService && (
+            <div class="bg-gradient-to-br from-green-50 to-white border border-green-200 rounded-3xl p-10 mb-16 shadow-inner relative overflow-hidden">
+               <div class="absolute top-0 right-0 w-32 h-32 bg-green-600/5 rounded-bl-full"></div>
+               <h3 class="text-2xl font-extrabold text-green-900 mb-6 font-display">Our Recycling Advantage</h3>
+               <p class="text-green-800 mb-8 text-lg leading-relaxed">{ewasteService.description}</p>
+               <div class="grid sm:grid-cols-2 gap-4 mb-10">
+                 {ewasteService.badges.map(badge => (
+                   <div class="flex items-center gap-3 text-green-700 font-bold">
+                     <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                     {badge}
+                   </div>
+                 ))}
+               </div>
+               <a href="/services/e-waste-recycling" class="inline-flex items-center gap-3 bg-green-600 text-white font-bold py-4 px-8 rounded-xl hover:bg-green-700 transition-all shadow-lg">
+                 Learn More About Our Process →
+               </a>
+            </div>
+          )}
+
+          <div class="grid md:grid-cols-3 gap-6 mb-16">
+            {[
+              { color: 'blue', icon: '📍', title: 'Find Location', desc: '569+ Kochi pins served', link: '/locations' },
+              { color: 'purple', icon: '🔧', title: 'View Services', desc: 'ITAD & Data Security', link: '/services' },
+              { color: 'green', icon: '💬', title: 'Get Quote', desc: 'Free doorstep pickup', link: 'https://wa.me/917500555454' }
+            ].map(card => (
+              <a href={card.link} class={`block p-8 bg-${card.color}-50 border border-${card.color}-100 rounded-2xl text-center hover:scale-[1.03] transition-transform`}>
+                <div class={`w-14 h-14 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm text-2xl`}>
+                  {card.icon}
+                </div>
+                <h4 class={`font-bold text-${card.color}-900 mb-2 font-display`}>{card.title}</h4>
+                <p class={`text-${card.color}-700 text-sm`}>{card.desc}</p>
+              </a>
+            ))}
+          </div>
+
+          <footer class="bg-zinc-900 rounded-3xl p-12 text-white text-center shadow-2xl">
+            <h3 class="text-3xl font-extrabold mb-6 font-display">Ready for Responsible Disposal?</h3>
+            <p class="text-zinc-400 mb-10 text-lg max-w-lg mx-auto">Skip the landfill. Choose the environment. Choose EWaste Kochi.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+              <a href="https://wa.me/917500555454" class="bg-green-600 text-white font-bold py-4 px-10 rounded-xl hover:bg-green-500 transition-all font-display">
+                Request Free Collection
+              </a>
+              <a href="tel:+917500555454" class="bg-zinc-800 text-white font-bold py-4 px-10 rounded-xl hover:bg-zinc-700 transition-all border border-zinc-700 font-display">
+                Talk to Advisor
+              </a>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </main>
+</MainLayout>

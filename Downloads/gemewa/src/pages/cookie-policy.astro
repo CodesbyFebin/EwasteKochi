@@ -1,0 +1,130 @@
+---
+// src/pages/cookie-policy.astro
+import MainLayout from "@/layouts/MainLayout.astro";
+import Breadcrumbs from "@/components/seo/Breadcrumbs.astro";
+import { SITE_NAME, CONTACT_EMAIL, SITE_URL } from "@/lib/content";
+import { buildFullHelmetTags, getBreadcrumbSchema, getOrganizationSchema, getWebPageSchema } from "@/lib/seo";
+
+// Breadcrumbs
+const breadcrumbItems = [
+  { name: "Home", url: "/" },
+  { name: "Cookie Policy", url: "/cookie-policy" }
+];
+const breadcrumbSchema = getBreadcrumbSchema(breadcrumbItems);
+
+// Page SEO
+const pageTitle = `Cookie Policy | ${SITE_NAME}`;
+const pageDesc = "How EWaste Kochi uses cookies and tracking technologies to improve your experience. Learn about necessary, functional, and analytical cookies.";
+const canonicalPath = "/cookie-policy/";
+
+const helmetTags = buildFullHelmetTags({
+  title: pageTitle,
+  description: pageDesc,
+  canonicalPath,
+  ogType: "website",
+  keywords: "cookie policy, website tracking, data privacy kochi, ewaste recycling cookies",
+});
+
+// Structured data
+const schemas = [
+  getOrganizationSchema(),
+  getWebPageSchema({
+    name: pageTitle,
+    description: pageDesc,
+    url: `${SITE_URL}/cookie-policy`,
+    lastReviewed: "2025-01-01",
+  }),
+  breadcrumbSchema,
+];
+---
+
+<MainLayout
+  title={pageTitle}
+  description={pageDesc}
+  canonical={canonicalPath}
+  schemas={schemas}
+>
+  <Breadcrumbs items={breadcrumbItems} />
+
+  <section class="pt-32 pb-20 bg-white dark:bg-zinc-950">
+    <div class="container max-w-4xl mx-auto px-4">
+      <header class="mb-12 border-b border-zinc-100 dark:border-zinc-800 pb-12">
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-4 dark:text-white font-display tracking-tight leading-tight">Cookie Policy</h1>
+        <p class="text-zinc-500 dark:text-zinc-400 text-sm font-bold tracking-widest uppercase">Last updated: January 2025</p>
+        <div class="mt-6 p-6 bg-blue-50 dark:bg-blue-950/30 rounded-2xl border border-blue-100 dark:border-blue-800/50 italic font-medium text-zinc-600 dark:text-zinc-400">
+          <p>We use cookies to ensure you get the best browsing experience on EWasteKochi.com. This policy outlines how and why we use these technologies.</p>
+        </div>
+      </header>
+      
+      <div class="prose prose-lg prose-zinc dark:prose-invert max-w-none space-y-16 text-zinc-600 dark:text-zinc-400 font-medium">
+        <section id="definition">
+          <h2 class="text-3xl font-extrabold dark:text-white font-display">1. What are Cookies?</h2>
+          <p>Cookies are small text files stored on your device when you visit a website. They help the website remember your preferences, provide analytical data to the site owner, and improve overall security.</p>
+        </section>
+
+        <section id="types">
+          <h2 class="text-3xl font-extrabold dark:text-white font-display">2. Types of Cookies We Use</h2>
+          <div class="space-y-8 mt-8">
+            <div class="p-8 bg-zinc-50 dark:bg-zinc-900 rounded-3xl border border-zinc-100 dark:border-zinc-800">
+              <h3 class="text-xl font-bold dark:text-white mb-2">Essential Cookies</h3>
+              <p class="text-sm">These are necessary for the website to function. They handle secure logins, accessibility settings (like your contrast preference), and fundamental navigation. These cannot be disabled.</p>
+            </div>
+            
+            <div class="p-8 bg-zinc-50 dark:bg-zinc-900 rounded-3xl border border-zinc-100 dark:border-zinc-800">
+              <h3 class="text-xl font-bold dark:text-white mb-2">Analytical & Performance Cookies</h3>
+              <p class="text-sm">We use tools like Google Analytics and Cloudflare Web Analytics to understand how visitors interact with our content. This data is anonymized and helps us see which e-waste guides are most popular in Kochi.</p>
+            </div>
+
+            <div class="p-8 bg-zinc-50 dark:bg-zinc-900 rounded-3xl border border-zinc-100 dark:border-zinc-800">
+              <h3 class="text-xl font-bold dark:text-white mb-2">Functional Cookies</h3>
+              <p class="text-sm">These allow our website to remember choices you make (such as your theme preference) to provide a more personalized and consistent experience.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="third-party">
+          <h2 class="text-3xl font-extrabold dark:text-white font-display">3. Third-Party Cookies</h2>
+          <p>Some cookies are placed by third-party services that appear on our pages. For example:</p>
+          <ul class="list-disc pl-6 space-y-2">
+            <li><strong>YouTube:</strong> Used when we embed e-waste recycling education videos.</li>
+            <li><strong>Google Maps:</strong> Used to display our facility location in Kochi.</li>
+            <li><strong>WhatsApp:</strong> To facilitate the "Chat with Specialist" functionality.</li>
+          </ul>
+        </section>
+
+        <section id="control">
+          <h2 class="text-3xl font-extrabold dark:text-white font-display">4. Controlling Cookies</h2>
+          <p>You can manage and delete cookies through your browser settings. Be aware that disabling certain cookies may impact the functionality of our lead funnel and accessibility widget.</p>
+          <p class="mt-4 italic">To find out more about how to manage cookies on popular browsers, visit:</p>
+          <ul class="list-disc pl-6 space-y-2">
+             <li><a href="https://support.google.com/chrome/answer/95647" class="text-green-600 hover:underline">Google Chrome</a></li>
+             <li><a href="https://support.apple.com/en-in/guide/safari/sfri11471/mac" class="text-green-600 hover:underline">Safari</a></li>
+             <li><a href="https://support.mozilla.org/en-US/kb/enhanced-tracking-protection-firefox-desktop" class="text-green-600 hover:underline">Mozilla Firefox</a></li>
+          </ul>
+        </section>
+
+        <section class="border-t-4 border-zinc-100 dark:border-zinc-800 pt-16 mt-16">
+          <h2 class="text-3xl font-extrabold dark:text-white mb-8 font-display">Questions?</h2>
+          <div class="bg-blue-600 dark:bg-blue-900/30 p-10 rounded-[2.5rem] text-white shadow-2xl relative overflow-hidden group">
+            <div class="absolute -right-16 -bottom-16 text-[15rem] text-white/10 select-none group-hover:scale-110 transition-transform duration-700">🍪</div>
+            <p class="text-xl font-medium mb-8 relative z-10">
+               If you have any questions regarding our use of cookies, please reach out:
+            </p>
+            <ul class="relative z-10 space-y-4">
+              <li class="flex items-center gap-4">
+                 <span class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center">📧</span>
+                 <a href={`mailto:${CONTACT_EMAIL}`} class="text-lg font-extrabold hover:underline">{CONTACT_EMAIL}</a>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <div class="flex flex-wrap gap-8 pt-12 text-sm font-bold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
+          <a href="/terms" class="hover:text-green-600 transition-colors">Terms & Conditions</a>
+          <a href="/privacy" class="hover:text-green-600 transition-colors">Privacy Policy</a>
+          <a href="/" class="hover:text-green-600 transition-colors">Return Home</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>

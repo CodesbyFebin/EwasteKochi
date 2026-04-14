@@ -1,0 +1,213 @@
+---
+// src/pages/locations/[slug]/[service].astro
+import MainLayout from '../../../layouts/MainLayout.astro';
+import { locations } from '../../../data/locations';
+import { services } from '../../../data/services';
+import { generateLocationFaqs, generateServiceFaqs, faqs as genericFaqs } from '../../../data/faqs';
+import { getContentBySlug } from '../../../data/megaContent';
+import Breadcrumbs from '../../../components/seo/Breadcrumbs.astro';
+
+export function getStaticPaths() {
+  const paths = [];
+  for (const loc of locations) {
+    for (const service of services) {
+      paths.push({
+        params: { slug: loc.slug, service: service.slug },
+        props: { location: loc, service: service }
+      });
+    }
+  }
+  return paths;
+}
+
+const { location, service } = Astro.props;
+
+// Fetch unique mega-content for this combination
+const contentKey = `${location.slug}-${service.slug}`;
+const mega = getContentBySlug(contentKey);
+
+const pageTitle = `${service.name} in ${location.name} | Certified E-Waste Recycling Kochi`;
+const pageDescription = `Professional ${service.name.toLowerCase()} in ${location.name}. Free doorstep pickup, KSPCB authorized recycling, and NIST certified data destruction in your local area. Best market rates for old IT assets.`;
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Locations', url: '/locations' },
+  { name: location.name, url: `/locations/${location.slug}/` },
+  { name: service.name, url: `/locations/${location.slug}/${service.slug}/` }
+];
+
+// Generate 50+ FAQs for the page
+const locationFaqs = generateLocationFaqs(location.name);
+const serviceFaqs = generateServiceFaqs(service.name);
+const megaFaqs = mega?.faqs?.map(f => ({ q: f.question, a: f.answer })) || [];
+const allFaqs = [...megaFaqs, ...locationFaqs, ...serviceFaqs, ...genericFaqs].slice(0, 50);
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": `${service.name} in ${location.name}`,
+  "provider": {
+    "@type": "Organization",
+    "name": "EWaste Kochi",
+    "url": "https://ewastekochi.com"
+  },
+  "areaServed": {
+    "@type": "Place",
+    "name": location.name
+  },
+  "description": pageDescription,
+  "mainEntity": {
+    "@type": "FAQPage",
+    "mainEntity": allFaqs.map(f => ({
+      "@type": "Question",
+      "name": f.q,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": f.a.replace(/<[^>]*>?/gm, '')
+      }
+    }))
+  }
+};
+---
+
+<MainLayout title={pageTitle} description={pageDescription} schema={schema}>
+  <Breadcrumbs items={breadcrumbs} />
+
+  <main class="py-20 bg-zinc-50/30">
+    <div class="container mx-auto px-4">
+      <div class="max-w-5xl mx-auto">
+        
+        <header class="text-center mb-16 px-4">
+          <div class="inline-flex items-center justify-center w-24 h-24 bg-white rounded-3xl mb-8 shadow-xl border border-zinc-100 animate-fade-in">
+             <span class="text-5xl">{service.icon || '♻️'}</span>
+          </div>
+          <h1 class="text-4xl md:text-6xl font-extrabold text-zinc-900 mb-6 font-display leading-[1.1] tracking-tight">
+            {service.name} in <span class="text-green-600">{location.name}</span>
+          </h1>
+          <p class="text-xl md:text-2xl text-zinc-600 max-w-3xl mx-auto leading-relaxed font-medium">
+            Authorized {service.name.toLowerCase()} for homes and businesses in <span class="text-zinc-900">{location.name}</span>. Secure, local, and certified.
+          </p>
+        </header>
+
+        <div class="grid lg:grid-cols-3 gap-12 mb-24">
+          <div class="lg:col-span-2 space-y-12">
+            
+            <section class="bg-white rounded-[2rem] p-10 border border-zinc-200 shadow-sm relative overflow-hidden">
+              <div class="absolute top-0 right-0 w-32 h-32 bg-green-500/5 rounded-bl-full"></div>
+              <h2 class="text-3xl font-bold text-zinc-900 mb-8 font-display">Service excellence in {location.name}</h2>
+              <div class="grid sm:grid-cols-2 gap-8">
+                {[
+                  { title: "KSPCB Authorized", desc: "Fully compliant with Kerala's environmental regulations." },
+                  { title: "NIST-Certified", desc: "Military-grade data destruction for all devices." },
+                  { title: "Free Audit", desc: "On-site technical evaluation and fair market pricing." },
+                  { title: "Zero Landfill", desc: "100% material recovery via state-of-the-art refining." }
+                ].map(item => (
+                  <div class="flex gap-4">
+                    <div class="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <h4 class="font-bold text-zinc-900 mb-1">{item.title}</h4>
+                      <p class="text-zinc-500 text-sm">{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Injected Mega Content */}
+            <section class="prose prose-lg prose-zinc max-w-none">
+               <h2 class="font-display">Certified E-Waste Management in {location.name}</h2>
+               {mega ? (
+                 <Fragment set:html={mega.content} />
+               ) : (
+                 <p>
+                   Our specialized {service.name.toLowerCase()} program in {location.name} is designed to help local residents and corporate entities dispose of their electronic waste responsibly. We offer expedited collection across all major roads and office hubs in {location.name}.
+                 </p>
+               )}
+               <p class="mt-6 italic text-zinc-500">
+                 {location.description}
+               </p>
+            </section>
+
+            {/* 50 FAQS Section */}
+            <section class="bg-white rounded-[2rem] p-10 border border-zinc-200 shadow-sm" id="faqs">
+               <div class="flex items-center justify-between mb-12">
+                 <h2 class="text-3xl font-bold text-zinc-900 font-display">Local & Service FAQs</h2>
+                 <span class="text-sm font-bold text-green-600 bg-green-50 px-4 py-1 rounded-full">{allFaqs.length} Expert Answers</span>
+               </div>
+               
+               <div class="grid gap-6">
+                 {allFaqs.map((faq, index) => (
+                   <div class="group border-b border-zinc-100 last:border-0 pb-6">
+                     <h3 class="text-lg font-bold text-zinc-900 mb-3 group-hover:text-green-600 transition-colors flex items-start gap-4">
+                       <span class="text-zinc-300 font-mono text-sm mt-1">{index + 1}.</span>
+                       {faq.q}
+                     </h3>
+                     <div class="text-zinc-600 leading-relaxed text-sm bg-zinc-50/50 p-6 rounded-2xl border border-zinc-100" set:html={faq.a} />
+                   </div>
+                 ))}
+               </div>
+            </section>
+          </div>
+
+          <aside class="space-y-8 h-fit lg:sticky lg:top-32">
+            <div class="bg-zinc-900 rounded-[2rem] p-10 text-white shadow-2xl relative overflow-hidden group">
+               <div class="absolute -right-20 -top-20 text-[15rem] leading-none text-white/5 font-display transition-transform group-hover:rotate-12">?</div>
+               <div class="relative z-10">
+                 <h3 class="text-2xl font-bold mb-4 font-display">Book {location.name} Pickup</h3>
+                 <p class="text-zinc-400 mb-10 leading-relaxed font-medium">Join 50,000+ satisfied clients in the {location.district} area. Certified secure disposal.</p>
+                 <a href="https://wa.me/917500555454" class="block w-full bg-green-600 text-white font-extrabold py-5 rounded-2xl text-center hover:bg-green-500 transition-all shadow-xl hover:shadow-green-500/20 active:scale-95 font-display text-lg">
+                    💬 WhatsApp Pickup Request
+                 </a>
+                 <p class="text-center mt-8 text-zinc-500 text-xs font-bold uppercase tracking-widest leading-loose">KSPCB Auth: KL/EW/628 <br/> NIST 800-88 Compliant</p>
+               </div>
+            </div>
+
+            <div class="bg-white border border-zinc-200 rounded-[2rem] p-10 shadow-sm">
+               <h3 class="font-bold text-zinc-900 mb-6 font-display">Localized Support</h3>
+               <div class="space-y-6">
+                 <div class="flex items-center gap-4">
+                   <div class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center text-2xl shadow-inner italic">P</div>
+                   <div>
+                     <p class="text-xs text-zinc-400 font-bold uppercase tracking-tighter">Pickup Coordinator</p>
+                     <a href="tel:+917500555454" class="text-xl font-bold text-zinc-900 hover:text-green-600 transition-colors tracking-tight">7500555454</a>
+                   </div>
+                 </div>
+                 <div class="flex items-center gap-4">
+                   <div class="w-14 h-14 bg-purple-50 rounded-2xl flex items-center justify-center text-2xl">⚡</div>
+                   <div>
+                     <p class="text-xs text-zinc-400 font-bold uppercase tracking-tighter">Turnaround Time</p>
+                     <p class="text-zinc-900 font-bold">2-4 Hours in {location.name}</p>
+                   </div>
+                 </div>
+               </div>
+            </div>
+          </aside>
+        </div>
+
+        <section class="py-20 border-t border-zinc-200">
+           <div class="text-center mb-12">
+             <h2 class="text-3xl font-bold text-zinc-900 mb-4 font-display">Regional Service Coverage</h2>
+             <p class="text-zinc-500">Professional {service.name.toLowerCase()} available in neighboring areas.</p>
+           </div>
+           <div class="flex flex-wrap justify-center gap-4">
+             {locations.slice(0, 20).map(loc => loc.slug !== location.slug && (
+               <a href={`/locations/${loc.slug}/${service.slug}/`} class="px-6 py-4 bg-white border border-zinc-200 rounded-3xl text-sm font-bold text-zinc-700 hover:bg-green-600 hover:text-white hover:border-green-600 transition-all shadow-sm hover:shadow-lg hover:-translate-y-1">
+                 {service.name} {loc.name}
+               </a>
+             ))}
+           </div>
+        </section>
+      </div>
+    </div>
+  </main>
+</MainLayout>
+
+<style>
+  .animate-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>

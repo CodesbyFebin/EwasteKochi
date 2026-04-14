@@ -1,0 +1,125 @@
+---
+// src/pages/returns.astro
+import MainLayout from "@/layouts/MainLayout.astro";
+import Breadcrumbs from "@/components/seo/Breadcrumbs.astro";
+import { SITE_NAME, CONTACT_EMAIL, SITE_URL } from "@/lib/content";
+import { buildFullHelmetTags, getBreadcrumbSchema, getOrganizationSchema, getWebPageSchema } from "@/lib/seo";
+
+// Breadcrumbs
+const breadcrumbItems = [
+  { name: "Home", url: "/" },
+  { name: "Returns & Refunds", url: "/returns" }
+];
+const breadcrumbSchema = getBreadcrumbSchema(breadcrumbItems);
+
+// Page SEO
+const pageTitle = `Return & Refund Policy | Buyback Guidelines | ${SITE_NAME}`;
+const pageDesc = "EWaste Kochi Return and Refund policy for electronics buybacks and ITAD services. Guidelines for equipment valuation, payment reversals, and data destruction finality.";
+const canonicalPath = "/returns/";
+
+const helmetTags = buildFullHelmetTags({
+  title: pageTitle,
+  description: pageDesc,
+  canonicalPath,
+  ogType: "website",
+  keywords: "refund policy, item returns kochi, buyback cancellation, e-waste services refund",
+});
+
+// Structured data
+const schemas = [
+  getOrganizationSchema(),
+  getWebPageSchema({
+    name: pageTitle,
+    description: pageDesc,
+    url: `${SITE_URL}/returns`,
+    lastReviewed: "2025-01-01",
+  }),
+  breadcrumbSchema,
+];
+---
+
+<MainLayout
+  title={pageTitle}
+  description={pageDesc}
+  canonical={canonicalPath}
+  schemas={schemas}
+>
+  <Breadcrumbs items={breadcrumbItems} />
+
+  <section class="pt-32 pb-20 bg-white dark:bg-zinc-950">
+    <div class="container max-w-4xl mx-auto px-4">
+      <header class="mb-12 border-b border-zinc-100 dark:border-zinc-800 pb-12">
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-4 dark:text-white font-display tracking-tight leading-tight">Return & Refund Policy</h1>
+        <p class="text-zinc-500 dark:text-zinc-400 text-sm font-bold tracking-widest uppercase">Buyback & Service Guidelines | Last updated: January 2025</p>
+        <div class="mt-6 p-6 bg-red-50 dark:bg-red-950/20 rounded-2xl border border-red-100 dark:border-red-800/50 italic font-medium text-red-700 dark:text-red-400">
+          <p>Due to the irreversible nature of certified data destruction and industrial electronics recycling, specific return and refund conditions apply.</p>
+        </div>
+      </header>
+      
+      <div class="prose prose-lg prose-zinc dark:prose-invert max-w-none space-y-16 text-zinc-600 dark:text-zinc-400 font-medium">
+        <section id="recycling-finality">
+          <h2 class="text-3xl font-extrabold dark:text-white font-display">1. Recycling & Destruction Finality</h2>
+          <p>Once an item has been collected for recycling or data destruction and the physical processing has commenced, the transaction is **final and irreversible**.</p>
+          <ul class="list-disc pl-6 space-y-2 mt-4">
+            <li>We cannot return items once they have entered the shredding or material recovery flow.</li>
+            <li>Certificates of Destruction are issued based on the physical consumption of the asset, after which no data or asset recovery is possible.</li>
+          </ul>
+        </section>
+
+        <section id="buyback-returns">
+          <h2 class="text-3xl font-extrabold dark:text-white font-display">2. Electronics Buyback Returns</h2>
+          <p>For our laptop and smartphone buyback services in Kochi, the following terms apply:</p>
+          <ul class="list-disc pl-6 space-y-4 mt-4">
+            <li><strong>Verification Period:</strong> Once our technician verifies the device and payment is made, the ownership transfer is complete. Devices cannot be returned after the payment has been disbursed.</li>
+            <li><strong>Data Wiping Receipt:</strong> If you change your mind *before* the technician leaves your premises, we can cancel the transaction. However, if data wiping has already been initiated, we charge a nominal software service fee for the processed wiping.</li>
+          </ul>
+        </section>
+
+        <section id="itad-refunds">
+          <h2 class="text-3xl font-extrabold dark:text-white font-display">3. ITAD Service Refunds</h2>
+          <p>For corporate IT asset disposition (ITAD) projects:</p>
+          <ul class="list-disc pl-6 space-y-4 mt-4">
+            <li><strong>Project Cancellation:</strong> Cancellation of high-volume pickups must be made at least 48 hours in advance. A logistics mobilization fee may be charged for late cancellations.</li>
+            <li><strong>Service Quality:</strong> If you are unsatisfied with the quality of reporting or certification provided, we will re-audit the documentation at no extra cost. Financial refunds for services are evaluated on a case-by-case basis as per the service level agreement (SLA).</li>
+          </ul>
+        </section>
+
+        <section id="erroneous-payments">
+          <h2 class="text-3xl font-extrabold dark:text-white font-display">4. Erroneous Online Payments</h2>
+          <p>If you have made an erroneous payment for any premium service (such as on-site shredding or specialized audit) via our online portal:</p>
+          <ul class="list-disc pl-6 space-y-2 mt-4">
+            <li>Refunds will be processed within 5-7 working days to the original payment method.</li>
+            <li>A transaction processing fee levied by the payment gateway (usually 2-3%) may be deducted from the refund amount.</li>
+          </ul>
+        </section>
+
+        <section id="contact-refunds">
+          <h2 class="text-3xl font-extrabold dark:text-white font-display">5. Dispute Resolution</h2>
+          <p>We pride ourselves on 100% customer satisfaction across thousands of projects in Kochi. If you have a dispute regarding a transaction, please contact our finance team immediately.</p>
+          <div class="bg-zinc-900 dark:bg-zinc-800 p-10 rounded-[2.5rem] text-white shadow-2xl relative overflow-hidden group mt-8">
+            <div class="absolute -right-16 -bottom-16 text-[15rem] text-white/5 opacity-40 select-none group-hover:scale-110 transition-transform duration-700">💰</div>
+            <p class="text-xl font-medium mb-6 relative z-10">
+              Finance & Returns Support:
+            </p>
+            <ul class="relative z-10 space-y-4">
+              <li class="flex items-center gap-4">
+                 <span class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center">📧</span>
+                 <a href={`mailto:${CONTACT_EMAIL}`} class="text-lg font-extrabold hover:underline">{CONTACT_EMAIL}</a>
+              </li>
+              <li class="flex items-center gap-4">
+                 <span class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center">📞</span>
+                 <a href="tel:+917500555454" class="text-lg font-extrabold hover:underline">+91 75005 555454</a>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <div class="flex flex-wrap gap-8 pt-12 text-sm font-bold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
+          <a href="/terms" class="hover:text-green-600 transition-colors">Terms & Conditions</a>
+          <a href="/privacy" class="hover:text-green-600 transition-colors">Privacy Policy</a>
+          <a href="/" class="hover:text-green-600 transition-colors">Return Home</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>

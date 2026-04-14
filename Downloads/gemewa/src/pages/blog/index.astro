@@ -1,0 +1,108 @@
+---
+// src/pages/blog/index.astro
+import MainLayout from '../../layouts/MainLayout.astro';
+import { getRecentBlogs, blogCategories } from '../../data/blogs';
+import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
+
+const recentBlogs = getRecentBlogs(20);
+const categories = blogCategories;
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Blog', url: '/blog' }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "EWaste Kochi Blog",
+  "description": "Expert insights on e-waste recycling, ITAD, data destruction, and sustainable electronics in Kochi.",
+  "url": "https://ewastekochi.com/blog",
+  "hasPart": recentBlogs.map(blog => ({
+    "@type": "Article",
+    "url": `https://ewastekochi.com/blog/${blog.slug}`,
+    "headline": blog.title
+  }))
+};
+---
+
+<MainLayout 
+  title="EWaste Kochi Blog | E-Waste News & Recycling Guides"
+  description="Latest news, guides, and insights on e-waste recycling, ITAD, data destruction, and sustainable electronics in Kochi."
+  schema={schema}
+>
+  <Breadcrumbs items={breadcrumbs} />
+
+  <main class="pt-24 pb-16">
+    <div class="container mx-auto px-4">
+      <div class="max-w-6xl mx-auto">
+        <header class="text-center mb-12">
+          <h1 class="text-3xl lg:text-4xl font-bold text-zinc-900 mb-6 font-display">EWaste Kochi Blog</h1>
+          <p class="text-xl text-zinc-600 max-w-3xl mx-auto">
+            Expert insights on e-waste recycling, ITAD, data destruction, and sustainable electronics in Kochi and Kerala.
+          </p>
+        </header>
+
+        {/* Categories */}
+        <div class="mb-12">
+          <h2 class="text-2xl font-bold text-zinc-900 mb-6">Browse by Category</h2>
+          <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            {categories.map((category) => (
+              <a 
+                href={`/pillars/${category.id}`}
+                class="block p-4 bg-white border border-zinc-200 rounded-xl hover:border-green-300 hover:shadow-lg transition-all text-center"
+              >
+                <div class="font-semibold text-zinc-900 text-sm">{category.name}</div>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* Blog Grid */}
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {recentBlogs.map((blog) => {
+            const category = categories.find(c => c.id === blog.category);
+            return (
+              <article class="group bg-white border border-zinc-200 rounded-2xl overflow-hidden hover:shadow-xl transition-all flex flex-col">
+                {blog.image && (
+                  <a href={`/blog/${blog.slug}`} class="block overflow-hidden h-48 bg-zinc-100">
+                    <img 
+                      src={blog.image} 
+                      alt={blog.altText || blog.title}
+                      loading="lazy"
+                      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                  </a>
+                )}
+                <div class="p-6 flex flex-col flex-grow">
+                  <div class="flex items-center gap-2 mb-3">
+                    {category && (
+                      <span class="px-2 py-1 bg-green-50 text-green-700 text-xs font-bold rounded-md">
+                        {category.name}
+                      </span>
+                    )}
+                    <time class="text-xs text-zinc-400" datetime={blog.date}>
+                      {new Date(blog.date).toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' })}
+                    </time>
+                  </div>
+                  
+                  <h3 class="text-xl font-bold text-zinc-900 mb-3 group-hover:text-green-600 transition-colors">
+                    <a href={`/blog/${blog.slug}`}>{blog.title}</a>
+                  </h3>
+                  
+                  <p class="text-zinc-500 text-sm line-clamp-3 mb-6 flex-grow">
+                    {blog.excerpt}
+                  </p>
+                  
+                  <a href={`/blog/${blog.slug}`} class="text-green-600 font-bold text-sm inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                    Read Post <span>→</span>
+                  </a>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  </main>
+</MainLayout>
