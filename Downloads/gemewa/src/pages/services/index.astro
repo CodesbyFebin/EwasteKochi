@@ -1,0 +1,102 @@
+---
+// src/pages/services/index.astro - Services listing page
+import MainLayout from '../../layouts/MainLayout.astro';
+import { services } from '../../data/services';
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "E-Waste & ITAD Services in Kochi",
+  "description": "Complete list of e-waste recycling, ITAD, and data destruction services offered by EWaste Kochi in Kerala.",
+  "itemListElement": services.map((service, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "item": {
+      "@type": "Service",
+      "name": service.name,
+      "description": service.description,
+      "url": `https://ewastekochi.com/services/${service.slug}`
+    }
+  }))
+};
+---
+
+<MainLayout 
+  title="E-Waste & ITAD Services | EWaste Kochi"
+  description="Professional e-waste recycling and ITAD services in Kochi. Data destruction, laptop buyback, corporate solutions. KSPCB authorized."
+  schema={schema}
+>
+  {/* Hero */}
+  <section class="py-24 lg:py-32 bg-cream relative overflow-hidden">
+    <div class="absolute inset-0 bg-dots opacity-50" />
+    <div class="container relative">
+      <div class="max-w-3xl">
+        <span class="text-sm font-medium text-forest uppercase tracking-widest mb-4 block">Services</span>
+        <h1 class="text-5xl md:text-6xl text-zinc-900 leading-tight mb-6">
+          E-Waste & ITAD<br/>
+          <span class="text-forest">Solutions</span>
+        </h1>
+        <p class="text-xl text-zinc-600 max-w-xl">
+          Comprehensive e-waste and ITAD solutions for businesses and individuals. From single-device destruction to enterprise ITAD programs.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* Services Grid */}
+  <section class="py-20 lg:py-24">
+    <div class="container">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {services.map((service, i) => (
+          <a 
+            href={`/services/${service.slug}`} 
+            class="card card-hover p-8 group block"
+            style={`animation-delay: ${i * 50}ms`}
+          >
+            <div class="flex items-start justify-between mb-6">
+              <div class="w-14 h-14 bg-forest/5 rounded-xl flex items-center justify-center text-2xl group-hover:bg-forest group-hover:text-white transition-all duration-300">
+                ♻️
+              </div>
+              <span class="text-zinc-300 text-2xl group-hover:text-forest transition-colors">→</span>
+            </div>
+            <h2 class="text-xl text-zinc-900 mb-3 group-hover:text-forest transition-colors">
+              {service.name}
+            </h2>
+            <p class="text-zinc-500 mb-4 line-clamp-2">
+              {service.description}
+            </p>
+            {service.badges && service.badges.length > 0 && (
+              <div class="flex flex-wrap gap-2">
+                {service.badges.slice(0, 3).map((badge) => (
+                  <span class="text-xs px-3 py-1 bg-forest/5 text-forest rounded-full font-medium">
+                    {badge}
+                  </span>
+                ))}
+              </div>
+            )}
+            <div class="mt-6 pt-4 border-t border-zinc-100 flex items-center gap-2 text-sm font-medium text-forest opacity-0 group-hover:opacity-100 transition-opacity">
+              Learn more <span>→</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* CTA */}
+  <section class="py-20 bg-forest text-white relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10" style="background-image: linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px), linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px); background-size: 40px 40px;" />
+    <div class="container text-center relative">
+      <h2 class="text-3xl md:text-4xl mb-6">Need a Custom Solution?</h2>
+      <p class="text-white/80 max-w-lg mx-auto mb-8">Contact us for enterprise ITAD programs, bulk pickups, or custom data destruction requirements.</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="https://wa.me/917500555454" class="btn bg-white text-forest hover:bg-cream text-lg px-8 py-3">
+          Get Quote
+        </a>
+        <a href="tel:+917500555454" class="btn btn-primary-gold text-lg px-8 py-3">
+          Call Now
+        </a>
+      </div>
+    </div>
+  </section>
+</MainLayout>

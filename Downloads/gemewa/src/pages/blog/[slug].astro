@@ -1,0 +1,201 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import { blogs, blogCategories } from "../../data/blogs";
+import { SITE_URL, SITE_NAME, CONTACT_PHONE } from "@/constants/content";
+import { getArticleSchema, getBreadcrumbSchema, getAuthorSchema } from "@/lib/schema";
+
+export async function getStaticPaths() {
+  return blogs.map((blog) => ({
+    params: { slug: blog.slug },
+    props: { blog },
+  }));
+}
+
+const { blog } = Astro.props;
+
+// Map massive catalog data to template expectations
+const post = {
+  ...blog,
+  category: blogCategories.find(c => c.id === blog.pillarSlug)?.name || blog.pillarSlug,
+  date: blog.dateModified || "2024-01-01",
+  updatedDate: blog.dateModified,
+  excerpt: blog.metaDesc,
+  image: blog.image || `/images/blog/default.webp`, // Placeholder if missing
+  readTime: blog.wordCount ? `${Math.ceil(blog.wordCount / 200)} min read` : "5 min read",
+  content: blog.content
+};
+
+// Find related posts (same pillar, max 3)
+const relatedPosts = blogs
+  .filter((p) => p.pillarSlug === blog.pillarSlug && p.slug !== blog.slug)
+  .slice(0, 3)
+  .map(b => ({
+    ...b,
+    title: b.title,
+    slug: b.slug,
+    excerpt: b.metaDesc,
+    image: b.image || `/images/blog/default.webp`
+  }));
+
+// Structured Data
+const articleSchema = getArticleSchema({
+  title: post.title,
+  description: post.excerpt,
+  url: `${SITE_URL}/blog/${post.slug}`,
+  image: post.image.startsWith('http') ? post.image : `${SITE_URL}${post.image}`,
+  datePublished: post.date,
+  dateModified: post.updatedDate || post.date,
+  authorName: SITE_NAME,
+  authorUrl: SITE_URL,
+});
+
+const breadcrumbSchema = getBreadcrumbSchema([
+  { name: "Home", url: SITE_URL },
+  { name: "Blog", url: `${SITE_URL}/blog` },
+  { name: post.title, url: `${SITE_URL}/blog/${post.slug}` },
+]);
+
+const authorSchema = getAuthorSchema({
+  name: SITE_NAME,
+  url: SITE_URL,
+  sameAs: [
+    "https://facebook.com/ewastekochi",
+    "https://twitter.com/ewastekochi",
+    "https://linkedin.com/company/ewaste-kochi",
+  ],
+});
+
+// Table of contents (if post has headings)
+const headings = post.content?.match(/^## (.*)$/gm)?.map((h: string) => h.replace('## ', '')) || [];
+
+// Social share URLs
+const shareUrl = encodeURIComponent(`${SITE_URL}/blog/${post.slug}`);
+const shareText = encodeURIComponent(post.title);
+---
+
+<MainLayout
+  title={`${post.title} | EWaste Kochi Blog`}
+  description={post.excerpt}
+  type="article"
+  ogImage={post.image}
+  datePublished={post.date}
+  dateModified={post.updatedDate}
+  schema={[articleSchema, breadcrumbSchema, authorSchema]}
+>
+  <article class="py-20 bg-white dark:bg-zinc-950" itemscope itemtype="https://schema.org/Article">
+    <div class="container max-w-4xl mx-auto px-4">
+      
+      <!-- Hero Section with Featured Image -->
+      {post.image && (
+        <div class="mb-8 -mt-6">
+          <img 
+            src={post.image} 
+            alt={post.title} 
+            class="w-full h-auto rounded-2xl shadow-lg border border-zinc-100 dark:border-zinc-800"
+            loading="eager"
+            width="1200" height="630"
+            itemprop="image"
+          />
+        </div>
+      )}
+
+      <!-- Meta Info Row -->
+      <div class="flex flex-wrap items-center gap-3 text-xs font-bold text-green-600 dark:text-green-400 uppercase mb-6">
+        <span class="hover:underline">{post.category}</span>
+        <span class="text-zinc-300 dark:text-zinc-700">·</span>
+        <time datetime={post.date} itemprop="datePublished">
+          {new Date(post.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}
+        </time>
+        {post.updatedDate && post.updatedDate !== post.date && (
+          <>
+            <span class="text-zinc-300 dark:text-zinc-700">·</span>
+            <span class="text-zinc-400">Updated: {new Date(post.updatedDate).toLocaleDateString('en-IN')}</span>
+          </>
+        )}
+        <span class="text-zinc-300 dark:text-zinc-700">·</span>
+        <span class="text-zinc-400">{post.readTime}</span>
+      </div>
+
+      <!-- Title -->
+      <h1 class="text-3xl md:text-5xl font-extrabold mb-6 dark:text-white leading-tight font-display" itemprop="headline">
+        {post.title}
+      </h1>
+      
+      <!-- Excerpt -->
+      <p class="text-xl text-zinc-500 dark:text-zinc-400 mb-8 leading-relaxed italic border-l-4 border-green-500 pl-6" itemprop="description">
+        {post.excerpt}
+      </p>
+
+      <!-- Table of Contents (if headings exist) -->
+      {headings.length > 0 && (
+        <div class="bg-zinc-50 dark:bg-zinc-900/50 rounded-2xl p-6 mb-10 border border-zinc-100 dark:border-zinc-800">
+          <h2 class="text-lg font-bold mb-3 dark:text-white font-display">📑 Table of Contents</h2>
+          <ul class="space-y-2">
+            {headings.map((heading: string) => (
+              <li><a href={`#${heading.toLowerCase().replace(/\s+/g, '-')}`} class="text-green-600 hover:underline text-sm">{heading}</a></li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <!-- Main Content -->
+      <div class="prose prose-zinc dark:prose-invert max-w-none prose-headings:scroll-mt-24 prose-headings:font-display prose-a:text-green-600 hover:prose-a:underline" itemprop="articleBody">
+        <Fragment set:html={post.content} />
+      </div>
+
+      <!-- Author Box with Call to Action -->
+      <div class="mt-12 pt-8 border-t border-zinc-100 dark:border-zinc-800 flex flex-col sm:flex-row gap-6 items-start sm:items-center justify-between">
+        <div class="flex items-center gap-4" itemprop="author" itemscope itemtype="https://schema.org/Organization">
+          <div class="w-14 h-14 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center text-3xl">♻️</div>
+          <div>
+            <div class="font-bold dark:text-white" itemprop="name">{SITE_NAME}</div>
+            <div class="text-sm text-zinc-500">Kerala's #1 Certified ITAD & E-Waste Expert</div>
+          </div>
+        </div>
+        <a 
+          href={`https://wa.me/${CONTACT_PHONE}?text=I%20read%20your%20blog%20post%20"${encodeURIComponent(post.title)}"%20and%20have%20a%20question`}
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-5 py-2.5 rounded-xl font-semibold transition shadow-md no-underline"
+        >
+          💬 Ask an Expert
+        </a>
+      </div>
+
+      <!-- Social Share Buttons -->
+      <div class="mt-8 flex flex-wrap gap-3 justify-center sm:justify-start">
+        <a href={`https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareText}`} target="_blank" rel="noopener" class="bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 p-2 rounded-full transition" aria-label="Share on Twitter">🐦</a>
+        <a href={`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`} target="_blank" rel="noopener" class="bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 p-2 rounded-full transition" aria-label="Share on Facebook">📘</a>
+        <a href={`https://www.linkedin.com/shareArticle?mini=true&url=${shareUrl}&title=${shareText}`} target="_blank" rel="noopener" class="bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 p-2 rounded-full transition" aria-label="Share on LinkedIn">🔗</a>
+        <a href={`https://wa.me/?text=${shareText}%20${shareUrl}`} target="_blank" rel="noopener" class="bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 p-2 rounded-full transition" aria-label="Share on WhatsApp">💬</a>
+      </div>
+
+      <!-- Related Posts (internal linking powerhouse) -->
+      {relatedPosts.length > 0 && (
+        <div class="mt-16 pt-8 border-t border-zinc-100 dark:border-zinc-800">
+          <h2 class="text-2xl font-bold mb-6 dark:text-white font-display">📖 You Might Also Like</h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {relatedPosts.map((related: any) => (
+              <a href={`/blog/${related.slug}`} class="group block bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden hover:shadow-lg transition no-underline">
+                {related.image && <img src={related.image} alt={related.title} class="w-full h-40 object-cover" loading="lazy" />}
+                <div class="p-4">
+                  <h3 class="font-bold text-lg group-hover:text-green-600 transition dark:text-white leading-tight">{related.title}</h3>
+                  <p class="text-sm text-zinc-500 mt-2 line-clamp-2">{related.excerpt}…</p>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <!-- Call to Action at Bottom -->
+      <div class="mt-12 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-950/30 dark:to-emerald-950/30 rounded-2xl p-8 text-center border border-green-100 dark:border-green-800/30">
+        <h3 class="text-2xl font-bold mb-3 dark:text-white font-display">Ready to Secure Your Data & Recycle Responsibly?</h3>
+        <p class="text-zinc-600 dark:text-zinc-400 mb-6 max-w-2xl mx-auto">Get a free quote and same‑day pickup across Kochi & Ernakulam. KSPCB Authorized & NIST Certified.</p>
+        <a href={`https://wa.me/${CONTACT_PHONE}?text=Hi%2C%20I%20need%20a%20free%20quote%20for%20e-waste%20disposal`} target="_blank" class="inline-block bg-green-600 hover:bg-green-700 text-white font-bold px-10 py-4 rounded-xl transition shadow-md no-underline">
+          📞 Get Free Quote Now
+        </a>
+      </div>
+    </div>
+  </article>
+</MainLayout>

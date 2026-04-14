@@ -1,0 +1,162 @@
+---
+// src/pages/dpdp-act-kochi.astro
+import MainLayout from '../layouts/MainLayout.astro';
+import { faqs } from '../data/faqs';
+import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
+
+const dpDpFaqs = faqs.filter(f => f.category === 'compliance');
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'DPDP Act Kochi', url: '/dpdp-act-kochi' }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "DPDP Act 2023 Compliance Kochi | Data Protection Law Guide",
+  "description": "Complete guide to Digital Personal Data Protection Act 2023 in Kochi. Learn compliance requirements, data destruction obligations, and audit preparation.",
+  "url": "https://ewastekochi.com/dpdp-act-kochi",
+  "mainEntity": {
+    "@type": "Article",
+    "headline": "DPDP Act 2023 Compliance Guide for Kochi Businesses",
+    "about": {
+      "@type": "Thing",
+      "name": "Digital Personal Data Protection Act 2023",
+      "description": "India's comprehensive data protection law"
+    }
+  }
+};
+
+const compliancePoints = [
+  {
+    title: 'Data Destruction Obligations',
+    description: 'When personal data is no longer needed, businesses must ensure it is irreversibly destroyed.',
+    icon: '🗑️'
+  },
+  {
+    title: 'NIST 800-88 Compliance',
+    description: 'Data sanitization must follow internationally recognized standards for permanent destruction.',
+    icon: '🔐'
+  },
+  {
+    title: 'Audit Trail Requirements',
+    description: 'Maintain documented evidence of data destruction for regulatory audits and legal compliance.',
+    icon: '📋'
+  },
+  {
+    title: 'Certificate of Destruction',
+    description: 'Legal proof that data has been permanently destroyed beyond recovery.',
+    icon: '📜'
+  }
+];
+---
+
+<MainLayout 
+  title="DPDP Act 2023 Compliance Kochi | Data Protection Law Guide"
+  description="Complete guide to Digital Personal Data Protection Act 2023 in Kochi. Learn compliance requirements, data destruction obligations, and audit preparation."
+  schema={schema}
+>
+  <Breadcrumbs items={breadcrumbs} />
+
+  <main class="pt-24 pb-16">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <div class="bg-white rounded-3xl shadow-xl border border-zinc-100 p-8 lg:p-14">
+          <header class="text-center mb-16">
+            <div class="inline-flex items-center justify-center w-24 h-24 bg-blue-50 rounded-3xl mb-8">
+              <span class="text-4xl">⚖️</span>
+            </div>
+            <h1 class="text-3xl md:text-5xl font-extrabold text-zinc-900 mb-4 font-display leading-tight">
+              DPDP Act 2023 Compliance Guide
+            </h1>
+            <p class="text-xl text-blue-600 font-bold tracking-wide uppercase">
+              Digital Personal Data Protection Act 2023
+            </p>
+          </header>
+
+          <div class="prose prose-lg prose-zinc max-w-none mb-16">
+            <p class="text-lg text-zinc-600 leading-relaxed">
+              India's <strong>Digital Personal Data Protection Act 2023</strong> establishes comprehensive requirements for how businesses handle personal data, including strict obligations for data destruction when information is no longer needed.
+            </p>
+
+            <div class="bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl p-8 text-white my-10 shadow-lg">
+              <h3 class="text-xl font-bold text-blue-100 mb-4 flex items-center gap-3">
+                <span class="text-2xl">🚨</span> Key Compliance Requirement
+              </h3>
+              <p class="text-lg font-medium leading-relaxed italic">
+                "Personal data shall be permanently and irreversibly erased or destroyed when it is no longer needed for the purpose for which it was collected or processed."
+              </p>
+              <p class="text-blue-300 text-sm mt-4 text-right">— Section 9, Digital Personal Data Protection Act 2023</p>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-8 mb-16">
+            {compliancePoints.map(point => (
+              <div class="bg-zinc-50 border border-zinc-200 rounded-2xl p-8 hover:bg-white hover:shadow-xl transition-all">
+                <div class="flex items-center gap-4 mb-6">
+                  <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center text-3xl">
+                    {point.icon}
+                  </div>
+                  <h3 class="text-xl font-bold text-zinc-900 font-display">{point.title}</h3>
+                </div>
+                <p class="text-zinc-600 leading-relaxed">{point.description}</p>
+              </div>
+            ))}
+          </div>
+
+          <div class="bg-green-50 rounded-3xl p-10 border border-green-100 mb-16">
+            <h3 class="text-2xl font-extrabold text-green-900 mb-6 font-display">Our Compliance Services</h3>
+            <div class="grid sm:grid-cols-2 gap-4">
+              {[
+                "NIST 800-88 certified destruction",
+                "Legal audit compliance certificate",
+                "Complete chain-of-custody tracking",
+                "Authorization from KSPCB"
+              ].map(item => (
+                <div class="flex items-center gap-3 text-green-700 font-semibold">
+                  <span class="w-6 h-6 bg-green-200 rounded-full flex items-center justify-center text-[10px]">✅</span>
+                  {item}
+                </div>
+              ))}
+            </div>
+            <div class="mt-10 flex flex-col sm:flex-row gap-4">
+              <a href="/services/data-destruction" class="flex-1 bg-green-600 text-white font-bold py-4 px-6 rounded-xl text-center hover:bg-green-700 transition-all">
+                Data Destruction Services
+              </a>
+              <a href="/services/itad" class="flex-1 bg-zinc-900 text-white font-bold py-4 px-6 rounded-xl text-center hover:bg-zinc-800 transition-all">
+                Corporate ITAD Solutions
+              </a>
+            </div>
+          </div>
+
+          {/* FAQ Accordion Placeholder (Astro style) */}
+          <section class="mb-16">
+            <h3 class="text-2xl font-bold text-zinc-900 mb-8 font-display">DPDP Act Compliance FAQs</h3>
+            <div class="space-y-4">
+              {dpDpFaqs.slice(0, 6).map((faq) => (
+                <div class="border border-zinc-200 rounded-2xl p-6 hover:border-blue-300 transition-colors bg-zinc-50/50">
+                  <h4 class="text-lg font-bold text-zinc-900 mb-3">{faq.q}</h4>
+                  <div class="text-zinc-600 leading-relaxed" set:html={faq.a} />
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <footer class="bg-blue-600 rounded-3xl p-10 text-white text-center shadow-xl">
+            <h3 class="text-2xl font-bold mb-4 font-display">Ensure Compliance Today</h3>
+            <p class="text-blue-100 mb-8 max-w-lg mx-auto">Get your data destruction audit trail secured before the next regulatory cycle.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+              <a href="https://wa.me/917500555454" class="bg-white text-blue-700 font-bold py-4 px-8 rounded-xl hover:bg-blue-50 transition-colors">
+                WhatsApp Compliance Officer
+              </a>
+              <a href="tel:+917500555454" class="bg-blue-500 text-white font-bold py-4 px-8 rounded-xl hover:bg-blue-400 transition-colors">
+                Call +91 7500555454
+              </a>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </main>
+</MainLayout>

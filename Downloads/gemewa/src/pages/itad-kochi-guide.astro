@@ -1,0 +1,154 @@
+---
+// src/pages/itad-kochi-guide.astro - Pillar Guide for IT Asset Disposition
+import MainLayout from '../layouts/MainLayout.astro';
+import { pillars } from '../data/pillars.ts';
+import { getBreadcrumbSchema } from '@/lib/schema';
+import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
+
+const itadPillar = pillars.find(p => p.slug === 'itad')!;
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'ITAD Kochi Guide', url: '/itad-kochi-guide' }
+];
+
+const breadcrumbSchema = getBreadcrumbSchema(breadcrumbs);
+
+// FAQ Section for Guide (Internal PAAs)
+const guideFaqs = [
+  { q: "Is ITAD only for large corporations in Kochi?", a: "No, we provide ITAD services for startups, SMEs, and large enterprises across Infopark, SmartCity, and beyond." },
+  { q: "What happens to the data on our old servers?", a: "We use NIST 800-88 certified wiping protocols or physical shredding to ensure 100% data destruction before any asset leaves our custody." },
+  { q: "How does ITAD help with DPDP Act 2023 compliance?", a: "The DPDP Act mandates secure disposal of personal data. Our certified ITAD process provides the audit trail and Certificate of Destruction required to prove compliance." }
+];
+---
+
+<MainLayout 
+  title="ITAD Services Kochi — Complete IT Asset Disposition Guide for Kerala"
+  description="Comprehensive IT Asset Disposition guide for Kochi businesses. Learn about NIST-certified data destruction, asset tagging, and full DPDP Act compliance."
+  schemas={[breadcrumbSchema]}
+  type="article"
+>
+  <Breadcrumbs items={breadcrumbs} />
+
+  <main class="py-20 bg-white dark:bg-zinc-950">
+    <div class="container max-w-4xl mx-auto px-4">
+      <header class="mb-12">
+        <div class="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs font-bold rounded-full mb-6 uppercase tracking-widest">
+          <span>📚</span> Education Pillar
+        </div>
+        <h1 class="text-4xl md:text-6xl font-extrabold text-zinc-900 dark:text-white mb-8 font-display leading-[1.1]">
+          The Complete Guide to IT Asset Disposition (ITAD) in Kochi
+        </h1>
+        <p class="text-xl text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
+          In an era of strict data privacy laws like the DPDP Act 2023, how your business retires its IT hardware is as critical as how it secures its active servers.
+        </p>
+      </header>
+
+      {/* Table of Contents */}
+      <div class="bg-zinc-50 dark:bg-zinc-900 p-8 rounded-3xl mb-16 border border-zinc-100 dark:border-zinc-800">
+        <div class="font-bold text-zinc-900 dark:text-white mb-4 flex items-center gap-2">
+          <span>📑</span> On this page:
+        </div>
+        <nav>
+          <ul class="space-y-3">
+            <li><a href="#what-is-itad" class="text-green-600 dark:text-green-400 hover:underline font-medium flex items-center gap-2"><span>1.</span> What is ITAD?</a></li>
+            <li><a href="#why-kochi" class="text-green-600 dark:text-green-400 hover:underline font-medium flex items-center gap-2"><span>2.</span> Why Kochi Businesses Need ITAD</a></li>
+            <li><a href="#process" class="text-green-600 dark:text-green-400 hover:underline font-medium flex items-center gap-2"><span>3.</span> The EWaste Kochi ITAD Process</a></li>
+            <li><a href="#compliance" class="text-green-600 dark:text-green-400 hover:underline font-medium flex items-center gap-2"><span>4.</span> Compliance & DPDP Act</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <article class="prose prose-lg prose-zinc dark:prose-invert max-w-none prose-headings:font-display prose-headings:text-zinc-900 dark:prose-headings:text-white prose-a:text-green-600 dark:prose-a:text-green-400 prose-img:rounded-3xl">
+        
+        <section id="what-is-itad" class="scroll-mt-24 mb-16">
+          <h2>What is ITAD?</h2>
+          <p>
+            IT Asset Disposition (ITAD) refers to the industry and practices dedicated to disposing of IT hardware in a safe and environmentally responsible manner. Unlike simple recycling, ITAD focuses heavily on <strong>data security</strong> and <strong>value recovery</strong>.
+          </p>
+          <div class="p-6 bg-green-50 dark:bg-green-900/10 rounded-2xl border-l-4 border-green-500">
+            Professional ITAD ensures that your end-of-life laptops, servers, and networking gear don't become a liability through data breaches or environmental fines.
+          </div>
+        </section>
+
+        <section id="why-kochi" class="scroll-mt-24 mb-16">
+          <h2>Why Kochi Businesses Need Professional ITAD</h2>
+          <p>
+            Kochi is home to some of India's fastest-growing tech hubs, including Infopark and SmartCity. With this growth comes an immense volume of retired hardware. 
+          </p>
+          <ul>
+            <li><strong>Data Privacy:</strong> Kochi businesses are increasingly targets for cyber-attacks. Certified ITAD ensures no data is left behind.</li>
+            <li><strong>Legal Compliance:</strong> Avoid penalties under the KSPCB and the new DPDP Act 2023.</li>
+            <li><strong>Cost Recovery:</strong> Reclaim residual value from your hardware through our remarketing program.</li>
+          </ul>
+        </section>
+
+        <section id="process" class="scroll-mt-24 mb-16">
+          <h2>The EWaste Kochi ITAD Process</h2>
+          <div class="space-y-8 not-prose mt-10">
+            {[
+              { step: 1, title: "Secure Inventory", desc: "Every device is scanned and tagged with a serialized barcode for 100% visibility." },
+              { step: 2, title: "Certified Data Erasure", desc: "NIST 800-88 compliant software wiping or physical media shredding." },
+              { step: 3, title: "Hardware Audit", desc: "Functional testing to determine if the asset can be resold or must be recycled." },
+              { step: 4, title: "Certification", desc: "Delivery of the Certificate of Destruction and Form-6 manifests for your records." }
+            ].map((s) => (
+              <div class="flex gap-6 group">
+                <div class="flex-shrink-0 w-12 h-12 bg-white dark:bg-zinc-800 border-2 border-green-500 rounded-full flex items-center justify-center font-bold text-green-600 dark:text-green-400 group-hover:bg-green-600 group-hover:text-white transition-all shadow-sm">
+                  {s.step}
+                </div>
+                <div>
+                  <h4 class="text-xl font-bold dark:text-white mb-2">{s.title}</h4>
+                  <p class="text-zinc-600 dark:text-zinc-400 leading-relaxed">{s.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          <p class="text-center mt-12 bg-zinc-50 dark:bg-zinc-900 p-6 rounded-2xl">
+            → Ready to start? <a href="/itad-kochi" class="text-green-600 dark:text-green-400 font-bold underline">Get a professional ITAD assessment for your Kochi business</a>.
+          </p>
+        </section>
+
+        <section id="compliance" class="scroll-mt-24 mb-16">
+          <h2>Compliance & DPDP Act 2023</h2>
+          <p>
+            The Digital Personal Data Protection Act (DPDP) 2023 mandates that "Data Fiduciaries" (businesses) must ensure personal data is erased once the purpose for its collection is served. In the context of hardware retirement, this means certified destruction is no longer optional—it is a legal requirement.
+          </p>
+          <div class="bg-red-50 dark:bg-red-900/10 p-6 rounded-2xl border border-red-100 dark:border-red-900/30 text-red-800 dark:text-red-400">
+            <strong>⚠️ Corporate Risk:</strong> Non-compliance with the DPDP Act can lead to penalties up to <strong>₹250 Crore</strong>.
+          </div>
+        </section>
+
+      </article>
+
+      {/* Guide FAQ Section for snippet authority */}
+      <section class="mt-24 pt-16 border-t border-zinc-100 dark:border-zinc-800">
+        <h2 class="text-3xl font-bold text-zinc-900 dark:text-white mb-10 font-display">Common ITAD Questions</h2>
+        <div class="space-y-8">
+          {guideFaqs.map((faq) => (
+            <div class="bg-zinc-50 dark:bg-zinc-900/50 p-8 rounded-3xl border border-zinc-100 dark:border-zinc-800">
+              <h3 class="text-lg font-bold text-zinc-900 dark:text-white mb-4">{faq.q}</h3>
+              <p class="text-zinc-600 dark:text-zinc-400 leading-relaxed text-sm">{faq.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <div class="mt-20">
+         <footer class="bg-green-600 rounded-[3rem] p-12 text-white shadow-2xl text-center relative overflow-hidden">
+            <div class="absolute -right-20 -bottom-20 text-[15rem] leading-none text-white/5 opacity-10">🏢</div>
+            <h3 class="text-3xl font-bold mb-6 font-display">Is Your IT Retirement Compliant?</h3>
+            <p class="text-green-100 mb-10 max-w-lg mx-auto text-lg leading-relaxed">Join 200+ Ernakulam-based corporations that trust EWaste Kochi for secure ITAD and data destruction.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center relative z-10">
+              <a href="/itad-kochi" class="bg-white text-green-700 font-extrabold py-5 px-12 rounded-2xl hover:bg-zinc-100 transition-all font-display text-lg shadow-lg">
+                View Service Pricing
+              </a>
+              <a href="tel:+917500555454" class="bg-green-500 text-white font-extrabold py-5 px-12 rounded-2xl hover:bg-green-400 transition-all font-display text-lg">
+                Call ITAD Specialist
+              </a>
+            </div>
+         </footer>
+      </div>
+    </div>
+  </main>
+</MainLayout>

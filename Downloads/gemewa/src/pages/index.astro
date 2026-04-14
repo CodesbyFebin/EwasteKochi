@@ -1,0 +1,525 @@
+---
+// src/pages/index.astro - Homepage (Enhanced with comprehensive SEO & Conversion Optimizations)
+import MainLayout from '../layouts/MainLayout.astro';
+import { services } from '../data/services';
+import { locations } from '../data/locations';
+import { getRecentBlogs } from '../data/blogs';
+import { faqs } from '../data/faqs';
+
+// ============================================
+// ENHANCED SCHEMA (Organization + LocalBusiness + WebSite)
+// ============================================
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "name": "EWaste Kochi",
+      "description": "KSPCB-authorized e-waste recycling & ITAD services in Kochi, Kerala",
+      "url": "https://ewastekochi.com",
+      "logo": "https://ewastekochi.com/logo.png",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+91-7500555454",
+        "contactType": "customer service",
+        "availableLanguage": ["English", "Malayalam", "Tamil", "Hindi"]
+      },
+      "sameAs": [
+        "https://wa.me/917500555454",
+        "https://facebook.com/ewastekochi",
+        "https://twitter.com/ewastekochi",
+        "https://linkedin.com/company/ewastekochi"
+      ],
+      "serviceArea": {
+        "@type": "City",
+        "name": "Kochi",
+        "addressRegion": "Kerala",
+        "addressCountry": "IN"
+      }
+    },
+    {
+      "@type": "LocalBusiness",
+      "name": "EWaste Kochi",
+      "image": "https://ewastekochi.com/og-image.jpg",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "710A, Hill Palace Rd",
+        "addressLocality": "Thrippunithura",
+        "addressRegion": "Kerala",
+        "postalCode": "682301",
+        "addressCountry": "IN"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 9.9558,
+        "longitude": 76.3409
+      },
+      "openingHoursSpecification": [{
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        "opens": "00:00",
+        "closes": "23:59"
+      }],
+      "telephone": "+917500555454",
+      "priceRange": "₹₹",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "128"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "url": "https://ewastekochi.com",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://ewastekochi.com/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+  ]
+};
+
+const recentBlogs = getRecentBlogs(6);
+
+const testimonials = [
+  { name: "Rajesh Kumar", role: "IT Manager, Infopark MNC", text: "EWaste Kochi handled our 200+ laptop disposal with extreme professionalism. The Certificate of Destruction was delivered within 48 hours, satisfying our compliance team completely.", initials: "RK" },
+  { name: "Priya Menon", role: "Compliance Officer, Private Bank", text: "As a bank, data security is our top priority. Their NIST-certified data destruction process is the best in Kerala. Highly recommended for corporate ITAD.", initials: "PM" },
+  { name: "Arun Jose", role: "CTO, Tech Startup", text: "Got the best buyback price for our old MacBooks. The process was transparent, and the payment was instant. Great service for Kochi startups.", initials: "AJ" },
+];
+
+const heroStats = [
+  { value: "10+", label: "Years of Trust" },
+  { value: "50K+", label: "Devices Processed" },
+  { value: "100%", label: "Data Destruction" },
+  { value: "0", label: "Landfill Policy" },
+];
+
+const trustBadges = [
+  { icon: "🏢", label: "Infopark Kochi" },
+  { icon: "🏢", label: "SmartCity Partner" }, 
+  { icon: "📜", label: "ISO 14001" },
+  { icon: "🔒", label: "NIST 800-88" },
+  { icon: "✅", label: "KSPCB Licensed" },
+  { icon: "📋", label: "EPR Compliant" },
+];
+
+const processSteps = [
+  { number: "01", title: "Contact Us", desc: "Call, WhatsApp or fill our quote form. We respond within 30 minutes, 24/7.", icon: "📞" },
+  { number: "02", title: "Free Assessment", desc: "Tell us your devices, quantities, and data security requirements. We send a same-day quote.", icon: "📋" },
+  { number: "03", title: "Scheduled Pickup", desc: "We arrive at your Kochi location with trained technicians and secure transport.", icon: "🚚" },
+  { number: "04", title: "Asset Inventory", desc: "Every device is tagged, serialized, and entered into our chain-of-custody manifest.", icon: "🏷️" },
+  { number: "05", title: "Certified Destruction", desc: "NIST 800-88 data wiping or physical DoD shredding. Witnessed on-site available.", icon: "🔒" },
+  { number: "06", title: "CoD Issued", desc: "Receive your Certificate of Destruction and Environmental Impact Report within 24 hours.", icon: "📄" },
+];
+---
+
+<MainLayout 
+  title="EWaste Kochi | Certified E-Waste Recycling | Free Pickup"
+  description="KSPCB-authorized e-waste recycling in Kochi. Free corporate pickup, NIST 800-88 certified data destruction, laptop buyback, and EPR-compliant recycling across Kerala."
+  schema={schema}
+  canonical="https://ewastekochi.com/"
+  hreflangs={[
+    { lang: "en", url: "https://ewastekochi.com/" },
+    { lang: "ml", url: "https://ewastekochi.com/ml/" },
+    { lang: "ta", url: "https://ewastekochi.com/ta/" },
+    { lang: "hi", url: "https://ewastekochi.com/hi/" },
+    { lang: "x-default", url: "https://ewastekochi.com/" }
+  ]}
+>
+  {/* ============================================ */}
+  {/* STATUS BAR - Live operational info          */}
+  {/* ============================================ */}
+  <div class="bg-forest dark:bg-zinc-900 text-white py-3 text-sm">
+    <div class="container flex flex-wrap justify-center items-center gap-x-6 gap-y-2">
+      <span class="flex items-center gap-2">
+        <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+        <strong>OPERATIONAL 24/7</strong>
+      </span>
+      <span class="text-white/60">|</span>
+      <span>📍 Thrippunithura, Kochi, Kerala 682301</span>
+      <span class="text-white/60">|</span>
+      <span>🔒 NIST 800-88 · DoD 5220.22-M · EPR · DPDP 2023</span>
+    </div>
+  </div>
+
+  {/* ============================================ */}
+  {/* HERO SECTION - Dramatic & Dark Mode Ready   */}
+  {/* ============================================ */}
+  <section class="relative min-h-[90vh] flex items-center overflow-hidden bg-cream dark:bg-zinc-900">
+    {/* Cinematic Background Layers */}
+    <div class="absolute inset-0">
+      <div class="absolute inset-0 bg-[radial-gradient(ellipse_120%_80%_at_50%_120%,rgba(13,59,35,0.08)_0%,transparent_70%)] dark:bg-[radial-gradient(ellipse_120%_80%_at_50%_120%,rgba(45,122,71,0.15)_0%,transparent_70%)]" />
+      <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_80%_20%,rgba(184,134,11,0.06)_0%,transparent_50%)] dark:bg-[radial-gradient(ellipse_80%_50%_at_80%_20%,rgba(184,134,11,0.1)_0%,transparent_50%)]" />
+      <div class="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]" style="background-image: linear-gradient(rgba(13,59,35,0.5)_1px,transparent_1px), linear-gradient(90deg,rgba(13,59,35,0.5)_1px,transparent_1px); background-size: 60px 60px;" />
+      <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-forest/20 to-transparent dark:via-forest/40" />
+    </div>
+    
+    <div class="container relative z-10 py-24 lg:py-32 px-4 mx-auto">
+      <div class="max-w-4xl mx-auto text-center">
+        <div class="inline-flex items-center gap-3 px-5 py-2.5 bg-forest/5 dark:bg-forest/10 border border-forest/10 dark:border-forest/20 rounded-full mb-10">
+          <span class="w-2 h-2 bg-moss rounded-full animate-pulse"></span>
+          <span class="text-sm font-medium text-forest dark:text-sage tracking-wide">KSPCB Authorized Recycler</span>
+        </div>
+        
+        <h1 class="text-5xl md:text-7xl lg:text-8xl font-normal text-zinc-900 dark:text-white leading-[1.1] mb-8 font-display">
+          Secure E-Waste<br/>
+          <span class="text-forest dark:text-sage">&</span> ITAD Solutions<br/>
+          <span class="text-forest dark:text-sage">in Kochi</span>
+        </h1>
+        
+        <p class="text-xl md:text-2xl text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto mb-12 leading-relaxed">
+          NIST 800-88 certified data destruction for complete peace of mind. 
+          Free corporate pickup. Official Certificate of Destruction for every device.
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="https://wa.me/917500555454" class="bg-forest text-white hover:bg-forest-light px-8 py-4 rounded-xl font-bold transition-all transform hover:scale-105 shadow-xl shadow-forest/20">Get Free Quote</a>
+          <a href="/services" class="border-2 border-forest text-forest dark:border-sage dark:text-sage px-8 py-4 rounded-xl font-bold hover:bg-forest hover:text-white dark:hover:bg-sage dark:hover:text-zinc-900 transition-all">Explore Services</a>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20 pt-16 border-t border-zinc-100 dark:border-zinc-800">
+          {heroStats.map((stat) => (
+            <div class="text-center group">
+              <div class="text-4xl md:text-5xl font-normal text-forest dark:text-sage mb-2">{stat.value}</div>
+              <div class="text-sm text-zinc-500 dark:text-zinc-400 uppercase tracking-widest group-hover:text-forest dark:group-hover:text-sage transition-colors">{stat.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+    
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+      <span class="text-xs text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">Scroll</span>
+      <div class="w-px h-8 bg-gradient-to-b from-zinc-300 dark:from-zinc-600 to-transparent"></div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- TRUST BADGES - Dark Mode Compatible         -->
+  <!-- ============================================ -->
+  <section class="py-16 bg-cream-dark dark:bg-zinc-800 border-y border-zinc-100 dark:border-zinc-700">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-wrap justify-center items-center gap-x-12 gap-y-6">
+        {trustBadges.map(badge => (
+          <div class="flex items-center gap-2.5 text-zinc-500 dark:text-zinc-400 hover:text-forest dark:hover:text-sage transition-colors cursor-default">
+            <span class="text-lg">{badge.icon}</span>
+            <span class="text-sm font-medium">{badge.label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- SERVICES - Editorial Card Design (Dark Mode) -->
+  <!-- ============================================ -->
+  <section class="py-24 lg:py-32 bg-cream dark:bg-zinc-900 relative overflow-hidden">
+    <div class="container relative mx-auto px-4">
+      <div class="max-w-2xl mb-16">
+        <span class="text-sm font-medium text-forest dark:text-sage uppercase tracking-widest mb-4 block">Our Expertise</span>
+        <h2 class="text-4xl md:text-5xl text-zinc-900 dark:text-white leading-tight font-display">Comprehensive E-Waste & ITAD Solutions</h2>
+        <p class="text-xl text-zinc-600 dark:text-zinc-400 mt-6">From single-device destruction to enterprise ITAD programs — certified solutions for every scale.</p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {services.slice(0, 6).map((service, i) => (
+          <a 
+            href={`/services/${service.slug}`} 
+            class="p-8 group block bg-white dark:bg-zinc-800 border border-zinc-100 dark:border-zinc-700 rounded-2xl transition-all hover:shadow-2xl hover:-translate-y-1"
+          >
+            <div class="flex items-start justify-between mb-6">
+              <div class="w-12 h-12 bg-forest/5 dark:bg-forest/10 rounded-xl flex items-center justify-center text-2xl group-hover:bg-forest group-hover:text-white transition-all duration-300">
+                ♻️
+              </div>
+              <span class="text-zinc-300 dark:text-zinc-600 group-hover:text-forest dark:group-hover:text-sage transition-colors">→</span>
+            </div>
+            <h3 class="text-xl text-zinc-900 dark:text-white mb-3 group-hover:text-forest dark:group-hover:text-sage transition-colors font-bold">{service.name}</h3>
+            <p class="text-zinc-500 dark:text-zinc-400 line-clamp-2 text-sm leading-relaxed">{service.description}</p>
+            <div class="mt-6 pt-4 border-t border-zinc-100 dark:border-zinc-700 flex items-center gap-2 text-sm font-medium text-forest dark:text-sage opacity-0 group-hover:opacity-100 transition-opacity">
+              Learn more <span>→</span>
+            </div>
+          </a>
+        ))}
+      </div>
+      
+      <div class="text-center mt-16">
+        <a href="/services" class="inline-flex items-center gap-2 text-forest dark:text-sage font-bold hover:gap-4 transition-all">
+          View All Services <span>→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- PROCESS - Numbered Steps with Icons         -->
+  <!-- ============================================ -->
+  <section class="py-24 lg:py-32 bg-forest dark:bg-zinc-800 text-white relative overflow-hidden">
+    <div class="absolute inset-0 opacity-5">
+      <div class="absolute top-0 right-0 w-1/2 h-full bg-[radial-gradient(circle_at_100%_50%,rgba(255,255,255,0.3)_0%,transparent_70%)]" />
+    </div>
+    
+    <div class="container relative mx-auto px-4">
+      <div class="max-w-2xl mb-16">
+        <span class="text-sm font-medium text-sage uppercase tracking-widest mb-4 block">How It Works</span>
+        <h2 class="text-4xl md:text-5xl leading-tight text-white font-display">Simple. Certified. Responsible.</h2>
+        <p class="text-xl text-white/70 mt-6">Six steps to compliant e-waste management.</p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {processSteps.map((step) => (
+          <div class="relative">
+            <div class="text-8xl font-normal text-white/[0.06] absolute -top-4 -left-2 select-none tracking-tighter">{step.number}</div>
+            <div class="relative pt-16">
+              <div class="text-4xl mb-4">{step.icon}</div>
+              <h3 class="text-xl text-white mb-3 font-bold">{step.title}</h3>
+              <p class="text-white/60 text-sm leading-relaxed">{step.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- LOCATIONS - Map-like Display (Dark Mode)    -->
+  <!-- ============================================ -->
+  <section class="py-24 lg:py-32 bg-cream-dark dark:bg-zinc-900 relative overflow-hidden">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <span class="text-sm font-medium text-forest dark:text-sage uppercase tracking-widest mb-4 block">Service Areas</span>
+        <h2 class="text-4xl md:text-5xl text-zinc-900 dark:text-white font-display">We Serve All of Kochi & Kerala</h2>
+        <p class="text-xl text-zinc-600 dark:text-zinc-400 mt-6 max-w-xl mx-auto font-medium">Free pickup from these locations and surrounding areas. Same-day service available.</p>
+      </div>
+      
+      <div class="flex flex-wrap justify-center gap-3 max-w-3xl mx-auto">
+        {locations.slice(0, 18).map((loc) => (
+          <a 
+            href={`/locations/${loc.slug}`} 
+            class="px-6 py-3 bg-white dark:bg-zinc-800 rounded-full text-sm font-bold text-zinc-600 dark:text-zinc-300 hover:text-white hover:bg-forest dark:hover:bg-sage transition-all duration-300 shadow-sm border border-zinc-100 dark:border-zinc-700"
+          >
+            {loc.name}
+          </a>
+        ))}
+      </div>
+      
+      <div class="text-center mt-12">
+        <a href="/locations" class="text-forest dark:text-sage font-bold hover:underline">View All Locations →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- TESTIMONIALS - Trusted by Kerala's Leaders  -->
+  <!-- ============================================ -->
+  <section class="py-24 lg:py-32 bg-white dark:bg-zinc-800">
+    <div class="container mx-auto px-4">
+      <div class="max-w-2xl mb-16">
+        <span class="text-sm font-medium text-forest dark:text-sage uppercase tracking-widest mb-4 block">Testimonials</span>
+        <h2 class="text-4xl md:text-5xl text-zinc-900 dark:text-white font-display">Trusted by Kerala's Leaders</h2>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        {testimonials.map(testimonial => (
+          <div class="bg-zinc-50 dark:bg-zinc-900 p-8 rounded-3xl border border-zinc-100 dark:border-zinc-800">
+            <div class="flex gap-1 mb-6">
+              {[...Array(5)].map(() => <span class="text-amber-500">★</span>)}
+            </div>
+            <p class="text-zinc-600 dark:text-zinc-300 mb-8 italic leading-relaxed font-medium">"{testimonial.text}"</p>
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 bg-forest dark:bg-sage rounded-2xl flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                {testimonial.initials}
+              </div>
+              <div>
+                <div class="font-bold text-zinc-900 dark:text-white">{testimonial.name}</div>
+                <div class="text-xs text-zinc-500 dark:text-zinc-400 font-medium uppercase tracking-wider">{testimonial.role}</div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- CASE STUDIES - Proven Results (Dark Mode)   -->
+  <!-- ============================================ -->
+  <section class="py-24 lg:py-32 bg-cream-dark dark:bg-zinc-900">
+    <div class="container mx-auto px-4">
+      <div class="max-w-2xl mb-16">
+        <span class="text-sm font-medium text-forest dark:text-sage uppercase tracking-widest mb-4 block">Case Studies</span>
+        <h2 class="text-4xl md:text-5xl text-zinc-900 dark:text-white font-display">Proven Results in Kochi</h2>
+      </div>
+      
+      <div class="grid md:grid-cols-2 gap-8">
+        <a href="/case-studies/infopark-1000-laptop" class="bg-white dark:bg-zinc-800 p-8 rounded-3xl block transition hover:shadow-2xl border border-zinc-100 dark:border-zinc-700">
+          <div class="text-xs uppercase tracking-[0.2em] font-bold text-forest dark:text-sage mb-4">Success Story</div>
+          <h3 class="text-2xl text-zinc-900 dark:text-white mb-6 font-bold leading-snug">Infopark Giant's 1000-Laptop Refresh: 100% Data Destruction Verified</h3>
+          <div class="grid grid-cols-3 gap-4 pt-8 border-t border-zinc-100 dark:border-zinc-700">
+            <div class="text-center">
+              <div class="text-3xl font-bold text-forest dark:text-sage mb-1">100%</div>
+              <div class="text-[10px] uppercase tracking-wider text-zinc-500 font-bold">Data Security</div>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl font-bold text-forest dark:text-sage mb-1">₹4.2L</div>
+              <div class="text-[10px] uppercase tracking-wider text-zinc-500 font-bold">Value Recovered</div>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl font-bold text-forest dark:text-sage mb-1">0%</div>
+              <div class="text-[10px] uppercase tracking-wider text-zinc-500 font-bold">Waste</div>
+            </div>
+          </div>
+        </a>
+        
+        <a href="/case-studies/kochi-hospital-data-security" class="bg-white dark:bg-zinc-800 p-8 rounded-3xl block transition hover:shadow-2xl border border-zinc-100 dark:border-zinc-700">
+          <div class="text-xs uppercase tracking-[0.2em] font-bold text-forest dark:text-sage mb-4">Medical Compliance</div>
+          <h3 class="text-2xl text-zinc-900 dark:text-white mb-6 font-bold leading-snug">Kochi Hospital: Certified Server Disposal & NABH Compliance Satisfaction</h3>
+          <div class="grid grid-cols-3 gap-4 pt-8 border-t border-zinc-100 dark:border-zinc-700">
+            <div class="text-center">
+              <div class="text-3xl font-bold text-forest dark:text-sage mb-1">✓</div>
+              <div class="text-[10px] uppercase tracking-wider text-zinc-500 font-bold">On-site Task</div>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl font-bold text-forest dark:text-sage mb-1">✓</div>
+              <div class="text-[10px] uppercase tracking-wider text-zinc-500 font-bold">Full Audit</div>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl font-bold text-forest dark:text-sage mb-1">✓</div>
+              <div class="text-[10px] uppercase tracking-wider text-zinc-500 font-bold">Compliant</div>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- BLOG / RESOURCES - Knowledge Hub (Lazy Images) -->
+  <!-- ============================================ -->
+  <section class="py-24 lg:py-32 bg-white dark:bg-zinc-800">
+    <div class="container mx-auto px-4">
+      <div class="max-w-2xl mb-16">
+        <span class="text-sm font-medium text-forest dark:text-sage uppercase tracking-widest mb-4 block">Resources & Blog</span>
+        <h2 class="text-4xl md:text-5xl text-zinc-900 dark:text-white font-display">E-Waste Knowledge Hub</h2>
+      </div>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+        {recentBlogs.slice(0, 6).map((blog: any) => (
+          <a href={`/blog/${blog.slug}`} class="group group">
+            <div class="aspect-[16/10] bg-zinc-100 dark:bg-zinc-700 rounded-3xl overflow-hidden mb-6 relative">
+              {blog.image ? (
+                <img 
+                  src={blog.image} 
+                  alt={blog.altText || blog.title} 
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  loading="lazy"
+                />
+              ) : (
+                <div class="w-full h-full flex items-center justify-center text-5xl">📄</div>
+              )}
+              <div class="absolute top-4 left-4">
+                <span class="px-4 py-1.5 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-sm rounded-full text-xs font-bold text-forest dark:text-sage shadow-sm uppercase tracking-wider">
+                  {blog.category}
+                </span>
+              </div>
+            </div>
+            <h3 class="text-xl text-zinc-900 dark:text-white font-bold group-hover:text-forest dark:group-hover:text-sage transition-colors leading-snug">{blog.title}</h3>
+            <p class="text-zinc-500 dark:text-zinc-400 text-sm mt-3 line-clamp-2 leading-relaxed font-medium">{blog.excerpt || blog.description || "Expert insights on e-waste recycling and ITAD in Kochi."}</p>
+          </a>
+        ))}
+      </div>
+      
+      <div class="text-center mt-16">
+        <a href="/blog" class="px-8 py-3 bg-forest text-white rounded-xl font-bold hover:bg-forest-light transition-all">
+          View All Knowledge Hub Articles <span>→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- FAQ - Everything You Need to Know           -->
+  <!-- ============================================ -->
+  <section class="py-24 lg:py-32 bg-cream dark:bg-zinc-900">
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl mx-auto text-center mb-16">
+        <span class="text-sm font-medium text-forest dark:text-sage uppercase tracking-widest mb-4 block text-center">FAQ Hub</span>
+        <h2 class="text-4xl md:text-5xl text-zinc-900 dark:text-white font-display">Everything You Need to Know</h2>
+        <p class="text-xl text-zinc-600 dark:text-zinc-400 mt-6 font-medium">50+ detailed answers about e-waste recycling, data destruction, and compliance in Kochi.</p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 gap-4 max-w-5xl mx-auto">
+        {faqs.slice(0, 12).map(faq => (
+          <details class="group bg-white dark:bg-zinc-800 rounded-2xl p-6 cursor-pointer border border-zinc-100 dark:border-zinc-700 transition-all hover:border-forest shadow-sm">
+            <summary class="flex justify-between items-center font-bold text-zinc-900 dark:text-white list-none pr-4">
+              <span class="text-sm md:text-base">{faq.question || faq.q}</span>
+              <span class="w-6 h-6 rounded-full bg-zinc-50 dark:bg-zinc-700 flex items-center justify-center text-[10px] text-forest dark:text-sage group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <div class="mt-4 text-zinc-600 dark:text-zinc-400 text-sm pt-4 border-t border-zinc-50 dark:border-zinc-700 leading-relaxed font-medium">
+              <div set:html={faq.answer || faq.a} />
+            </div>
+          </details>
+        ))}
+      </div>
+      
+      <div class="text-center mt-16">
+        <a href="/faq" class="inline-flex items-center gap-2 text-forest dark:text-sage font-bold hover:underline">
+          View Master FAQ Knowledge Hub <span>→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- DPDP COMPLIANCE BANNER                      -->
+  <!-- ============================================ -->
+  <section class="py-12 bg-gradient-to-r from-amber-500 to-amber-600 shadow-2xl">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col md:flex-row items-center justify-center gap-8 text-center md:text-left">
+        <div class="text-6xl animate-pulse">⚠️</div>
+        <div class="flex-1">
+          <h3 class="text-2xl md:text-3xl font-extrabold text-white mb-2 font-display">Avoid DPDP Act 2023 penalties up to ₹250 Crore</h3>
+          <p class="text-white/90 text-lg font-medium opacity-90">Corporate data destruction is no longer optional—it's a legal mandate in India.</p>
+        </div>
+        <a href="/dpdp-act-kochi" class="bg-white text-amber-600 font-extrabold px-10 py-5 rounded-2xl text-xl hover:bg-zinc-100 transition-all shadow-xl">
+          Compliance Guide
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- CTA - Bold & Immersive (Dark Mode Ready)    -->
+  <!-- ============================================ -->
+  <section class="py-32 relative overflow-hidden">
+    <div class="absolute inset-0 bg-forest dark:bg-zinc-800">
+      <div class="absolute inset-0 opacity-10" style="background-image: linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px), linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px); background-size: 40px 40px;" />
+      <div class="absolute inset-0 bg-[radial-gradient(ellipse_100%_100%_at_50%_0%,rgba(255,255,255,0.15)_0%,transparent_60%)]" />
+    </div>
+    
+    <div class="container relative text-center mx-auto px-4">
+      <h2 class="text-5xl md:text-7xl text-white leading-tight mb-8 font-display">Ready to Recycle<br/>Responsibly?</h2>
+      <p class="text-xl md:text-2xl text-white/80 max-w-2xl mx-auto mb-16 leading-relaxed font-medium">Secure your data, protect Kochi's environment, and recover value from your aging IT assets today.</p>
+      
+      <div class="flex flex-col sm:flex-row gap-6 justify-center">
+        <a href="https://wa.me/917500555454" class="bg-white text-forest hover:bg-zinc-100 text-xl font-bold px-12 py-5 rounded-2xl shadow-2xl transition-all hover:scale-105">Chat on WhatsApp</a>
+        <a href="tel:+917500555454" class="bg-green-500 text-white hover:bg-green-400 text-xl font-bold px-12 py-5 rounded-2xl shadow-2xl transition-all hover:scale-105">Call Specialist</a>
+      </div>
+      
+      <div class="mt-20 pt-20 border-t border-white/10 flex flex-wrap justify-center gap-x-12 gap-y-6 text-white/60 font-bold uppercase tracking-widest text-sm">
+        <a href="tel:+917500555454" class="hover:text-white transition-colors flex items-center gap-2"><span>📞</span> +91 7500 555 454</a>
+        <a href="mailto:info@ewastekochi.com" class="hover:text-white transition-colors flex items-center gap-2"><span>✉️</span> info@ewastekochi.com</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- STICKY CTA FOR MOBILE (WhatsApp)            -->
+  <!-- ============================================ -->
+  <div class="fixed bottom-6 right-6 z-50 md:hidden">
+    <a href="https://wa.me/917500555454" class="bg-green-600 text-white p-5 rounded-full shadow-2xl flex items-center gap-3 hover:bg-green-700 transition-all scale-110">
+      <span class="text-2xl">💬</span>
+      <span class="font-extrabold text-sm uppercase tracking-wider">Free Quote</span>
+    </a>
+  </div>
+</MainLayout>

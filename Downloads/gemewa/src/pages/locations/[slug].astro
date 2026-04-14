@@ -1,0 +1,133 @@
+---
+// src/pages/locations/[slug].astro
+import MainLayout from '../../layouts/MainLayout.astro';
+import { locations } from '../../data/locations';
+import { services } from '../../data/services';
+import { generateLocationFaqs, faqs as genericFaqs } from '../../data/faqs';
+import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
+
+export function getStaticPaths() {
+  return locations.map(loc => ({
+    params: { slug: loc.slug },
+    props: { location: loc }
+  }));
+}
+
+const { location } = Astro.props;
+
+// Generate 50 FAQs
+const locationSpecificFaqs = generateLocationFaqs(location.name);
+const allFaqs = [...locationSpecificFaqs, ...genericFaqs].slice(0, 50);
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Place",
+  "name": `EWaste Recycling in ${location.name}`,
+  "description": location.description,
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": location.name,
+    "addressRegion": "Kerala",
+    "addressCountry": "IN"
+  },
+  "mainEntity": {
+    "@type": "FAQPage",
+    "mainEntity": allFaqs.map(f => ({
+      "@type": "Question",
+      "name": f.q,
+      "acceptedAnswer": { "@type": "Answer", "text": f.a.replace(/<[^>]*>?/gm, '') }
+    }))
+  }
+};
+
+const serviceList = services.slice(0, 8);
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Locations', url: '/locations' },
+  { name: location.name, url: `/locations/${location.slug}/` }
+];
+---
+
+<MainLayout 
+  title={`E-Waste Recycling in ${location.name} | Certified Local Pickup`}
+  description={`Free e-waste pickup and certified recycling services in ${location.name}, Kochi. KSPCB authorized disposal for all old electronics and IT assets.`}
+  schema={schema}
+>
+  <Breadcrumbs items={breadcrumbs} />
+
+  <section class="py-20 bg-zinc-50/50">
+    <div class="container mx-auto px-4">
+      <div class="grid lg:grid-cols-3 gap-12">
+        <div class="lg:col-span-2">
+          <header class="mb-12">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-zinc-900 mb-6 font-display">
+              E-Waste Services in <span class="text-green-600">{location.name}</span>
+            </h1>
+            <p class="text-xl text-zinc-600 max-w-3xl leading-relaxed">
+              {location.description} Authorized collection and material recovery for individuals and corporations in the local area.
+            </p>
+          </header>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-16">
+            {serviceList.map(service => (
+              <a href={`/locations/${location.slug}/${service.slug}/`} class="group p-6 bg-white border border-zinc-200 rounded-[2rem] hover:border-green-500 transition-all shadow-sm">
+                <div class="text-3xl mb-4 group-hover:scale-110 transition-transform">{service.icon}</div>
+                <h3 class="font-bold text-zinc-900 mb-2 group-hover:text-green-600">{service.name} {location.name}</h3>
+                <p class="text-zinc-500 text-sm italic">Local pickup and certification available.</p>
+              </a>
+            ))}
+          </div>
+
+          <!-- 50 FAQs -->
+          <div class="mt-20">
+            <h2 class="text-3xl font-bold text-zinc-900 mb-10 font-display">Frequently Asked Questions for {location.name}</h2>
+            <div class="grid gap-4">
+              {allFaqs.map((faq, i) => (
+                <details class="group bg-white p-6 rounded-2xl border border-zinc-200 transition-all">
+                  <summary class="font-bold text-zinc-900 cursor-pointer list-none flex items-center justify-between">
+                    <span class="flex gap-4">
+                       <span class="text-zinc-300 font-mono text-sm">{i+1}.</span>
+                       {faq.q}
+                    </span>
+                    <span class="text-zinc-400 group-open:rotate-180 transition-transform">▼</span>
+                  </summary>
+                  <div class="mt-4 text-zinc-600 text-sm leading-relaxed pl-10 border-l-2 border-green-500/20" set:html={faq.a} />
+                </details>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <aside class="space-y-8">
+          <div class="bg-zinc-900 rounded-[2rem] p-10 text-white shadow-xl relative overflow-hidden group">
+             <div class="absolute -right-20 -top-20 text-[15rem] leading-none text-white/5 font-display">📍</div>
+             <div class="relative z-10">
+               <h3 class="text-2xl font-bold mb-4 font-display">Direct Pickup in {location.name}</h3>
+               <p class="text-zinc-400 mb-10">Same-day pickup available for tech hubs and residential zones.</p>
+               <a href="https://wa.me/917500555454" class="block w-full bg-green-600 text-white font-extrabold py-5 rounded-2xl text-center hover:bg-green-500 transition-all shadow-xl font-display">
+                  💬 WhatsApp Request
+               </a>
+             </div>
+          </div>
+
+          {location.insights && (
+            <div class="bg-green-50 border border-green-100 rounded-[2rem] p-8">
+               <h3 class="font-bold text-green-900 mb-4 font-display">Local Insights</h3>
+               <p class="text-green-800 text-sm leading-relaxed">{location.insights}</p>
+            </div>
+          )}
+
+          <div class="bg-white rounded-[2rem] p-8 border border-zinc-200 shadow-sm">
+             <h3 class="font-bold text-zinc-900 mb-6 font-display">Quick Stats</h3>
+             <ul class="space-y-4 text-sm font-medium text-zinc-600">
+               <li class="flex justify-between"><span>Service ID:</span> <span class="text-zinc-900 font-bold">EK-{location.slug.toUpperCase()}</span></li>
+               <li class="flex justify-between"><span>Certification:</span> <span class="text-zinc-900 font-bold">KSPCB/EPR</span></li>
+               <li class="flex justify-between"><span>Area Type:</span> <span class="text-zinc-900 font-bold">{location.district} Region</span></li>
+             </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</MainLayout>

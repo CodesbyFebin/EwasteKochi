@@ -1,0 +1,151 @@
+---
+// src/pages/terms.astro
+import MainLayout from "@/layouts/MainLayout.astro";
+import Breadcrumbs from "@/components/seo/Breadcrumbs.astro";
+import { SITE_NAME, CONTACT_EMAIL, ADDRESS, SITE_URL } from "@/lib/content";
+import { buildFullHelmetTags, getBreadcrumbSchema, getOrganizationSchema, getWebPageSchema } from "@/lib/seo";
+
+// Breadcrumbs
+const breadcrumbItems = [
+  { name: "Home", url: "/" },
+  { name: "Terms & Conditions", url: "/terms" }
+];
+const breadcrumbSchema = getBreadcrumbSchema(breadcrumbItems);
+
+// Page SEO
+const pageTitle = `Terms & Conditions | ${SITE_NAME}`;
+const pageDesc = "EWaste Kochi Terms and Conditions — guidelines for our e-waste recycling, ITAD, and buyback services in Kerala. Last updated January 2025.";
+const canonicalPath = "/terms/";
+
+// Build all meta tags
+// helmetTags is built for context, MainLayout consumes the props
+const helmetTags = buildFullHelmetTags({
+  title: pageTitle,
+  description: pageDesc,
+  canonicalPath,
+  ogType: "website",
+  keywords: "terms and conditions, e-waste recycling terms, ITAD service agreement, Kochi",
+});
+
+// Structured data: Organization + WebPage + BreadcrumbList
+const schemas = [
+  getOrganizationSchema(),
+  getWebPageSchema({
+    name: pageTitle,
+    description: pageDesc,
+    url: `${SITE_URL}/terms`,
+    lastReviewed: "2025-01-01",
+  }),
+  breadcrumbSchema,
+];
+---
+
+<MainLayout
+  title={pageTitle}
+  description={pageDesc}
+  canonical={canonicalPath}
+  schemas={schemas}
+>
+  <Breadcrumbs items={breadcrumbItems} />
+
+  <section class="pt-32 pb-20 bg-white dark:bg-zinc-950">
+    <div class="container max-w-4xl mx-auto px-4">
+      <header class="mb-12 border-b border-zinc-100 dark:border-zinc-800 pb-12">
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-4 dark:text-white font-display tracking-tight leading-tight">Terms & Conditions</h1>
+        <p class="text-zinc-500 dark:text-zinc-400 text-sm font-bold tracking-widest uppercase">Last updated: January 2025</p>
+        <div class="mt-6 p-6 bg-zinc-50 dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 italic font-medium text-zinc-600 dark:text-zinc-400">
+          <p>By using our physical or digital services, you agree to these legal terms. Please read them carefully to understand your rights and our obligations.</p>
+        </div>
+      </header>
+      
+      <div class="prose prose-lg prose-zinc dark:prose-invert max-w-none space-y-16">
+        <section id="service-scope">
+          <h2 class="text-3xl font-extrabold dark:text-white font-display">1. Service Scope</h2>
+          <p class="text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
+            EWaste Kochi provides e-waste collection, IT Asset Disposition (ITAD), and data destruction services. By using our services, you agree to provide accurate information regarding the type and quantity of items for disposal.
+          </p>
+          <p class="text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
+            We reserve the right to refuse service for any item that does not comply with local environmental regulations or poses a safety risk to our logistics or processing facility.
+          </p>
+        </section>
+
+        <section id="data-security">
+          <h2 class="text-3xl font-extrabold dark:text-white font-display">2. Data Security & Liability</h2>
+          <p class="text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
+            While we use industrial-grade data destruction methods (NIST 800-88 compliant), it is the customer's responsibility to back up any necessary data before the items are handed over to us. Once items are collected for destruction, recovery of data is physically and digitally impossible.
+          </p>
+          <p class="text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
+            We are not liable for any data loss that occurs as a result of our certified destruction process, as we provide a formal Certificate of Destruction for every job completed in Kochi.
+          </p>
+        </section>
+
+        <section id="ownership">
+          <h2 class="text-3xl font-extrabold dark:text-white font-display">3. Item Ownership</h2>
+          <p class="text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
+            By handing over electronics to EWaste Kochi, you represent that you are the legal owner or authorized representative with the right to dispose of these assets.
+          </p>
+          <p class="text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
+            If you are disposing of assets on behalf of a company, library, or institution, you warrant that you have the authority to sign the pickup manifest.
+          </p>
+        </section>
+
+        <section id="payment">
+          <h2 class="text-3xl font-extrabold dark:text-white font-display">4. Payment & Valuation</h2>
+          <p class="text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
+            For buyback services, valuations are based on Kochi market rates and the current functional condition of the device. Instant payments are made via verified UPI or cash upon physical verification.
+          </p>
+          <p class="text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
+            For corporate ITAD services, pricing is provided in a formal written quote. Payment terms remain 15-30 days unless otherwise agreed in the service contract.
+          </p>
+        </section>
+
+        <section id="cancellation">
+          <h2 class="text-3xl font-extrabold dark:text-white font-display">5. Cancellation & Refund Policy</h2>
+          <p class="text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
+            You may cancel a scheduled pickup or destruction service at least 24 hours in advance with no charge. If cancellation occurs less than 24 hours before the scheduled time, a logistics fee may apply.
+          </p>
+          <p class="text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
+            Once assets have been collected and physical destruction has commenced, cancellations or asset returns are not available due to structural processing.
+          </p>
+        </section>
+
+        <section id="governing-law">
+          <h2 class="text-3xl font-extrabold dark:text-white font-display">6. Governing Law</h2>
+          <p class="text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
+            These terms are governed by the laws of the Republic of India. Any disputes shall be subject to the exclusive jurisdiction of the judicial courts in Ernakulam/Kochi, Kerala.
+          </p>
+        </section>
+
+        <section class="border-t-4 border-zinc-100 dark:border-zinc-800 pt-16 mt-16">
+          <h2 class="text-3xl font-extrabold dark:text-white mb-8 font-display">Official Contact Channel</h2>
+          <div class="bg-green-600 dark:bg-green-900/30 p-10 rounded-[2.5rem] border border-green-500 shadow-2xl relative overflow-hidden group">
+            <div class="absolute -right-16 -bottom-16 text-[15rem] text-white/10 select-none group-hover:scale-110 transition-transform duration-700">⚖️</div>
+            <p class="text-white dark:text-zinc-200 text-xl font-medium mb-8 relative z-10">
+              For legal inquiries regarding your recycling service or ITAD agreement, please contact our compliance officer:
+            </p>
+            <ul class="relative z-10 space-y-4 text-white">
+              <li class="flex items-center gap-4">
+                 <span class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center">📧</span>
+                 <a href={`mailto:${CONTACT_EMAIL}`} class="text-lg font-extrabold hover:underline">{CONTACT_EMAIL}</a>
+              </li>
+              <li class="flex items-center gap-4">
+                 <span class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center">🏢</span>
+                 <span class="text-lg font-medium">{ADDRESS}</span>
+              </li>
+              <li class="flex items-center gap-4">
+                 <span class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center">📞</span>
+                 <a href="tel:+917500555454" class="text-lg font-extrabold hover:underline">+91 75005 555454</a>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <div class="flex flex-wrap gap-8 pt-12 text-sm font-bold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
+          <a href="/privacy" class="hover:text-green-600 transition-colors">Privacy Policy</a>
+          <a href="/cookie-policy" class="hover:text-green-600 transition-colors">Cookie Policy</a>
+          <a href="/" class="hover:text-green-600 transition-colors">Return Home</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>

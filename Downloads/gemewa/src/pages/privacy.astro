@@ -1,0 +1,140 @@
+---
+// src/pages/privacy.astro
+import MainLayout from "@/layouts/MainLayout.astro";
+import Breadcrumbs from "@/components/seo/Breadcrumbs.astro";
+import { SITE_NAME, CONTACT_EMAIL, ADDRESS, SITE_URL } from "@/lib/content";
+import { buildFullHelmetTags, getBreadcrumbSchema, getOrganizationSchema, getWebPageSchema } from "@/lib/seo";
+
+// Breadcrumbs
+const breadcrumbItems = [
+  { name: "Home", url: "/" },
+  { name: "Privacy Policy", url: "/privacy" }
+];
+const breadcrumbSchema = getBreadcrumbSchema(breadcrumbItems);
+
+// Page SEO
+const pageTitle = `Privacy Policy | ${SITE_NAME}`;
+const pageDesc = "EWaste Kochi Privacy Policy — how we handle your data for e-waste recycling, ITAD, and buyback services in Kochi. Last updated January 2025.";
+const canonicalPath = "/privacy/";
+
+const helmetTags = buildFullHelmetTags({
+  title: pageTitle,
+  description: pageDesc,
+  canonicalPath,
+  ogType: "website",
+  keywords: "privacy policy, data protection, e-waste recycling kochi, DPDP act compliance",
+});
+
+// Structured data
+const schemas = [
+  getOrganizationSchema(),
+  getWebPageSchema({
+    name: pageTitle,
+    description: pageDesc,
+    url: `${SITE_URL}/privacy`,
+    lastReviewed: "2025-01-01",
+  }),
+  breadcrumbSchema,
+];
+---
+
+<MainLayout
+  title={pageTitle}
+  description={pageDesc}
+  canonical={canonicalPath}
+  schemas={schemas}
+>
+  <Breadcrumbs items={breadcrumbItems} />
+
+  <section class="pt-32 pb-20 bg-white dark:bg-zinc-950">
+    <div class="container max-w-4xl mx-auto px-4">
+      <header class="mb-12 border-b border-zinc-100 dark:border-zinc-800 pb-12">
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-4 dark:text-white font-display tracking-tight leading-tight">Privacy Policy</h1>
+        <p class="text-zinc-500 dark:text-zinc-400 text-sm font-bold tracking-widest uppercase">Last updated: January 2025</p>
+        <div class="mt-6 p-6 bg-green-50 dark:bg-green-950/30 rounded-2xl border border-green-100 dark:border-green-800/50 italic font-medium text-zinc-600 dark:text-zinc-400">
+          <p>This privacy policy explains how EWaste Kochi collects, uses, and protects your information in compliance with the Digital Personal Data Protection (DPDP) Act 2023.</p>
+        </div>
+      </header>
+      
+      <div class="prose prose-lg prose-zinc dark:prose-invert max-w-none space-y-16 text-zinc-600 dark:text-zinc-400 font-medium">
+        <section id="collection">
+          <h2 class="text-3xl font-extrabold dark:text-white font-display">1. Information We Collect</h2>
+          <p>We collect information you provide directly to us when you request a pickup, sell a device, or contact us for a quote. This may include:</p>
+          <ul class="list-disc pl-6 space-y-2">
+            <li>Name, email address, and phone number</li>
+            <li>Pickup address and location details</li>
+            <li>Details about the electronic assets intended for recycling/buyback</li>
+            <li>Government ID (where legally required for buyback transactions)</li>
+          </ul>
+        </section>
+
+        <section id="usage">
+          <h2 class="text-3xl font-extrabold dark:text-white font-display">2. How We Use Your Information</h2>
+          <p>We use the collected information for the following purposes:</p>
+          <ul class="list-disc pl-6 space-y-2">
+            <li>To facilitate e-waste collection and logistics</li>
+            <li>To issue official Certificates of Destruction</li>
+            <li>To process buyback payments via bank transfer or UPI</li>
+            <li>To maintain records required by the KSPCB (Kerala State Pollution Control Board)</li>
+            <li>To communicate service updates and environmental impact reports</li>
+          </ul>
+        </section>
+
+        <section id="data-destruction">
+          <h2 class="text-3xl font-extrabold dark:text-white font-display">3. Asset Data Destruction</h2>
+          <p>While we destroy data on your physical assets as a service, the personal data you provide to manage your account/service is handled separately:</p>
+          <ul class="list-disc pl-6 space-y-2">
+            <li><strong>Asset Data:</strong> Physically shredded or software-wiped following NIST 800-88 standards.</li>
+            <li><strong>Service Data:</strong> Securely stored in encrypted databases to maintain your recycling history and compliance documentation.</li>
+          </ul>
+        </section>
+
+        <section id="sharing">
+          <h2 class="text-3xl font-extrabold dark:text-white font-display">4. Data Sharing & Disclosure</h2>
+          <p>We do not sell your personal information. We only share data with:</p>
+          <ul class="list-disc pl-6 space-y-2">
+            <li><strong>Regulatory Bodies:</strong> KSPCB and other government authorities when mandated by environmental law.</li>
+            <li><strong>Payment Processors:</strong> To facilitate bank/UPI transfers for buybacks.</li>
+            <li><strong>Logistics Partners:</strong> Only when necessary to facilitate specialized heavy-load pickups.</li>
+          </ul>
+        </section>
+
+        <section id="security">
+          <h2 class="text-3xl font-extrabold dark:text-white font-display">5. Data Security</h2>
+          <p>We implement industry-standard security measures to protect your digital personal data from unauthorized access, alteration, or disclosure. All service-related data is treated with the same high level of security as the physical assets we process.</p>
+        </section>
+
+        <section id="rights">
+          <h2 class="text-3xl font-extrabold dark:text-white font-display">6. Your Rights (DPDP Act 2023)</h2>
+          <p>Consistent with the DPDP Act 2023, you have the right to request access to, correction of, or erasure of your personal data stored by us. You may also withdraw your consent for future data processing at any time.</p>
+        </section>
+
+        <section class="border-t-4 border-zinc-100 dark:border-zinc-800 pt-16 mt-16">
+          <h2 class="text-3xl font-extrabold dark:text-white mb-8 font-display">Data Protection Officer</h2>
+          <div class="bg-zinc-900 dark:bg-zinc-800 p-10 rounded-[2.5rem] text-white shadow-2xl relative overflow-hidden group">
+            <div class="absolute -right-16 -bottom-16 text-[15rem] text-white/5 opacity-40 select-none group-hover:scale-110 transition-transform duration-700">🛡️</div>
+            <p class="text-xl font-medium mb-8 relative z-10">
+              For any privacy-related queries or to exercise your data rights, contact our Data Protection Officer:
+            </p>
+            <ul class="relative z-10 space-y-4">
+              <li class="flex items-center gap-4">
+                 <span class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center">📧</span>
+                 <a href={`mailto:${CONTACT_EMAIL}`} class="text-lg font-extrabold hover:underline">{CONTACT_EMAIL}</a>
+              </li>
+              <li class="flex items-center gap-4">
+                 <span class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center">🏢</span>
+                 <span class="text-lg font-medium">{ADDRESS}</span>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <div class="flex flex-wrap gap-8 pt-12 text-sm font-bold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
+          <a href="/terms" class="hover:text-green-600 transition-colors">Terms & Conditions</a>
+          <a href="/cookie-policy" class="hover:text-green-600 transition-colors">Cookie Policy</a>
+          <a href="/" class="hover:text-green-600 transition-colors">Return Home</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>

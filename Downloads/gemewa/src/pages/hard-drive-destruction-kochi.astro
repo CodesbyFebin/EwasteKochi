@@ -1,0 +1,164 @@
+---
+// src/pages/hard-drive-destruction-kochi.astro
+import MainLayout from '../layouts/MainLayout.astro';
+import { services } from '../data/services';
+import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
+
+const destructionService = services.find(s => s.slug === 'hard-drive-shredding');
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Hard Drive Destruction Kochi', url: '/hard-drive-destruction-kochi' }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Hard Drive Shredding Kochi | NIST Certified Data Destruction",
+  "description": "Professional hard drive shredding in Kochi. NIST 800-88 certified, DIN 66399 compliant, 2mm particle size. Certificate of Destruction included.",
+  "url": "https://ewastekochi.com/hard-drive-destruction-kochi",
+  "mainEntity": {
+    "@type": "Service",
+    "name": "Hard Drive Shredding Service",
+    "description": "Industrial-grade hard drive destruction with certified data elimination"
+  }
+};
+
+const destructionMethods = [
+  {
+    method: 'Physical Shredding',
+    description: 'Industrial shredder reduces drives to 2mm particles',
+    icon: '⚙️',
+    certified: true
+  },
+  {
+    method: 'NIST 800-88 Wiping',
+    description: 'Software-based data overwriting for reuse',
+    icon: '💻',
+    certified: true
+  },
+  {
+    method: 'Degaussing',
+    description: 'Magnetic field erasure for legacy drives',
+    icon: '🧲',
+    certified: true
+  },
+  {
+    method: 'Drilling/Punching',
+    description: 'Physical destruction for small volumes',
+    icon: '🔨',
+    certified: true
+  }
+];
+---
+
+<MainLayout 
+  title="Hard Drive Shredding Kochi | NIST Certified Data Destruction"
+  description="Professional hard drive shredding in Kochi. NIST 800-88 certified, DIN 66399 compliant, 2mm particle size. Certificate of Destruction included."
+  schema={schema}
+>
+  <Breadcrumbs items={breadcrumbs} />
+
+  <main class="pt-24 pb-16">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <div class="bg-white rounded-3xl shadow-xl border border-zinc-100 p-8 lg:p-14">
+          <header class="text-center mb-16">
+            <div class="inline-flex items-center justify-center w-24 h-24 bg-red-50 rounded-3xl mb-8">
+              <span class="text-4xl">💥</span>
+            </div>
+            <h1 class="text-3xl md:text-5xl font-extrabold text-zinc-900 mb-4 font-display leading-tight">
+              Hard Drive Shredding Kochi
+            </h1>
+            <p class="text-xl text-red-600 font-bold uppercase tracking-wider">
+              NIST Certified • DIN 66399 Compliant • 2mm Particles
+            </p>
+          </header>
+
+          <div class="prose prose-lg prose-zinc max-w-none mb-12">
+            <p class="text-lg text-zinc-600 leading-relaxed">
+              Complete data destruction requires more than just deleting files. Our industrial hard drive shredding service in Kochi ensures your sensitive data is permanently unrecoverable through certified physical destruction.
+            </p>
+
+            {destructionService?.longDescription && (
+              <div class="bg-red-50 border border-red-200 rounded-3xl p-8 my-10 shadow-inner">
+                <p class="text-red-900 whitespace-pre-line leading-relaxed font-medium capitalize">
+                  {destructionService.longDescription}
+                </p>
+              </div>
+            )}
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-8 mb-16">
+            {destructionMethods.map(method => (
+              <div class={`border rounded-3xl p-8 group hover:shadow-2xl transition-all ${
+                method.certified ? 'border-red-200 bg-red-50/30' : 'border-zinc-200 bg-zinc-50'
+              }`}>
+                <div class="flex items-center gap-5 mb-6">
+                  <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-3xl shadow-sm">
+                    {method.icon}
+                  </div>
+                  <h3 class="text-xl font-bold text-zinc-900 font-display">{method.method}</h3>
+                </div>
+                <p class="text-zinc-600 leading-relaxed group-hover:text-zinc-900 transition-colors">
+                  {method.description}
+                </p>
+                {method.certified && (
+                  <div class="mt-6">
+                    <span class="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-bold bg-red-600 text-white shadow-lg">
+                      Certified High Security
+                    </span>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+
+          <div class="bg-zinc-900 rounded-3xl p-10 text-white mb-16">
+            <h3 class="text-2xl font-bold text-center mb-10 font-display">Industry Certifications</h3>
+            <div class="grid md:grid-cols-3 gap-8">
+              {[
+                { country: '🇺🇸', name: 'NIST 800-88', desc: 'US Federal Data Sanitization' },
+                { country: '🇩🇪', name: 'DIN 66399', desc: 'ISO/German Destruction Std' },
+                { country: '🏢', name: 'KSPCB', desc: 'Authorised Kerala Board' }
+              ].map(cert => (
+                <div class="text-center p-6 bg-zinc-800 rounded-2xl">
+                  <div class="text-3xl mb-4">{cert.country}</div>
+                  <h4 class="text-lg font-bold text-green-400 mb-2">{cert.name}</h4>
+                  <p class="text-zinc-400 text-sm">{cert.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {destructionService?.faqs && (
+            <section class="mb-16">
+              <h3 class="text-2xl font-bold text-zinc-900 mb-8 font-display">Data Destruction Questions</h3>
+              <div class="grid gap-4">
+                {destructionService.faqs.slice(0, 6).map((faq) => (
+                  <div class="p-6 border border-zinc-200 rounded-2xl hover:border-red-300 bg-zinc-50/30 transition-colors">
+                    <h4 class="font-bold text-zinc-900 mb-3">{faq.q}</h4>
+                    <div class="text-zinc-600 text-sm leading-relaxed" set:html={faq.a} />
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          <footer class="bg-red-600 rounded-3xl p-12 text-white text-center shadow-2xl">
+            <h3 class="text-3xl font-extrabold mb-6 font-display leading-tight">Secure Your Data Destruction</h3>
+            <p class="text-red-100 mb-10 text-lg opacity-90 max-w-xl mx-auto">NIST certified industrial shredding with tamper-evident chain-of-custody.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+              <a href="https://wa.me/917500555454" class="bg-white text-red-700 font-bold py-4 px-10 rounded-xl hover:bg-zinc-100 transition-all font-display">
+                Book Shredder Truck
+              </a>
+              <a href="tel:+917500555454" class="bg-red-500 text-white font-bold py-4 px-10 rounded-xl hover:bg-red-400 border border-red-400 transition-all font-display">
+                Talk to Expert
+              </a>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </main>
+</MainLayout>

@@ -1,0 +1,169 @@
+---
+// src/pages/sell-electronics-kochi.astro
+import MainLayout from '../layouts/MainLayout.astro';
+import { getServiceSchema, getFAQSchema, getBreadcrumbSchema } from '@/lib/schema';
+
+const buybackService = services.find(s => s.slug === 'laptop-buyback');
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Sell Electronics Kochi', url: '/sell-electronics-kochi' }
+];
+
+const serviceSchema = getServiceSchema({
+  title: "Electronics Buyback & Laptop Resale",
+  description: "Sell your old laptops, mobiles, and electronics in Kochi. Best market prices, free doorstep evaluation, instant payment.",
+  url: "https://ewastekochi.com/sell-electronics-kochi"
+});
+
+const faqSchema = buybackService?.faqs 
+  ? getFAQSchema(buybackService.faqs.map(f => ({ question: f.q, answer: f.a })))
+  : null;
+
+const breadcrumbSchema = getBreadcrumbSchema(breadcrumbs);
+
+const schemas = [serviceSchema, breadcrumbSchema, ...(faqSchema ? [faqSchema] : [])];
+
+const sellOptions = [
+  {
+    device: 'Laptops & Notebooks',
+    priceRange: '₹2,000 - ₹80,000',
+    description: 'All brands: Dell, HP, Lenovo, Apple MacBook, ASUS, Acer',
+    icon: '💻'
+  },
+  {
+    device: 'Mobile Phones',
+    priceRange: '₹500 - ₹35,000',
+    description: 'iPhone, Samsung, OnePlus, Xiaomi, Google Pixel, all Android phones',
+    icon: '📱'
+  },
+  {
+    device: 'Tablets & iPads',
+    priceRange: '₹1,000 - ₹25,000',
+    description: 'iPad, Samsung Tab, Amazon Kindle, Surface Pro',
+    icon: '📱'
+  },
+  {
+    device: 'Desktop Computers',
+    priceRange: '₹3,000 - ₹25,000',
+    description: 'Gaming PCs, workstations, office desktops, all-in-one systems',
+    icon: '🖥️'
+  }
+];
+---
+
+<MainLayout 
+  title="Sell Old Electronics Kochi | Best Buyback Prices | Free Pickup"
+  description="Sell your old laptops, mobiles, and electronics in Kochi. Best market prices, free doorstep evaluation, instant payment. All brands accepted."
+  schemas={schemas}
+>
+  <Breadcrumbs items={breadcrumbs} />
+
+  <main class="pt-24 pb-20">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <div class="bg-white rounded-3xl shadow-xl border border-zinc-100 p-8 lg:p-14 text-center">
+          <header class="mb-16">
+            <div class="inline-flex items-center justify-center w-24 h-24 bg-green-50 rounded-3xl mb-8">
+              <span class="text-4xl">💰</span>
+            </div>
+            <h1 class="text-3xl md:text-5xl font-extrabold text-zinc-900 mb-4 font-display leading-tight">
+              Sell Your Old Electronics in Kochi
+            </h1>
+            <p class="text-xl text-green-600 font-bold uppercase tracking-widest">
+              Best Market Prices · Free Pickup · Instant Payment
+            </p>
+          </header>
+
+          <div class="prose prose-lg prose-zinc max-w-none mb-12 mx-auto">
+            <p class="text-lg text-zinc-600 leading-relaxed">
+              Turn your old electronics into cash! We buy laptops, mobiles, tablets, and computers at the best market prices in Kochi. Free doorstep evaluation, instant payment, and professional data wiping included.
+            </p>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-8 mb-16">
+            {sellOptions.map(option => (
+              <div class="bg-zinc-50 border border-zinc-200 rounded-2xl p-8 hover:bg-white hover:shadow-xl transition-all text-left">
+                <div class="flex items-center gap-5 mb-6">
+                  <div class="w-14 h-14 bg-green-100 rounded-2xl flex items-center justify-center text-3xl">
+                    {option.icon}
+                  </div>
+                  <div>
+                    <h3 class="text-xl font-bold text-zinc-900 font-display">{option.device}</h3>
+                    <p class="text-green-600 font-extrabold">{option.priceRange}</p>
+                  </div>
+                </div>
+                <p class="text-zinc-600 text-sm leading-relaxed">{option.description}</p>
+              </div>
+            ))}
+          </div>
+
+          <div class="mb-16">
+            <h3 class="text-2xl font-bold text-zinc-900 mb-10 font-display">How Our Buyback Works</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {[
+                { icon: '📞', title: 'Contact', desc: 'WhatsApp or call for evaluation' },
+                { icon: '🚚', title: 'Pickup', desc: 'Free collection from your door' },
+                { icon: '🔍', title: 'Audit', desc: 'On-site technical evaluation' },
+                { icon: '💰', title: 'Payment', desc: 'Instant cash or bank transfer' }
+              ].map(step => (
+                <div class="text-center">
+                  <div class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4 border border-blue-100 text-2xl">
+                    {step.icon}
+                  </div>
+                  <h4 class="font-bold text-zinc-900 mb-2">{step.title}</h4>
+                  <p class="text-zinc-500 text-xs leading-relaxed">{step.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div class="bg-green-50 rounded-3xl p-10 border border-green-100 mb-16 text-left relative overflow-hidden">
+             <div class="absolute -right-10 -top-10 text-9xl text-green-200 opacity-20">🔐</div>
+             <div class="relative z-10 flex flex-col md:flex-row items-center gap-8">
+               <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center text-4xl shadow-sm flex-shrink-0 animate-pulse">
+                🔐
+               </div>
+               <div>
+                 <h3 class="text-2xl font-extrabold text-green-900 mb-2 font-display">Your Data Security is Guaranteed</h3>
+                 <p class="text-green-700 leading-relaxed max-w-xl">
+                   Every device sold to us undergoes NIST-800-88 certified data destruction. We ensure your personal files, photos, and accounts are unrecoverable before the asset is processed.
+                 </p>
+                 <a href="/services/data-destruction" class="text-green-600 font-bold mt-4 inline-block hover:underline">
+                   Read about our destruction process →
+                 </a>
+               </div>
+             </div>
+          </div>
+
+          {buybackService?.faqs && (
+            <section class="mb-16 text-left">
+              <h3 class="text-2xl font-bold text-zinc-900 mb-8 font-display">Selling Questions</h3>
+              <div class="grid gap-4">
+                {buybackService.faqs.slice(0, 6).map((faq) => (
+                  <div class="p-6 border border-zinc-200 rounded-2xl hover:border-green-300 transition-colors bg-zinc-50/20">
+                    <h4 class="font-bold text-zinc-900 mb-2">{faq.q}</h4>
+                    <div class="text-zinc-600 text-sm leading-relaxed" set:html={faq.a} />
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          <footer class="bg-green-600 rounded-3xl p-12 text-white shadow-2xl">
+            <h3 class="text-3xl font-extrabold mb-6 font-display">Get Cash for Your IT Today</h3>
+            <p class="text-green-100 mb-10 text-lg opacity-90 max-w-xl mx-auto">Join 50,000+ satisfied customers in Kochi who recycled their electronics with us.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+              <a href="https://wa.me/917500555454" class="bg-white text-green-700 font-bold py-4 px-10 rounded-xl hover:bg-zinc-100 transition-all font-display shadow-lg">
+                 WhatsApp Your Device Model
+              </a>
+              <a href="tel:+917500555454" class="bg-green-500 text-white font-bold py-4 px-10 rounded-xl hover:bg-green-400 transition-all font-display">
+                Call for Quote
+              </a>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </main>
+</MainLayout>

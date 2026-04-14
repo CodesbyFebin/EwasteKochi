@@ -1,0 +1,377 @@
+/* ============================================
+   SEO & Performance Optimized Global Styles
+   For Ewastekochi.com
+   ============================================ */
+
+/* 1. Font imports (already fast, but we add preload hints via link tags in HTML)
+   We keep as is — but ensure font-display: swap for better perceived performance */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+/* 2. Custom theme extensions (keeping your OKLCH colors, adding more utilities) */
+@theme {
+  /* Your existing theme variables remain unchanged */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 2rem;
+  --radius-4xl: 2.5rem;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* NEW: performance & spacing utilities */
+  --animate-duration-fast: 150ms;
+  --animate-duration-slow: 300ms;
+  --container-padding: 1rem;
+}
+
+/* 3. Root variables – already fine, but we add a few for critical rendering */
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.45 0.15 150);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --radius: 0.625rem;
+
+  /* SEO/UX: smooth scrolling (only for users who don't prefer reduced motion) */
+  scroll-behavior: smooth;
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.269 0 0);
+  --input: oklch(0.269 0 0);
+  --ring: oklch(0.439 0 0);
+}
+
+/* 4. Base layer – critical for stability (reduces layout shift) */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    /* Optimize rendering */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    /* Prevent layout shift due to scrollbar */
+    overflow-y: scroll;
+  }
+  /* Improve image rendering and prevent layout shift */
+  img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+  /* Set default focus styles for accessibility (SEO benefits from better UX) */
+  :focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+    border-radius: var(--radius);
+  }
+  /* Reduce motion for users who prefer it (helps Core Web Vitals) */
+  @media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* 5. Utility overrides and performance helpers */
+@layer utilities {
+  .container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    /* Contain layout for better paint performance */
+    contain: layout style paint;
+  }
+  
+  /* Critical above-the-fold content optimization */
+  .critical-content {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 500px;
+  }
+  
+  /* Lazy-loaded sections get a minimum height to reduce CLS */
+  .lazy-section {
+    min-height: 200px;
+    content-visibility: auto;
+    contain-intrinsic-size: auto 200px;
+  }
+  
+  /* Better tap targets on mobile (improves user engagement) */
+  button, a, [role="button"] {
+    touch-action: manipulation;
+  }
+  
+  /* Print styles – helps with PDF generation and SEO (search engines sometimes render print version) */
+  @media print {
+    body {
+      background: white;
+      color: black;
+      font-size: 12pt;
+    }
+    .no-print, header, footer, nav, .mobile-menu {
+      display: none !important;
+    }
+    a[href]::after {
+      content: " (" attr(href) ")";
+      font-size: 10pt;
+    }
+    .container {
+      max-width: 100%;
+      padding: 0;
+      margin: 0;
+    }
+  }
+  
+  /* Ensure text contrast meets WCAG AAA (indirect SEO via better user signals) */
+  .text-muted-foreground {
+    color: oklch(0.45 0 0); /* increased contrast for readability */
+  }
+  .dark .text-muted-foreground {
+    color: oklch(0.7 0 0);
+  }
+}
+
+/* 6. Animation keyframes (already included in tw-animate-css, but we add fallbacks) */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideInFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-in {
+  animation-fill-mode: both;
+  animation-duration: 200ms;
+}
+.fade-in {
+  animation-name: fadeIn;
+}
+.slide-in-from-top-5 {
+  animation-name: slideInFromTop;
+  animation-duration: 250ms;
+}
+
+/* 7. Critical CSS for header to prevent CLS (above the fold) */
+header {
+  contain: layout style paint;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  transition: background 0.3s ease, padding 0.3s ease;
+}
+/* Reserve space for header to avoid layout shift */
+body::before {
+  content: "";
+  display: block;
+  height: 80px; /* Adjust based on your header height */
+  margin-top: 0;
+}
+
+/* 8. Optimize font loading – swap ensures text remains visible */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
+}
+
+/* 9. Additional SEO boost: hide empty elements that might cause layout shifts */
+[hidden] {
+  display: none !important;
+}
+
+/* 10. Ensure interactive elements have enough spacing (improves user engagement signals) */
+@media (max-width: 640px) {
+  button, a, .clickable {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* 11. Icemorphism / Glassmorphism */
+.glass {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+.dark .glass {
+  background: rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.glass-card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  border-radius: 2rem;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+}
+.dark .glass-card {
+  background: rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+/* 12. Accessibility: High Contrast */
+.high-contrast {
+  --background: black;
+  --foreground: white;
+  --card: black;
+  --card-foreground: white;
+  --popover: black;
+  --popover-foreground: white;
+  --primary: yellow;
+  --primary-foreground: black;
+  --secondary: #333;
+  --secondary-foreground: white;
+  --muted: #222;
+  --muted-foreground: #eee;
+  --accent: #444;
+  --accent-foreground: white;
+  --border: white;
+  --input: white;
+  --ring: yellow;
+}
+.high-contrast * {
+  border-color: white !important;
+}
+.high-contrast .glass, .high-contrast .glass-card {
+  background: black !important;
+  backdrop-filter: none !important;
+  border: 2px solid white !important;
+}
+
+/* ============================================
+   ACCESSIBILITY - High Contrast, Reduced Motion & Focus
+   ============================================ */
+
+/* High Contrast Mode */
+.high-contrast,
+.high-contrast * {
+  --hc-bg: #000000;
+  --hc-text: #ffffff;
+  --hc-link: #ffff00;
+}
+.high-contrast {
+  background-color: var(--hc-bg) !important;
+  color: var(--hc-text) !important;
+}
+.high-contrast a,
+.high-contrast button,
+.high-contrast [role="button"] {
+  color: var(--hc-link) !important;
+  background-color: transparent !important;
+  border-color: var(--hc-text) !important;
+}
+.high-contrast input,
+.high-contrast textarea {
+  background-color: #000 !important;
+  color: #fff !important;
+  border: 2px solid #fff !important;
+}
+
+/* Reduced Motion */
+.reduce-motion,
+.reduce-motion * {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* Focus Indicators (WCAG 2.1 AA) */
+*:focus-visible {
+  outline: 3px solid #0066cc;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+.high-contrast *:focus-visible {
+  outline: 3px solid #ffff00;
+}
+
+/* Skip to content link */
+.skip-to-content {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #000;
+  color: #fff;
+  padding: 8px;
+  z-index: 1000;
+  text-decoration: none;
+}
+.skip-to-content:focus {
+  top: 0;
+}

@@ -1,0 +1,162 @@
+---
+// src/pages/itad-kochi.astro
+import MainLayout from '../layouts/MainLayout.astro';
+import { getServiceSchema, getFAQSchema, getBreadcrumbSchema, getProductSchema, getHowToSchema } from '@/lib/schema';
+import { services } from '../data/services';
+
+const itadService = services.find(s => s.slug === 'itad');
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'ITAD Kochi', url: '/itad-kochi' }
+];
+
+const serviceSchema = getServiceSchema({
+  title: "IT Asset Disposition (ITAD) Kochi",
+  description: "Professional ITAD services in Kochi. NIST 800-88 data destruction, chain-of-custody, Certificate of Destruction for RBI and ISO audits.",
+  url: "https://ewastekochi.com/itad-kochi"
+});
+
+const productSchema = getProductSchema({
+  name: "IT Asset Remarketing & Buyback",
+  description: "Recover up to 40% of your retired IT asset value through our certified remarketing program.",
+  price: "0",
+  priceCurrency: "INR"
+});
+
+const howToSchema = getHowToSchema();
+
+const faqSchema = itadService?.faqs 
+  ? getFAQSchema(itadService.faqs.map(f => ({ question: f.q, answer: f.a })))
+  : null;
+
+const breadcrumbSchema = getBreadcrumbSchema(breadcrumbs);
+
+const schemas = [serviceSchema, productSchema, howToSchema, breadcrumbSchema, ...(faqSchema ? [faqSchema] : [])];
+---
+
+<MainLayout 
+  title="ITAD Services Kochi | IT Asset Disposition | Certified & Auditable"
+  description="Kochi's #1 certified ITAD provider. NIST 800-88 data destruction, asset recovery, and DPDP Act compliance. Free assessment for Infopark businesses. Get a quote today."
+  schemas={schemas}
+>
+  <Breadcrumbs items={breadcrumbs} />
+
+  <main class="pt-24 pb-16">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <div class="bg-white rounded-3xl shadow-xl border border-zinc-100 p-8 lg:p-14">
+          <header class="text-center mb-16">
+            <div class="inline-flex items-center justify-center w-24 h-24 bg-blue-50 rounded-3xl mb-8">
+              <span class="text-4xl">🔐</span>
+            </div>
+            <h1 class="text-3xl md:text-5xl font-extrabold text-zinc-900 mb-4 font-display leading-tight">
+              IT Asset Disposition (ITAD) Kochi
+            </h1>
+            <p class="text-xl text-blue-600 font-bold uppercase tracking-widest">
+              Certified · Auditable · Compliant
+            </p>
+          </header>
+
+          <div class="prose prose-lg prose-zinc max-w-none mb-12">
+            <p class="text-lg text-zinc-600 leading-relaxed">
+              {itadService?.description}
+            </p>
+
+            {itadService?.longDescription && (
+              <div class="bg-zinc-50 border border-zinc-200 rounded-3xl p-8 my-10 shadow-sm font-medium leading-relaxed">
+                {itadService.longDescription}
+              </div>
+            )}
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-10 mb-16">
+            <div class="space-y-6">
+              <h3 class="text-2xl font-bold text-zinc-900 font-display">ITAD Lifecycle Process</h3>
+              <ul class="space-y-4">
+                {[
+                  "Asset inventory and RFID tagging",
+                  "NIST 800-88 certified destruction",
+                  "Secure chain-of-custody tracking",
+                  "Final audit-ready Certificate"
+                ].map(item => (
+                  <li class="flex items-start gap-3 text-zinc-600">
+                    <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div class="space-y-6">
+              <h3 class="text-2xl font-bold text-zinc-900 font-display">Why Enterprises Choose Us?</h3>
+              <ul class="space-y-4">
+                {[
+                  "KSPCB authorised processing facility",
+                  "RBI, SEBI, and ISO audit compliant",
+                  "Zero landfill environmental policy",
+                  "Asset remarketing for maximum ROI"
+                ].map(item => (
+                  <li class="flex items-start gap-3 text-zinc-600">
+                    <span class="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {itadService?.faqs && (
+            <section class="mb-16">
+              <h3 class="text-2xl font-bold text-zinc-900 mb-8 font-display">ITAD Common Questions</h3>
+              <div class="grid gap-4">
+                {itadService.faqs.slice(0, 8).map((faq) => (
+                  <div class="p-6 border border-zinc-200 rounded-2xl hover:border-blue-300 bg-zinc-50/20 transition-all">
+                    <h4 class="font-bold text-zinc-900 mb-3">{faq.q}</h4>
+                    <div class="text-zinc-600 text-sm leading-relaxed" set:html={faq.a} />
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Related ITAD Services (Distribute link equity) */}
+          <section class="mb-16 border-t border-zinc-100 pt-16">
+            <h3 class="text-2xl font-bold text-zinc-900 mb-8 font-display">Related IT Compliance Services</h3>
+            <div class="grid md:grid-cols-3 gap-6">
+              <a href="/hard-drive-destruction-kochi" class="p-6 border border-zinc-200 rounded-2xl hover:shadow-xl hover:border-green-400 transition-all group bg-zinc-50/30">
+                <div class="text-2xl mb-4 group-hover:scale-110 transition-transform">🔒</div>
+                <h4 class="font-bold text-zinc-900 text-sm mb-2">Hard Drive Shredding</h4>
+                <p class="text-zinc-500 text-xs">NIST certified physical destruction.</p>
+              </a>
+              <a href="/dpdp-act-kochi" class="p-6 border border-zinc-200 rounded-2xl hover:shadow-xl hover:border-green-400 transition-all group bg-zinc-50/30">
+                <div class="text-2xl mb-4 group-hover:scale-110 transition-transform">⚖️</div>
+                <h4 class="font-bold text-zinc-900 text-sm mb-2">DPDP Compliance</h4>
+                <p class="text-zinc-500 text-xs">₹250Cr penalty shield for corporates.</p>
+              </a>
+              <a href="/services/e-waste-recycling" class="p-6 border border-zinc-200 rounded-2xl hover:shadow-xl hover:border-green-400 transition-all group bg-zinc-50/30">
+                <div class="text-2xl mb-4 group-hover:scale-110 transition-transform">♻️</div>
+                <h4 class="font-bold text-zinc-900 text-sm mb-2">EPR Compliance</h4>
+                <p class="text-zinc-500 text-xs">KSPCB approved recycling reports.</p>
+              </a>
+            </div>
+          </section>
+
+          <footer class="bg-gradient-to-br from-blue-600 to-blue-800 rounded-3xl p-12 text-white text-center shadow-2xl relative overflow-hidden">
+            <div class="absolute -right-20 -bottom-20 text-[15rem] leading-none text-white/5 opacity-10">🏢</div>
+            <h3 class="text-3xl font-extrabold mb-6 font-display">Modernize Your IT Retirement</h3>
+            <p class="text-blue-100 mb-10 text-lg opacity-90 max-w-xl mx-auto">Get a professional ITAD assessment for your Kochi-based organization today.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center relative z-10">
+              <a href="https://wa.me/917500555454" class="bg-white text-blue-800 font-bold py-4 px-10 rounded-xl hover:bg-zinc-100 transition-all font-display shadow-lg">
+                Start ITAD Audit
+              </a>
+              <a href="tel:+917500555454" class="bg-blue-400 text-white font-bold py-4 px-10 rounded-xl hover:bg-blue-300 transition-all font-display">
+                Talk to Asset Expert
+              </a>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </main>
+</MainLayout>

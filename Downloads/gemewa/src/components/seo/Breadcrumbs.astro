@@ -1,0 +1,109 @@
+---
+// src/components/seo/Breadcrumbs.astro
+// Enhanced with dark mode, microdata, and automatic path handling
+
+export interface BreadcrumbItem {
+  name: string;
+  url: string;
+}
+
+export interface Props {
+  items?: BreadcrumbItem[];
+  hideOnHomepage?: boolean;
+  className?: string;
+}
+
+const { items, hideOnHomepage = true, className = "" } = Astro.props;
+
+// Helper: generate breadcrumbs from current URL path if no custom items provided
+const generateFromPath = (path: string): BreadcrumbItem[] => {
+  const segments = path.split('/').filter(Boolean);
+  const result: BreadcrumbItem[] = [{ name: 'Home', url: '/' }];
+  let current = '';
+  
+  segments.forEach((segment) => {
+    current += `/${segment}`;
+    let name = segment.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+    // Special handling for common abbreviations
+    const abbreviations: Record<string, string> = {
+      itad: 'ITAD',
+      dpdp: 'DPDP',
+      epc: 'EPC',
+      kspcb: 'KSPCB',
+      nist: 'NIST',
+      dod: 'DoD',
+    };
+    if (abbreviations[segment.toLowerCase()]) {
+      name = abbreviations[segment.toLowerCase()];
+    }
+    result.push({ name, url: current });
+  });
+  return result;
+};
+
+const breadcrumbItems = items || generateFromPath(Astro.url.pathname);
+const isHomepage = breadcrumbItems.length === 1 && breadcrumbItems[0].url === '/';
+
+// Don't render on homepage if hideOnHomepage is true
+if (hideOnHomepage && isHomepage) return;
+
+// Build BreadcrumbList schema (JSON-LD)
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": breadcrumbItems.map((item, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "name": item.name,
+    "item": `https://ewastekochi.com${item.url}`
+  }))
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+<nav 
+  aria-label="Breadcrumb" 
+  class={`bg-zinc-50 dark:bg-zinc-900/80 py-3 border-b border-zinc-200 dark:border-zinc-800 sticky top-[65px] md:top-[81px] z-40 ${className}`}
+>
+  <div class="container mx-auto px-4">
+    <ol class="flex flex-wrap items-center text-xs md:text-sm" itemscope itemtype="https://schema.org/BreadcrumbList">
+      {breadcrumbItems.map((item, index) => {
+        const isLast = index === breadcrumbItems.length - 1;
+        const position = index + 1;
+        return (
+          <li 
+            class="flex items-center" 
+            itemprop="itemListElement" 
+            itemscope 
+            itemtype="https://schema.org/ListItem"
+          >
+            {index > 0 && (
+              <svg class="w-4 h-4 mx-1 text-zinc-400 dark:text-zinc-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            )}
+            {isLast ? (
+              <span 
+                class="text-zinc-500 dark:text-zinc-400 font-medium" 
+                aria-current="page"
+                itemprop="name"
+              >
+                {item.name}
+              </span>
+            ) : (
+              <a 
+                href={item.url} 
+                class="text-zinc-700 dark:text-zinc-300 hover:text-green-600 dark:hover:text-green-400 transition-colors font-medium"
+                itemprop="item"
+              >
+                <span itemprop="name">{item.name}</span>
+              </a>
+            )}
+            <meta itemprop="position" content={String(position)} />
+          </li>
+        );
+      })}
+    </ol>
+  </div>
+</nav>
