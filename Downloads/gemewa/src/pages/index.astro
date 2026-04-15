@@ -56,18 +56,39 @@ const schema = {
         "latitude": 9.9558,
         "longitude": 76.3409
       },
-      "openingHoursSpecification": [{
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-        "opens": "00:00",
-        "closes": "23:59"
-      }],
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          "opens": "08:00",
+          "closes": "20:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Sunday",
+          "opens": "10:00",
+          "closes": "16:00"
+        }
+      ],
       "telephone": "+917500555454",
       "priceRange": "₹₹",
       "aggregateRating": {
         "@type": "AggregateRating",
         "ratingValue": "4.9",
-        "reviewCount": "128"
+        "reviewCount": "243"
+      },
+      "areaServed": ["Kochi","Ernakulam","Kakkanad","Edapally","Thrippunithura","Aluva","Vyttila","Palarivattom","Fort Kochi","Kaloor"],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "ITAD & E-Waste Services",
+        "itemListElement": [
+          {"@type": "Offer","itemOffered": {"@type": "Service","name": "Corporate ITAD"}},
+          {"@type": "Offer","itemOffered": {"@type": "Service","name": "NIST 800-88 Data Destruction"}},
+          {"@type": "Offer","itemOffered": {"@type": "Service","name": "Hard Drive Shredding"}},
+          {"@type": "Offer","itemOffered": {"@type": "Service","name": "Laptop Buyback"}},
+          {"@type": "Offer","itemOffered": {"@type": "Service","name": "Phone Buyback"}},
+          {"@type": "Offer","itemOffered": {"@type": "Service","name": "Office Clearance"}}
+        ]
       }
     },
     {
@@ -128,8 +149,8 @@ const processSteps = [
 ---
 
 <MainLayout 
-  title="EWaste Kochi | Certified E-Waste Recycling | Free Pickup"
-  description="KSPCB-authorized e-waste recycling in Kochi. Free corporate pickup, NIST 800-88 certified data destruction, laptop buyback, and EPR-compliant recycling across Kerala."
+  title="NIST 800-88 ITAD & E-Waste Recycling Kochi | EWasteKochi.in – Kerala's #1 Certified Facility"
+  description="Kerala's #1 certified ITAD & e-waste recycling in Kochi. NIST 800-88 data destruction, hard drive shredding, laptop buyback, free pickup. Certificate of Destruction every job. DPDP Act 2023 compliant."
   schema={schema}
   canonical="https://ewastekochi.com/"
   hreflangs={[
