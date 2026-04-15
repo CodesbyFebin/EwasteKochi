@@ -1,0 +1,80 @@
+---
+// src/components/seo/SEOInternalLinks.astro
+import { services } from '@/data/services';
+import { getRecentBlogs } from '@/data/blogs';
+import { pillars } from '@/data/pillars';
+
+interface Props {
+  currentSlug?: string;
+  category?: string;
+}
+
+const { currentSlug, category } = Astro.props;
+
+// Algorithm: find 5 relevant services, 4 blog posts, and 2 pillars
+const relevantServices = services
+  .filter(s => s.slug !== currentSlug)
+  .sort(() => 0.5 - Math.random()) // Randomize for distribution across programmatic pages
+  .slice(0, 5);
+
+const relevantBlogs = getRecentBlogs(20)
+  .sort(() => 0.5 - Math.random())
+  .slice(0, 4);
+
+const topPillars = (pillars || [])
+  .sort(() => 0.5 - Math.random())
+  .slice(0, 2);
+---
+
+<section class="py-16 bg-white dark:bg-zinc-900 border-t border-zinc-100 dark:border-zinc-800">
+  <div class="container mx-auto px-4">
+    <div class="grid md:grid-cols-3 gap-12">
+      <!-- Services Pillar -->
+      <div>
+        <h4 class="text-sm font-bold text-zinc-900 dark:text-white uppercase tracking-widest mb-6">Expert Services</h4>
+        <ul class="space-y-3">
+          {relevantServices.map(s => (
+            <li>
+              <a href={`/services/${s.slug}`} class="text-zinc-500 hover:text-green-600 dark:text-zinc-400 dark:hover:text-green-400 font-medium transition-colors">
+                {s.name} <span class="text-[10px] bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 rounded ml-2">Certified</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Resources Pillar -->
+      <div>
+        <h4 class="text-sm font-bold text-zinc-900 dark:text-white uppercase tracking-widest mb-6">Latest Resources</h4>
+        <ul class="space-y-3">
+          {relevantBlogs.map(b => (
+            <li>
+              <a href={`/blog/${b.slug}`} class="text-zinc-500 hover:text-green-600 dark:text-zinc-400 dark:hover:text-green-400 font-medium transition-colors line-clamp-1">
+                {b.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Authority Pillars -->
+      <div>
+        <h4 class="text-sm font-bold text-zinc-900 dark:text-white uppercase tracking-widest mb-6">Global Compliance</h4>
+        <ul class="space-y-3">
+           {topPillars.map(p => (
+            <li>
+              <a href={`/pillars/${p.slug}`} class="text-zinc-500 hover:text-green-600 dark:text-zinc-400 dark:hover:text-green-400 font-medium transition-colors">
+                {p.title}
+              </a>
+            </li>
+          ))}
+          <li>
+            <a href="/dpdp-act-kochi" class="text-zinc-900 dark:text-white font-bold hover:text-green-600 transition-colors">
+               DPDP Act 2023 Guide →
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

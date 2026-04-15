@@ -1,0 +1,10 @@
+<div class="flex items-center gap-1.5 p-1 bg-zinc-100 dark:bg-zinc-800 rounded-xl border border-zinc-200 dark:border-zinc-700">
+  {['EN', 'ML', 'TA', 'HI'].map(lang => (
+    <a 
+      href={lang === 'EN' ? '/' : "/" + lang.toLowerCase() + "/"} 
+      class="px-2.5 py-1 text-[10px] font-bold rounded-lg transition-all hover:bg-white dark:hover:bg-zinc-900 hover:text-forest active:scale-95"
+    >
+      {lang}
+    </a>
+  ))}
+</div>

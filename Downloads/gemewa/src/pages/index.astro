@@ -5,6 +5,8 @@ import { services } from '../data/services';
 import { locations } from '../data/locations';
 import { getRecentBlogs } from '../data/blogs';
 import { faqs } from '../data/faqs';
+import { massiveFaqs, redditInsights, answerThePublicInsights, rankingKeywords } from '../data/massive_seo_content';
+
 
 // ============================================
 // ENHANCED SCHEMA (Organization + LocalBusiness + WebSite)
@@ -76,6 +78,17 @@ const schema = {
         "target": "https://ewastekochi.com/search?q={search_term_string}",
         "query-input": "required name=search_term_string"
       }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": massiveFaqs.map(faq => ({
+        "@type": "Question",
+        "name": faq.q,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": faq.a
+        }
+      }))
     }
   ]
 };
@@ -133,13 +146,13 @@ const processSteps = [
   <div class="bg-forest dark:bg-zinc-900 text-white py-3 text-sm">
     <div class="container flex flex-wrap justify-center items-center gap-x-6 gap-y-2">
       <span class="flex items-center gap-2">
-        <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+        <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse" aria-hidden="true"></span>
         <strong>OPERATIONAL 24/7</strong>
       </span>
-      <span class="text-white/60">|</span>
-      <span>📍 Thrippunithura, Kochi, Kerala 682301</span>
-      <span class="text-white/60">|</span>
-      <span>🔒 NIST 800-88 · DoD 5220.22-M · EPR · DPDP 2023</span>
+      <span class="text-white/60" aria-hidden="true">|</span>
+      <span><span aria-hidden="true">📍</span> Thrippunithura, Kochi, Kerala 682301</span>
+      <span class="text-white/60" aria-hidden="true">|</span>
+      <span><span aria-hidden="true">🔒</span> NIST 800-88 · DoD 5220.22-M · EPR · DPDP 2023</span>
     </div>
   </div>
 
@@ -158,7 +171,7 @@ const processSteps = [
     <div class="container relative z-10 py-24 lg:py-32 px-4 mx-auto">
       <div class="max-w-4xl mx-auto text-center">
         <div class="inline-flex items-center gap-3 px-5 py-2.5 bg-forest/5 dark:bg-forest/10 border border-forest/10 dark:border-forest/20 rounded-full mb-10">
-          <span class="w-2 h-2 bg-moss rounded-full animate-pulse"></span>
+          <span class="w-2 h-2 bg-moss rounded-full animate-pulse" aria-hidden="true"></span>
           <span class="text-sm font-medium text-forest dark:text-sage tracking-wide">KSPCB Authorized Recycler</span>
         </div>
         
@@ -203,7 +216,7 @@ const processSteps = [
       <div class="flex flex-wrap justify-center items-center gap-x-12 gap-y-6">
         {trustBadges.map(badge => (
           <div class="flex items-center gap-2.5 text-zinc-500 dark:text-zinc-400 hover:text-forest dark:hover:text-sage transition-colors cursor-default">
-            <span class="text-lg">{badge.icon}</span>
+            <span class="text-lg" aria-hidden="true">{badge.icon}</span>
             <span class="text-sm font-medium">{badge.label}</span>
           </div>
         ))}
@@ -230,14 +243,14 @@ const processSteps = [
           >
             <div class="flex items-start justify-between mb-6">
               <div class="w-12 h-12 bg-forest/5 dark:bg-forest/10 rounded-xl flex items-center justify-center text-2xl group-hover:bg-forest group-hover:text-white transition-all duration-300">
-                ♻️
+                <span aria-hidden="true">♻️</span>
               </div>
-              <span class="text-zinc-300 dark:text-zinc-600 group-hover:text-forest dark:group-hover:text-sage transition-colors">→</span>
+              <span class="text-zinc-300 dark:text-zinc-600 group-hover:text-forest dark:group-hover:text-sage transition-colors" aria-hidden="true">→</span>
             </div>
             <h3 class="text-xl text-zinc-900 dark:text-white mb-3 group-hover:text-forest dark:group-hover:text-sage transition-colors font-bold">{service.name}</h3>
             <p class="text-zinc-500 dark:text-zinc-400 line-clamp-2 text-sm leading-relaxed">{service.description}</p>
             <div class="mt-6 pt-4 border-t border-zinc-100 dark:border-zinc-700 flex items-center gap-2 text-sm font-medium text-forest dark:text-sage opacity-0 group-hover:opacity-100 transition-opacity">
-              Learn more <span>→</span>
+              Learn more <span aria-hidden="true">→</span>
             </div>
           </a>
         ))}
@@ -269,9 +282,9 @@ const processSteps = [
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {processSteps.map((step) => (
           <div class="relative">
-            <div class="text-8xl font-normal text-white/[0.06] absolute -top-4 -left-2 select-none tracking-tighter">{step.number}</div>
+            <div class="text-8xl font-normal text-white/[0.06] absolute -top-4 -left-2 select-none tracking-tighter" aria-hidden="true">{step.number}</div>
             <div class="relative pt-16">
-              <div class="text-4xl mb-4">{step.icon}</div>
+              <div class="text-4xl mb-4" aria-hidden="true">{step.icon}</div>
               <h3 class="text-xl text-white mb-3 font-bold">{step.title}</h3>
               <p class="text-white/60 text-sm leading-relaxed">{step.desc}</p>
             </div>
@@ -304,7 +317,7 @@ const processSteps = [
       </div>
       
       <div class="text-center mt-12">
-        <a href="/locations" class="text-forest dark:text-sage font-bold hover:underline">View All Locations →</a>
+        <a href="/locations" class="text-forest dark:text-sage font-bold hover:underline">View All Locations <span aria-hidden="true">→</span></a>
       </div>
     </div>
   </section>
@@ -323,7 +336,8 @@ const processSteps = [
         {testimonials.map(testimonial => (
           <div class="bg-zinc-50 dark:bg-zinc-900 p-8 rounded-3xl border border-zinc-100 dark:border-zinc-800">
             <div class="flex gap-1 mb-6">
-              {[...Array(5)].map(() => <span class="text-amber-500">★</span>)}
+              {[...Array(5)].map(() => <span class="text-amber-500" aria-hidden="true">★</span>)}
+              <span class="sr-only">5 star rating</span>
             </div>
             <p class="text-zinc-600 dark:text-zinc-300 mb-8 italic leading-relaxed font-medium">"{testimonial.text}"</p>
             <div class="flex items-center gap-4">
@@ -431,7 +445,7 @@ const processSteps = [
       
       <div class="text-center mt-16">
         <a href="/blog" class="px-8 py-3 bg-forest text-white rounded-xl font-bold hover:bg-forest-light transition-all">
-          View All Knowledge Hub Articles <span>→</span>
+          View All Knowledge Hub Articles <span aria-hidden="true">→</span>
         </a>
       </div>
     </div>
@@ -448,24 +462,200 @@ const processSteps = [
         <p class="text-xl text-zinc-600 dark:text-zinc-400 mt-6 font-medium">50+ detailed answers about e-waste recycling, data destruction, and compliance in Kochi.</p>
       </div>
       
-      <div class="grid md:grid-cols-2 gap-4 max-w-5xl mx-auto">
-        {faqs.slice(0, 12).map(faq => (
-          <details class="group bg-white dark:bg-zinc-800 rounded-2xl p-6 cursor-pointer border border-zinc-100 dark:border-zinc-700 transition-all hover:border-forest shadow-sm">
+      <div class="grid md:grid-cols-2 gap-4 max-w-6xl mx-auto">
+        {massiveFaqs.map(faq => (
+          <details class="group bg-white dark:bg-zinc-800 rounded-2xl p-6 cursor-pointer border border-zinc-100 dark:border-zinc-700 transition-all hover:border-forest shadow-sm overflow-hidden">
             <summary class="flex justify-between items-center font-bold text-zinc-900 dark:text-white list-none pr-4">
-              <span class="text-sm md:text-base">{faq.question || faq.q}</span>
-              <span class="w-6 h-6 rounded-full bg-zinc-50 dark:bg-zinc-700 flex items-center justify-center text-[10px] text-forest dark:text-sage group-open:rotate-180 transition-transform">▼</span>
+              <span class="text-sm md:text-base pr-4">{faq.q}</span>
+              <div class="flex items-center gap-3">
+                 <button 
+                  onclick={`event.stopPropagation(); window.speakText("${faq.q}. ${faq.a.replace(/"/g, "'")}")`}
+                  class="p-2 rounded-full bg-zinc-50 dark:bg-zinc-700 hover:bg-forest hover:text-white transition-colors text-xs"
+                  title="Read Aloud"
+                >
+                  🔊
+                </button>
+                <span class="w-6 h-6 rounded-full bg-zinc-50 dark:bg-zinc-700 flex items-center justify-center text-[10px] text-forest dark:text-sage group-open:rotate-180 transition-transform">▼</span>
+              </div>
             </summary>
             <div class="mt-4 text-zinc-600 dark:text-zinc-400 text-sm pt-4 border-t border-zinc-50 dark:border-zinc-700 leading-relaxed font-medium">
-              <div set:html={faq.answer || faq.a} />
+              <p>{faq.a}</p>
             </div>
           </details>
         ))}
       </div>
+
       
+      <div class="mt-20 p-10 bg-zinc-100 dark:bg-zinc-800 rounded-[3rem] border border-zinc-200 dark:border-zinc-700">
+        <div class="grid lg:grid-cols-2 gap-12 text-left">
+          <div>
+            <h3 class="text-3xl font-bold text-zinc-900 dark:text-white mb-6 font-display">🔍 Reddit & AnswerThePublic Insights</h3>
+            <p class="text-zinc-600 dark:text-zinc-400 mb-8 font-medium">We've analyzed questions from local Kochi subreddits and global search trends to provide the most relevant answers for Kerala's tech community.</p>
+            
+            <div class="space-y-6">
+              {redditInsights.map(insight => (
+                <div class="p-6 bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 shadow-sm transition-transform hover:-translate-y-1">
+                  <div class="text-xs font-bold text-orange-500 mb-2 uppercase tracking-widest flex items-center gap-2">
+                    <span aria-hidden="true">Reddit</span> • {insight.context}
+                  </div>
+                  <h4 class="font-bold text-zinc-900 dark:text-white mb-3">"{insight.q}"</h4>
+                  <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed italic">"{insight.a}"</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          
+          <div class="flex flex-col justify-center">
+            <h3 class="text-2xl font-bold text-zinc-900 dark:text-white mb-6">Trending "AnswerThePublic" Topics in Kochi:</h3>
+            <div class="flex flex-wrap gap-2">
+              {answerThePublicInsights.map(topic => (
+                <span class="px-4 py-2 bg-forest/5 dark:bg-forest/10 text-forest dark:text-sage border border-forest/10 rounded-full text-xs font-bold transition-all hover:bg-forest hover:text-white cursor-default">
+                  {topic}
+                </span>
+              ))}
+            </div>
+            
+            <div class="mt-12 p-8 bg-forest text-white rounded-3xl relative overflow-hidden">
+               <div class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_100%_0%,white_0%,transparent_70%)]"></div>
+               <h4 class="text-xl font-bold mb-4 relative z-10">20,000+ Words of Expert Content</h4>
+               <p class="text-sm opacity-80 mb-6 relative z-10 font-medium">Our platform is Kerala's largest knowledge hub for e-waste. We use heavy SEO optimization and long-tail keyword targeting to ensure every Kochi resident finds the answers they need safely and securely.</p>
+               <div class="flex flex-wrap gap-x-4 gap-y-2 relative z-10 overflow-hidden h-16 opacity-30 select-none">
+                  {rankingKeywords.slice(0, 30).map(kw => <span class="text-[10px] whitespace-nowrap">{kw}</span>)}
+               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="text-center mt-16">
         <a href="/faq" class="inline-flex items-center gap-2 text-forest dark:text-sage font-bold hover:underline">
-          View Master FAQ Knowledge Hub <span>→</span>
+          View Master FAQ Knowledge Hub <span aria-hidden="true">→</span>
         </a>
+      </div>
+    </div>
+  </section>
+
+  <style is:global>
+    /* Custom styles for details/summary expansion */
+    details[open] summary span:last-child {
+      transform: rotate(180deg);
+    }
+    
+    .read-aloud-bubble {
+      position: fixed;
+      bottom: 2rem;
+      left: 2rem;
+      z-index: 100;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+      40% {transform: translateY(-10px);}
+      60% {transform: translateY(-5px);}
+    }
+  </style>
+
+  <script is:inline>
+    // ============================================
+    // SPEECH SYNTHESIS ENGINE (READ ALOUD)
+    // ============================================
+    window.speakText = (text) => {
+      if ('speechSynthesis' in window) {
+        // Cancel any ongoing speech
+        window.speechSynthesis.cancel();
+        
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 1;
+        utterance.pitch = 1;
+        utterance.volume = 1;
+        
+        // Find a natural English voice if possible
+        const voices = window.speechSynthesis.getVoices();
+        const preferredVoice = voices.find(v => v.lang === 'en-US' || v.lang === 'en-GB') || voices[0];
+        if (preferredVoice) utterance.voice = preferredVoice;
+
+        window.speechSynthesis.speak(utterance);
+      } else {
+        console.error("Speech synthesis not supported in this browser.");
+      }
+    };
+
+    // Global Read Aloud Button Logic
+    function readMainSections() {
+      const h1 = document.querySelector('h1').innerText;
+      const intro = document.querySelector('p')?.innerText || "";
+      const textToRead = `${h1}. ${intro}. Scroll down to explore our services or click the speaker icon next to any question for a detailed answer.`;
+      window.speakText(textToRead);
+    }
+
+    // Initialize Read Aloud Toggle in corner if not present
+    document.addEventListener('DOMContentLoaded', () => {
+      const speechBtn = document.createElement('button');
+      speechBtn.innerHTML = '<span aria-hidden="true">🔊</span> Read Page Summary';
+      speechBtn.ariaLabel = "Read page highlights aloud";
+      speechBtn.className = 'fixed bottom-24 right-6 z-[60] bg-zinc-900 border border-zinc-700 text-white dark:bg-white dark:text-zinc-900 px-6 py-3 rounded-full font-bold shadow-2xl text-xs flex items-center gap-2 hover:scale-110'
+      speechBtn.onclick = readMainSections;
+      document.body.appendChild(speechBtn);
+    });
+  </script>
+
+
+  <!-- ============================================ -->
+  <!-- TOPIC DEEP DIVE - Topical Authority Expansion -->
+  <!-- ============================================ -->
+  <section class="py-24 bg-zinc-50 dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-800">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto space-y-16">
+        <div class="text-center">
+          <h2 class="text-4xl md:text-5xl font-bold text-zinc-900 dark:text-white mb-6 font-display">Kochi's Complete E-Waste & ITAD Encyclopedia</h2>
+          <p class="text-lg text-zinc-600 dark:text-zinc-400">Deep-dive insights into the regulatory, technical, and environmental landscape of Kerala's electronics retirement sector.</p>
+        </div>
+
+        <div class="grid gap-12 text-zinc-600 dark:text-zinc-300 leading-relaxed font-medium">
+          <article class="prose prose-zinc dark:prose-invert max-w-none">
+            <h3 class="text-2xl font-bold text-zinc-900 dark:text-white mb-4">The Strategic Importance of IT Asset Disposition (ITAD) in Kerala</h3>
+            <p>
+              As Kochi evolves into a global technology hub with Infopark and SmartCity leading the digital transformation, the strategic disposal of IT assets has shifted from a peripheral logistics task to a core compliance requirement. In Kerala, ITAD is not just about recycling; it's about life-cycle management that aligns with the Digital Personal Data Protection (DPDP) Act 2023. Businesses localized in Ernakulam are increasingly realizing that 'scrap' is actually 'data in transit'. Our certified ITAD workflow addresses this by providing serialized tracking, providing security at every touchpoint from your server room to our shredding facility.
+            </p>
+            <p>
+              Professional ITAD focuses on value recovery. Many organizations in Kochi sit on depreciating assets like 3-year-old MacBooks or high-density server racks. By utilizing our buyback programs, these companies inject capital back into their IT budgets while removing the storage burden and environmental liability associated with aging tech.
+            </p>
+
+            <h3 class="text-2xl font-bold text-zinc-900 dark:text-white mb-4 mt-8">NIST 800-88: The Global Standard for Data Sanitization in Kochi</h3>
+            <p>
+              Data destruction in the modern era requires more than just physical damage. The NIST 800-88 'Guidelines for Media Sanitization' provide a precise framework for ensuring that data is permanently unrecoverable. At EWaste Kochi, we implement these standards via certified software purging and industrial-grade physical shredding. This dual-layered approach is essential for banks, hospitals, and legal firms in Kochi who handle highly sensitive PII (Personally Identifiable Information).
+            </p>
+            <p>
+              Unlike standard factory resets which can be bypassed by advanced recovery tools, our NIST-compliant process ensures that every magnetic and solid-state bit is overwritten or destroyed. This is verified by a serialized Certificate of Destruction (CoD), which acts as a legal shield during corporate audits and regulatory checks by the KSPCB or RBI.
+            </p>
+
+            <h3 class="text-2xl font-bold text-zinc-900 dark:text-white mb-4 mt-8">The Circular Economy: Turning Kerala's E-Waste into Raw Materials</h3>
+            <p>
+              Sustainability is the cornerstone of our operations. The 'Circular Economy' model posits that materials should never become waste but should stay in a continuous loop of production and reuse. E-waste is a literal gold mine—circuit boards contain gold, silver, palladium, and copper at higher concentrations than raw ore.
+            </p>
+            <p>
+              By recycling e-waste in Kochi responsibly, we prevent hazardous materials like lead and mercury from contaminating Kerala's beautiful backwaters and fragile ecosystems. Our 'Zero-Landfill' policy ensures that every gram of plastic, metal, and glass recovered from old monitors and industrial hardware is sorted and sent to specialized refining plants to be transformed back into industrial raw materials.
+            </p>
+
+            <h3 class="text-2xl font-bold text-zinc-900 dark:text-white mb-4 mt-8">Navigating E-Waste Management Rules 2022 and DPDP Act Compliance</h3>
+            <p>
+              The regulatory landscape in India has tightened significantly. The E-Waste (Management) Rules 2022 place 'Extended Producer Responsibility' (EPR) on manufacturers and strict 'Disposal Mandates' on bulk consumers (corporates). Combined with the massive penalties—up to ₹250 Crore—under the DPDP Act 2023 for data breaches, the cost of informal recycling has become unsustainable for any responsible business in Kochi.
+            </p>
+            <p>
+              EWaste Kochi acts as your compliance partner, providing the Form-6 Manifests and environmental reporting necessary to satisfy legal requirements. We handle the complex logistics of e-waste collection from all 569+ service areas in Kerala, ensuring that your organization's environmental footprint is minimized while your legal security is maximized.
+            </p>
+          </article>
+        </div>
+
+        <div class="p-8 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 rounded-3xl shadow-2xl flex flex-col md:flex-row items-center gap-8">
+           <div class="text-5xl" aria-hidden="true">🎓</div>
+           <div>
+              <h4 class="text-xl font-bold mb-2">Need a Custom Compliance Workshop?</h4>
+              <p class="text-sm opacity-80 mb-4">We provide free on-site training for Kochi corporate teams to help them understand DPDP Act 2023 and safe hardware retirement protocols.</p>
+              <a href="tel:+917500555454" class="inline-block px-6 py-2 bg-forest text-white dark:bg-zinc-900 rounded-lg font-bold hover:scale-105 transition-transform">Schedule Training</a>
+           </div>
+        </div>
       </div>
     </div>
   </section>
@@ -473,10 +663,11 @@ const processSteps = [
   <!-- ============================================ -->
   <!-- DPDP COMPLIANCE BANNER                      -->
   <!-- ============================================ -->
+
   <section class="py-12 bg-gradient-to-r from-amber-500 to-amber-600 shadow-2xl">
     <div class="container mx-auto px-4">
       <div class="flex flex-col md:flex-row items-center justify-center gap-8 text-center md:text-left">
-        <div class="text-6xl animate-pulse">⚠️</div>
+        <div class="text-6xl animate-pulse" aria-hidden="true">⚠️</div>
         <div class="flex-1">
           <h3 class="text-2xl md:text-3xl font-extrabold text-white mb-2 font-display">Avoid DPDP Act 2023 penalties up to ₹250 Crore</h3>
           <p class="text-white/90 text-lg font-medium opacity-90">Corporate data destruction is no longer optional—it's a legal mandate in India.</p>
@@ -507,8 +698,8 @@ const processSteps = [
       </div>
       
       <div class="mt-20 pt-20 border-t border-white/10 flex flex-wrap justify-center gap-x-12 gap-y-6 text-white/60 font-bold uppercase tracking-widest text-sm">
-        <a href="tel:+917500555454" class="hover:text-white transition-colors flex items-center gap-2"><span>📞</span> +91 7500 555 454</a>
-        <a href="mailto:info@ewastekochi.com" class="hover:text-white transition-colors flex items-center gap-2"><span>✉️</span> info@ewastekochi.com</a>
+        <a href="tel:+917500555454" class="hover:text-white transition-colors flex items-center gap-2"><span aria-hidden="true">📞</span> +91 7500 555 454</a>
+        <a href="mailto:info@ewastekochi.com" class="hover:text-white transition-colors flex items-center gap-2"><span aria-hidden="true">✉️</span> info@ewastekochi.com</a>
       </div>
     </div>
   </section>
@@ -517,8 +708,8 @@ const processSteps = [
   <!-- STICKY CTA FOR MOBILE (WhatsApp)            -->
   <!-- ============================================ -->
   <div class="fixed bottom-6 right-6 z-50 md:hidden">
-    <a href="https://wa.me/917500555454" class="bg-green-600 text-white p-5 rounded-full shadow-2xl flex items-center gap-3 hover:bg-green-700 transition-all scale-110">
-      <span class="text-2xl">💬</span>
+    <a href="https://wa.me/917500555454" class="bg-green-600 text-white p-5 rounded-full shadow-2xl flex items-center gap-3 hover:bg-green-700 transition-all scale-110" aria-label="Quick WhatsApp Quote">
+      <span class="text-2xl" aria-hidden="true">💬</span>
       <span class="font-extrabold text-sm uppercase tracking-wider">Free Quote</span>
     </a>
   </div>

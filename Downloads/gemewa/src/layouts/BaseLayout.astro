@@ -144,8 +144,9 @@ const globalGraph = getFullGraphSchema();
     @import '../styles/global.css';
   </style>
 
-  <!-- Theme Initialization Script -->
+  <!-- Global Scripts (Speech, Theme, Metrics) -->
   <script is:inline>
+    // 1. Theme Initialization
     const theme = (() => {
       if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
         return localStorage.getItem('theme');
@@ -161,8 +162,26 @@ const globalGraph = getFullGraphSchema();
     } else {
       document.documentElement.classList.remove('dark');
     }
+
+    // 2. Global Speech Synthesis Engine
+    window.speakText = (text) => {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 1.1;
+        utterance.pitch = 1;
+        utterance.volume = 1;
+        const voices = window.speechSynthesis.getVoices();
+        const preferredVoice = voices.find(v => v.lang === 'en-US' || v.lang === 'en-GB') || voices[0];
+        if (preferredVoice) utterance.voice = preferredVoice;
+        window.speechSynthesis.speak(utterance);
+      } else {
+        console.error("Speech synthesis not supported.");
+      }
+    };
   </script>
 </head>
+
 <body class="bg-cream text-zinc-900 dark:text-zinc-50 font-sans antialiased selection:bg-forest selection:text-white">
   <slot />
 </body>

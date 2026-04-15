@@ -15,18 +15,18 @@ const QUICK_REPLIES = [
 
 // Bot responses for free-text mode
 const BOT_RESPONSES: Record<string, { text: string; next: string | null }> = {
-  "sell": { text: "Great! We buy old laptops, phones, and tablets at the best prices in Kochi. Same-day cash or UPI payment with guaranteed data wipe. What device do you want to sell?", next: "device" },
-  "laptop": { text: "We pay top price for laptops and MacBooks! Get an instant quote by calling us or sharing your device model on WhatsApp.", next: "cta" },
-  "phone": { text: "We buy all smartphone brands — iPhone, Samsung, OnePlus, Xiaomi. All data wiped before resale. Want an instant quote?", next: "cta" },
+  sell: { text: "Great! We buy old laptops, phones, and tablets at the best prices in Kochi. Same-day cash or UPI payment with guaranteed data wipe. What device do you want to sell?", next: "device" },
+  laptop: { text: "We pay top price for laptops and MacBooks! Get an instant quote by calling us or sharing your device model on WhatsApp.", next: "cta" },
+  phone: { text: "We buy all smartphone brands — iPhone, Samsung, OnePlus, Xiaomi. All data wiped before resale. Want an instant quote?", next: "cta" },
   "hard drive": { text: "We offer NIST 800-88 certified data wiping AND physical shredding. Certificate of Destruction issued for every device. Perfect for DPDP Act compliance. Starting ₹200/unit.", next: "cta" },
-  "shred": { text: "Physical hard drive shredding starts at ₹250/drive. We also offer on-site shredding for banks and hospitals. Certificate of Destruction included.", next: "cta" },
-  "dpdp": { text: "The DPDP Act 2023 mandates certified data destruction when retiring IT assets — penalties up to ₹250 Crore. We provide full compliance documentation. Want to know more?", next: "cta" },
-  "compliance": { text: "EWaste Kochi is fully DPDP Act 2023 compliant. We provide Certificate of Destruction, chain-of-custody logs, and audit-ready reports.", next: "cta" },
-  "pickup": { text: "Free pickup available for bulk orders (10+ devices) across all Kochi and Ernakulam areas. Same-day and scheduled options available!", next: "cta" },
-  "quote": { text: "For a free instant quote, WhatsApp us at +91 75005 555454 or call directly. We respond within 15 minutes during business hours!", next: "cta" },
-  "certificate": { text: "We issue a Certificate of Destruction (CoD) for every job. It includes serial numbers, destruction method, and compliance reference. Required for DPDP Act 2023.", next: "cta" },
-  "price": { text: "Data destruction starts at ₹200/unit. Hard drive shredding from ₹250/drive. Laptop buyback varies by model — get an instant valuation!", next: "cta" },
-  "cta": { text: "Ready to get started? You can call or WhatsApp us right now for a free quote and free pickup scheduling.", next: null },
+  shred: { text: "Physical hard drive shredding starts at ₹250/drive. We also offer on-site shredding for banks and hospitals. Certificate of Destruction included.", next: "cta" },
+  dpdp: { text: "The DPDP Act 2023 mandates certified data destruction when retiring IT assets — penalties up to ₹250 Crore. We provide full compliance documentation. Want to know more?", next: "cta" },
+  compliance: { text: "EWaste Kochi is fully DPDP Act 2023 compliant. We provide Certificate of Destruction, chain-of-custody logs, and audit-ready reports.", next: "cta" },
+  pickup: { text: "Free pickup available for bulk orders (10+ devices) across all Kochi and Ernakulam areas. Same-day and scheduled options available!", next: "cta" },
+  quote: { text: "For a free instant quote, WhatsApp us at +91 75005 555454 or call directly. We respond within 15 minutes during business hours!", next: "cta" },
+  certificate: { text: "We issue a Certificate of Destruction (CoD) for every job. It includes serial numbers, destruction method, and compliance reference. Required for DPDP Act 2023.", next: "cta" },
+  price: { text: "Data destruction starts at ₹200/unit. Hard drive shredding from ₹250/drive. Laptop buyback varies by model — get an instant valuation!", next: "cta" },
+  cta: { text: "Ready to get started? You can call or WhatsApp us right now for a free quote and free pickup scheduling.", next: null },
 };
 
 const getResponse = (input: string) => {
@@ -52,16 +52,16 @@ const getEstimatedPrice = (deviceType: string) => {
 export default function AIChatBot() {
   const [isOpen, setIsOpen] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
-  const [messages, setMessages] = useState<{role: 'bot' | 'user', text: string}[]>([]);
+  const [messages, setMessages] = useState<{ role: "bot" | "user", text: string }[]>([]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
-  
+
   // Funnel state
   const [step, setStep] = useState<"greeting" | "askName" | "askPhone" | "askDevice" | "results" | "chat">("greeting");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [deviceType, setDeviceType] = useState("");
-  
+
   const messagesEnd = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -80,7 +80,7 @@ export default function AIChatBot() {
       if (e.clientY <= 0 && !isOpen && !showPopup) setShowPopup(true);
     };
     document.addEventListener("mouseleave", exitIntent);
-    
+
     return () => {
       clearTimeout(timer);
       document.removeEventListener("mouseleave", exitIntent);
@@ -117,7 +117,7 @@ export default function AIChatBot() {
   };
 
   const openWhatsApp = () => {
-    const message = `Hi EWaste Kochi! I'm ${name} (📞 ${phone}). I'm interested in ${deviceType ? `${deviceType} disposal` : "e-waste recycling"}. Please send me a free quote and schedule pickup.`;
+    const message = `Hi EWaste Kochi! I'm ${name} (📞 ${phone}). I'm interested in ${deviceType ? `${deviceType} disposal` : "e-waste recycling"}. Please send me an instant quote and free pickup details.`;
     const encoded = encodeURIComponent(message);
     window.open(`https://wa.me/91${CONTACT_PHONE}?text=${encoded}`, "_blank");
     setIsOpen(false);
@@ -153,15 +153,15 @@ export default function AIChatBot() {
     if (step === "askDevice") {
       setDeviceType(msg);
       setStep("results");
-      
+
       // Show "typing" and then estimated price
       setIsTyping(true);
       await new Promise(r => setTimeout(r, 1500));
       const estPrice = getEstimatedPrice(msg);
       setIsTyping(false);
-      
+
       await addBotMessage(`📱 Based on current market rates, your ${msg} could be worth up to ₹${estPrice}. Plus free doorstep pickup!`, 500);
-      await addBotMessage("💡 **Pro tip**: Send photos of your items on WhatsApp for an exact valuation within 5 minutes.", 800);
+      await addBotMessage("💡 **Pro tip:** Send photos of your items on WhatsApp for an exact valuation within 5 minutes.", 800);
       setStep("chat");
       return;
     }
@@ -236,7 +236,7 @@ export default function AIChatBot() {
             <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center text-xl">♻️</div>
             <div>
               <div className="font-bold text-sm dark:text-white">EWaste Kochi Assistant</div>
-              <div className="flex items-center gap-1 text-xs text-green-600"><span className="w-1.5 h-1.5 rounded-full bg-green-500 inline-block animate-pulse"></span> Online now</div>
+              <div className="flex items-center gap-1 text-xs text-green-600 dark:text-green-400"><span className="w-1.5 h-1.5 rounded-full bg-green-500 inline-block animate-pulse"></span> Online now</div>
             </div>
           </div>
           <p className="text-xs text-zinc-600 dark:text-zinc-400 mb-2">🔥 <strong>Limited offer:</strong> Free pickup + 10% extra cashback. Offer ends in <span className="font-mono font-bold">{formatTime(countdown)}</span>.</p>
@@ -346,10 +346,10 @@ export default function AIChatBot() {
               onChange={e => setInput(e.target.value)}
               onKeyDown={handleKey}
               placeholder={
-                step === "askName" ? "Your name" :
-                step === "askPhone" ? "WhatsApp number" :
-                step === "askDevice" ? "Device type (laptop, phone, etc.)" :
-                "Type your question…"
+                step === "askName" ? "Your name"
+                : step === "askPhone" ? "WhatsApp number"
+                : step === "askDevice" ? "Device type (laptop, phone, etc.)"
+                : "Type your question…"
               }
               className="flex-1 px-4 py-2.5 rounded-xl bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-green-500 placeholder:text-zinc-400 border-none shadow-inner"
               aria-label="Chat input"

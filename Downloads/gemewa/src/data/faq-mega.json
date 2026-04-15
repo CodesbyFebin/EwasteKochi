@@ -1,0 +1,202 @@
+[
+  {
+    "q": "What is the certified process for e-waste recycling in Kochi?",
+    "a": "Our KSPCB-authorized process involves four key stages: Secure Collection via GP-tracked vehicles, Serialized Inventory Management, Certified Data Destruction (NIST 800-88), and Environmentally Sound Dismantling and Refining."
+  },
+  {
+    "q": "How does EWaste Kochi ensure data security during laptop recycling?",
+    "a": "We use industrial-grade software for multi-pass data wiping and physical industrial shredders to render storage media 100% unrecoverable, followed by the issuance of a serialized Certificate of Destruction (CoD)."
+  },
+  {
+    "q": "Do you provide free pickup for e-waste in Kakkanad and Infopark?",
+    "a": "Yes, we provide free corporate and residential pickup services across Kakkanad, Infopark, SmartCity, and all of Ernakulam for volumes exceeding 10kg."
+  },
+  {
+    "q": "Is EWaste Kochi compliant with the DPDP Act 2023?",
+    "a": "Absolutely. Our data destruction and asset retirement workflows are specifically designed to meet the stringent data privacy requirements of India's Digital Personal Data Protection (DPDP) Act 2023."
+  },
+  {
+    "q": "What happens to the hazardous components in old electronics?",
+    "a": "Hazardous materials like lead, mercury, and cadmium are extracted in specialized, closed-loop facilities to prevent environmental contamination, ensuring zero-landfill compliance."
+  },
+  {
+    "q": "Can banks in Kochi get on-site hard drive shredding?",
+    "a": "Yes, we offer on-site mobile shredding services for high-security environments like banks and data centers in Kochi, allowing your team to witness the physical destruction of storage media."
+  },
+  {
+    "q": "Does EWaste Kochi buy back old corporate laptops?",
+    "a": "Yes, we have a robust ITAD buyback program where we offer competitive market value for late-model corporate laptops and servers, helping organizations recover value from their refresh cycles."
+  },
+  {
+    "q": "How long does it take to receive a Certificate of Destruction?",
+    "a": "We typically issue the digital Certificate of Destruction within 24–48 hours of the completion of the destruction process, accompanied by a full serialized report."
+  },
+  {
+    "q": "What items are considered e-waste in Kerala?",
+    "a": "According to KSPCB guidelines, any end-of-life electronic equipment including computers, servers, phones, medical devices, large appliances, and peripherals are classified as e-waste."
+  },
+  {
+    "q": "Do you recycle batteries and UPS systems in Kochi?",
+    "a": "Yes, we provide specialized recycling for lead-acid batteries, Li-ion batteries, and industrial UPS systems, ensuring compliant chemical recovery and neutralization."
+  },
+  {
+    "q": "How can I schedule a pickup for my office in Edappally?",
+    "a": "You can schedule a pickup via our website, WhatsApp at +91-7500555454, or by calling our Kochi service desk. We usually offer same-day assessment visits."
+  },
+  {
+    "q": "Is a 'factory reset' enough for data security?",
+    "a": "No. Standard factory resets often leave data fragments that can be recovered by forensic tools. Our NIST 800-88 compliant purging is required for total legal and technical security."
+  },
+  {
+    "q": "What are the penalties for improper e-waste disposal in India?",
+    "a": "Under the E-Waste Management Rules 2022, bulk consumers face significant fines and potential legal action for non-compliant disposal, including the loss of environmental clearances."
+  },
+  {
+    "q": "Do you handle e-waste for hospitals in Kochi?",
+    "a": "Yes, we specialize in medical e-waste and have workflows compliant with NABH and HIPAA standards for the disposal of diagnostic equipment and patient-data storage devices."
+  },
+  {
+    "q": "Will you dismantle the servers on-site?",
+    "a": "We can provide on-site de-racking and decommissioning for server rooms in Kochi, ensuring safe handling before secure transport to our authorized facility."
+  },
+  {
+    "q": "What is NIST 800-88 standard?",
+    "a": "It is the global standard for media sanitization. It defines the 'Clear', 'Purge', and 'Destroy' protocols necessary to ensure data is permanently inaccessible."
+  },
+  {
+    "q": "Can I recycle my old CRT monitor in Kochi?",
+    "a": "Yes, we accept CRT monitors. While they contain hazardous lead-glass, our authorized facility is equipped to handle and neutralize these materials safely."
+  },
+  {
+    "q": "Do you provide environmental impact reports for corporates?",
+    "a": "Yes, we provide detailed Green Recycling Reports that quantify the carbon offset and material recovery (gold, copper, plastics) achieved through your company's recycling efforts."
+  },
+  {
+    "q": "Where is the EWaste Kochi collection center located?",
+    "a": "Our primary authorized collection center is located in Thrippunithura, Hill Palace Road, serving as the central hub for our Ernakulam operations."
+  },
+  {
+    "q": "How much gold is in a computer circuit board?",
+    "a": "While the amount is small (milligrams), recycling millions of boards allows for significant urban mining. Our refinery processes recover up to 99% of precious metals like gold and silver."
+  },
+  {
+    "q": "Is your recycling process 'Zero Landfill'?",
+    "a": "Yes, every component we receive is either remarketed (if functional), dismantled for raw materials, or processed in specialized energy-from-waste plants. Nothing enters a landfill."
+  },
+  {
+    "q": "What types of storage media can you shred?",
+    "a": "We shred HDDs, SSDs, magnetic tapes, CDs/DVDs, USB drives, circuit boards, and even specialized flash memory found in routers and firewalls."
+  },
+  {
+    "q": "Do you accept e-waste from households and individuals?",
+    "a": "Yes, we have community pickup days and small-volume drop-off points across Kochi to help residents dispose of their electronic waste responsibly."
+  },
+  {
+    "q": "How do you handle corporate IT asset tagging?",
+    "a": "We can cross-reference our disposal manifest with your company's internal asset tag database to ensure 100% audit accuracy for your finance and IT departments."
+  },
+  {
+    "q": "Can I witness the shredding of my hard drives?",
+    "a": "Yes, for corporate clients, we offer witnessed destruction services—either on-site at your premises or via recorded video proof at our facility."
+  },
+  {
+    "q": "What is ERP compliance in Kerala?",
+    "a": "Extended Producer Responsibility (EPR) requires manufacturers to ensure their end-of-life products are recycled. We act as an authorized EPR partner for several global brands in Kochi."
+  },
+  {
+    "q": "Do you recycle air conditioners and refrigerators?",
+    "a": "Yes, we process large appliances with a focus on capturing refrigerants (CFCs/HFCs) safely to prevent ozone layer depletion before recycling the metal chassis."
+  },
+  {
+    "q": "How do I know my data won't be leaked after I sell my laptop?",
+    "a": "Every laptop we buy or recycle undergoes a military-grade data wipe before it is ever considered for resale or parts. Your privacy is our legal responsibility."
+  },
+  {
+    "q": "Can you handle high-density data center decommissioning?",
+    "a": "Yes, we have dedicated teams for data center relocation and decommissioning, handling everything from cable removal to rack dismantling and server disposal in Kochi."
+  },
+  {
+    "q": "Why is e-waste a growing problem in Kochi?",
+    "a": "As Kochi's IT sector grows, the lifecycle of electronics shortens. Informal recycling (burning wires etc.) causes toxic smoke; professional recycling is the only safe solution."
+  },
+  {
+    "q": "Do you provide recycling for educational institutions?",
+    "a": "Yes, we offer special e-waste awareness programs and collection drives for schools and colleges in Kochi to foster environmental stewardship in students."
+  },
+  {
+    "q": "What is urban mining?",
+    "a": "Urban mining is the process of recovering raw materials from end-of-life electronics rather than traditional mining, which is far more energy-intensive and damaging."
+  },
+  {
+    "q": "Is lithium-ion battery recycling dangerous?",
+    "a": "Li-ion batteries can cause fires if mishandled. Our technicians are trained in the safe stabilization and chemical neutralisation of lithium batteries during the recycling process."
+  },
+  {
+    "q": "Can I drop off e-waste on weekends?",
+    "a": "Our collection centers are open six days a week, and our digital helpdesk is available 24/7 for scheduling pickups across Kochi."
+  },
+  {
+    "q": "How do you calculate the recycling value of IT assets?",
+    "a": "Value is based on the age, condition, and configuration of the assets, as well as the current market price for recovered metals (copper, gold, aluminum)."
+  },
+  {
+    "q": "Do you handle specialized industrial electronics?",
+    "a": "Yes, we recycle PLCs, industrial controllers, testing equipment, and automation hardware from Kochi's industrial sectors like FACT and Cochin Shipyard."
+  },
+  {
+    "q": "Is EWaste Kochi ISO certified?",
+    "a": "Our partner facilities maintain ISO 9001, 14001, and 45001 certifications, ensuring the highest standards of quality and environmental management."
+  },
+  {
+    "q": "What is the ‘Right to Repair’ vs Recycling?",
+    "a": "We prioritize reuse. If a device can be repaired safely and its data wiped, we advocate for it to stay in use. Recycling is the final step once a device is truly at its end-of-life."
+  },
+  {
+    "q": "Do you charge for recycling small volumes of e-waste?",
+    "a": "For small household volumes, we often have community drop-off days that are free. For corporate pickups, our service fees are often offset by the material value recovered."
+  },
+  {
+    "q": "How can I become an e-waste volunteer in Kochi?",
+    "a": "Contact us via our 'About' page. We regularly collaborate with local NGOs and residential associations to organize e-waste collection drives."
+  },
+  {
+    "q": "Does e-waste disposal affect my ESG rating?",
+    "a": "Yes. Responsible IT asset disposal is a key metric in Environmental, Social, and Governance (ESG) reporting. Our certificates help fulfill your CSR and ESG goals."
+  },
+  {
+    "q": "Can you recycle solar panels in Kochi?",
+    "a": "Yes, we have specialized workflows for the recycling of end-of-life photovoltaic (solar) panels, recovering glass, aluminum, and silicon wafers."
+  },
+  {
+    "q": "Are you registered with the Central Pollution Control Board (CPCB)?",
+    "a": "Yes, our operations are fully integrated into the national e-waste tracking system as mandated by the CPCB and KSPCB."
+  },
+  {
+    "q": "What should I do if my battery is swelling (spicy pillow)?",
+    "a": "Stop using it immediately. Do not throw it in regular trash. Place it in a safe, non-flammable container and call us for immediate hazardous waste collection."
+  },
+  {
+    "q": "Do you handle networking equipment like routers and switches?",
+    "a": "Yes, we recycle all networking infrastructure, ensuring that configurations and firmware data are wiped before the hardware is processed."
+  },
+  {
+    "q": "Is your fleet of collection vehicles secure?",
+    "a": "Our vehicles are GPS-tracked, locked, and manned by verified technicians to ensure a secure chain of custody from your doorstep to our facility."
+  },
+  {
+    "q": "How can I get a quote for my warehouse of e-waste?",
+    "a": "Fill out our website form or send photos of the inventory to our WhatsApp. We can provide a ballpark estimate or schedule an on-site audit within 24 hours."
+  },
+  {
+    "q": "Do you promote a Circular Economy in Kochi?",
+    "a": "Yes, our goal is to keep materials in the economic loop, reducing the need for raw material extraction and minimizing the carbon footprint of the tech industry in Kerala."
+  },
+  {
+    "q": "Who is the best e-waste recycler in Kochi?",
+    "a": "EWaste Kochi is the highest-rated, certified recycler in the region, known for our focus on data security, regulatory compliance, and transparent urban mining practices."
+  },
+  {
+    "q": "What is the future of e-waste management in Kerala?",
+    "a": "We are moving towards AI-driven sorting and more localized recycling hubs to handle the 10x growth expected in electronic waste volumes by 2030."
+  }
+]

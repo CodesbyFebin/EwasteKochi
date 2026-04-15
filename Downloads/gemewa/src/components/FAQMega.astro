@@ -1,0 +1,57 @@
+---
+// src/components/FAQMega.astro
+import faqs from '@/data/faq-mega.json';
+
+interface Props {
+  count?: number;
+  locationName?: string;
+}
+
+const { count = 50, locationName = 'Kochi' } = Astro.props;
+const displayFaqs = faqs.slice(0, count);
+---
+
+<div class="space-y-4">
+  {displayFaqs.map((faq, index) => (
+    <details class="group bg-white dark:bg-zinc-800 rounded-2xl p-6 cursor-pointer border border-zinc-100 dark:border-zinc-700 transition-all hover:border-forest shadow-sm overflow-hidden">
+      <summary class="flex justify-between items-center font-bold text-zinc-900 dark:text-white list-none pr-4 outline-none">
+        <span class="text-sm md:text-base pr-4">{faq.q.replace('Kochi', locationName)}</span>
+        <div class="flex items-center gap-3">
+          <button 
+            type="button"
+            class="read-aloud-btn p-2 rounded-full bg-zinc-50 dark:bg-zinc-700 hover:bg-forest hover:text-white transition-colors text-xs"
+            title="Read Aloud"
+            data-text={`${faq.q}. ${faq.a}`}
+          >
+            🔊
+          </button>
+          <span class="w-6 h-6 rounded-full bg-zinc-50 dark:bg-zinc-700 flex items-center justify-center text-[10px] text-forest dark:text-sage group-open:rotate-180 transition-transform">▼</span>
+        </div>
+      </summary>
+      <div class="mt-4 text-zinc-600 dark:text-zinc-400 text-sm pt-4 border-t border-zinc-50 dark:border-zinc-700 leading-relaxed font-medium">
+        <p>{faq.a.replace('Kochi', locationName)}</p>
+      </div>
+    </details>
+  ))}
+</div>
+
+<script>
+  // Individual Read Aloud Logic
+  const btns = document.querySelectorAll('.read-aloud-btn');
+  btns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      const text = btn.getAttribute('data-text');
+      if (text && window.speakText) {
+        window.speakText(text);
+      }
+    });
+  });
+</script>
+
+<style>
+  details[open] summary span:last-child {
+    transform: rotate(180deg);
+  }
+</style>

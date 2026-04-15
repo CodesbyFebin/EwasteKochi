@@ -1,0 +1,67 @@
+[
+  {
+    "slug": "itad",
+    "name": "IT Asset Disposition",
+    "shortName": "ITAD",
+    "category": "corporate",
+    "tagline": "Secure · Auditable · Compliant Corporate Hardware Retirement",
+    "description": "End-to-end ITAD for Kochi enterprises. Asset tagging, certified data destruction, remarketing, and full chain-of-custody documentation.",
+    "longDescription": "Our IT Asset Disposition (ITAD) service in Kochi is built on the pillars of data security and environmental responsibility. We help Kochi's growing tech hubs manage the lifecycle of their hardware while staying compliant with the DPDP Act 2023.",
+    "schemaType": "Service",
+    "price": "Custom Quote",
+    "badges": ["NIST 800-88 Certified", "Chain-of-Custody", "Audit-Ready Docs"],
+    "keywords": ["itad kochi", "it asset disposition kerala", "certified hardware retirement"]
+  },
+  {
+    "slug": "data-destruction",
+    "name": "Data Destruction",
+    "shortName": "Data Destruction",
+    "category": "security",
+    "tagline": "NIST 800-88 Certified · Data Wiping & Physical Shredding",
+    "description": "NIST 800-88 & DoD 5220.22-M certified data wiping and physical HDD/SSD shredding. Certificate of Destruction issued for every device.",
+    "longDescription": "We provide industrial-grade data destruction in Kochi. From software purging to physical industrial shredding, we ensure your company data never falls into the wrong hands.",
+    "schemaType": "Service",
+    "price": "From ₹200/unit",
+    "badges": ["NIST 800-88", "DoD 5220.22-M", "Certificate of Destruction"],
+    "keywords": ["data destruction kochi", "data wiping kerala", "secure data destruction"]
+  },
+  {
+    "slug": "hard-drive-shredding",
+    "name": "Hard Drive Shredding",
+    "shortName": "HDD Shredding",
+    "category": "security",
+    "tagline": "Physical Industrial Shredding · 100% Unrecoverable",
+    "description": "Physical industrial shredding of HDDs, SSDs, NVMe drives and all storage media. Data 100% unrecoverable. Ideal for banks and hospitals.",
+    "longDescription": "For Kochi organizations requiring maximum security, our physical shredding service renders memory chips into dust. 100% irreversible destruction verified by CoD.",
+    "schemaType": "Service",
+    "price": "From ₹250/drive",
+    "badges": ["100% Unrecoverable", "On-Site Available", "NABH Compliant"],
+    "keywords": ["hard drive shredding kochi", "hdd shredding kerala", "physical drive destruction"]
+  },
+  {
+    "slug": "e-waste-recycling",
+    "name": "E-Waste Recycling",
+    "shortName": "E-Waste Recycling",
+    "category": "core",
+    "tagline": "KSPCB Authorised · Zero Landfill · Free Bulk Pickup",
+    "description": "Certified e-waste recycling for homes and businesses in Kochi. We collect, dismantle, and recycle all electronic waste responsibly.",
+    "longDescription": "As Kochi's #1 authorised recycler, we ensure zero landfill for electronics. We recovered critical materials like gold and copper from Kerala's electronic waste streams.",
+    "schemaType": "RecyclingCenter",
+    "price": "Free / Rebate",
+    "badges": ["KSPCB Authorised", "Zero Landfill", "EPR Compliant"],
+    "keywords": ["e-waste recycling kochi", "electronic waste disposal", "kspcb authorized"]
+  },
+  {
+    "slug": "laptop-buyback",
+    "name": "Sell Old Laptops",
+    "shortName": "Laptop Buyback",
+    "category": "buyback",
+    "tagline": "Best Price Guarantee · Same-Day Payment",
+    "description": "Get the best buyback price for old laptops, MacBooks, gaming laptops in Kochi. Instant valuation, same-day payment.",
+    "longDescription": "We provide the highest resale value for your used laptops in Kochi. All devices are data-wiped using NIST-certified protocols before any potential resale.",
+    "schemaType": "Product",
+    "price": "Maximum Payout",
+    "badges": ["Best Price Guarantee", "Same-Day Payment", "Data Wiped"],
+    "keywords": ["sell laptop kochi", "laptop buyback kerala", "macbook scrap price"]
+  }
+]

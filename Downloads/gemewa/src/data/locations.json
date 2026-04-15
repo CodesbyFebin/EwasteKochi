@@ -1,0 +1,23 @@
+[
+  { "slug": "kakkanad", "name": "Kakkanad", "landmarks": ["Infopark", "SmartCity", "Rajagiri College", "Collectorate"] },
+  { "slug": "edappally", "name": "Edappally", "landmarks": ["Lulu Mall", "Oberon Mall", "Metro Station", "Amrita Hospital"] },
+  { "slug": "aluva", "name": "Aluva", "landmarks": ["Periyar River", "Metro Station", "UC College", "KSRTC Stand"] },
+  { "slug": "vytilla", "name": "Vytilla", "landmarks": ["Mobility Hub", "Decathlon", "Gold Souk", "Service Road"] },
+  { "slug": "thrippunithura", "name": "Thrippunithura", "landmarks": ["Hill Palace", "Sree Poornathrayeesa Temple", "Railway Station", "Statue Junction"] },
+  { "slug": "kalamassery", "name": "Kalamassery", "landmarks": ["CUSAT", "Appolo Tyres", "HMT", "Medical College"] },
+  { "slug": "thrikkakara", "name": "Thrikkakara", "landmarks": ["Thrikkakara Temple", "Bharata Mata College", "NPOL", "Municipality"] },
+  { "slug": "kadavanthra", "name": "Kadavanthra", "landmarks": ["Regional Sports Centre", "Indira Gandhi Hospital", "Metro Station", "Bridge"] },
+  { "slug": "palarivattom", "name": "Palarivattom", "landmarks": ["Palarivattom Bypass", "Civil Lane Road", "Avenue Center", "Medical Centre"] },
+  { "slug": "mg-road", "name": "MG Road", "landmarks": ["Centre Square Mall", "Maharajas College", "Air India Office", "Medical Trust"] },
+  { "slug": "fort-kochi", "name": "Fort Kochi", "landmarks": ["Chinese Fishing Nets", "St. Francis Church", "Beach", "Bastion Bungalow"] },
+  { "slug": "maradu", "name": "Maradu", "landmarks": ["Le Meridien", "Crowne Plaza", "Nucleus Mall", "Abad Nucleus"] },
+  { "slug": "panampilly-nagar", "name": "Panampilly Nagar", "landmarks": ["Passport Office", "Walkway", "South Overbridge", "GCDA"] },
+  { "slug": "thevera", "name": "Thevera", "landmarks": ["Sacred Heart College", "Naval Base", "Konthuruthy", "Shipyard"] },
+  { "slug": "chernallur", "name": "Chernallur", "landmarks": ["Aster Medcity", "Container Road", "Amrita Institute", "Puzhakkara"] },
+  { "slug": "kattakada", "name": "Kattakada", "landmarks": ["Christian College", "Bus Stand", "Market", "Police Station"] },
+  { "slug": "perumbavoor", "name": "Perumbavoor", "landmarks": ["Aluva Road", "Muvattupuzha Road", "KSRTC", "Wood Industries"] },
+  { "slug": "angs-junction", "name": "Angamaly", "landmarks": ["CSIA", "Little Flower Hospital", "Railway Station", "De Paul"] },
+  { "slug": "kothamangalam", "name": "Kothamangalam", "landmarks": ["MA College", "Thattekkad Bird Sanctuary", "High Range", "St. George Cathedral"] },
+  { "slug": "muvattupuzha", "name": "Muvattupuzha", "landmarks": ["Nirmala College", "White City", "Three Rivers", "Bus Stand"] },
+  { "slug": "piravom", "name": "Piravom", "landmarks": ["River Side", "St. Marys Cathedral", "Bus Stand", "Cinema Theater"] }
+]

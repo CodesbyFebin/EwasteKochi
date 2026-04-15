@@ -23,6 +23,11 @@ export default defineConfig({
     assets: '_assets' // clean asset directory for better CDN caching
   },
   vite: {
+    resolve: {
+      alias: {
+        '@': '/src'
+      }
+    },
     build: {
       cssCodeSplit: true,
       chunkSizeWarningLimit: 5000,

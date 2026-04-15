@@ -3,7 +3,7 @@
 import BaseLayout from './BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import AIChatBot from '../components/AIChatBot';
+import AccessibilityProviderWrapper from '../components/AccessibilityProviderWrapper';
 import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
 
 export interface Props {
@@ -45,5 +45,5 @@ const { title, description, lang, canonical, hreflangs, breadcrumbs, schema, sch
     <slot />
   </main>
   <Footer />
-  <AIChatBot client:load />
+  <AccessibilityProviderWrapper client:load />
 </BaseLayout>

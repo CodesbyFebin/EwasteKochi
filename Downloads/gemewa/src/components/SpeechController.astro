@@ -1,0 +1,31 @@
+<button 
+  id="global-read-aloud" 
+  class="flex items-center gap-2 px-4 py-2 bg-zinc-900 border border-zinc-700 text-white dark:bg-white dark:text-zinc-900 rounded-full text-[10px] font-extrabold uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-xl"
+  title="Read Entire Page Aloud"
+>
+  <span>🔊</span>
+  <span id="speech-status">Read Aloud</span>
+</button>
+
+<script>
+  const btn = document.getElementById('global-read-aloud');
+  const status = document.getElementById('speech-status');
+  let isSpeaking = false;
+
+  btn?.addEventListener('click', () => {
+    if (isSpeaking) {
+      window.speechSynthesis.cancel();
+      isSpeaking = false;
+      if (status) status.textContent = 'Read Aloud';
+      return;
+    }
+
+    if ((window as any).speakText) {
+      const h1 = document.querySelector('h1')?.innerText || '';
+      const p = document.querySelector('p')?.innerText || '';
+      (window as any).speakText(`${h1}. ${p}. Use the buttons on our FAQs to hear detailed answers.`);
+      isSpeaking = true;
+      if (status) status.textContent = 'Stop Reading';
+    }
+  });
+</script>
